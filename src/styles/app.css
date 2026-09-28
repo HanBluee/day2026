@@ -99,7 +99,7 @@ body {
 .box {
   position: relative;
   width: min(84vw, 370px);
-  aspect-ratio: 7 / 5;
+  aspect-ratio: 6 / 5;
   transform-style: preserve-3d;
   transform: rotateX(8deg);
 }
@@ -139,12 +139,12 @@ body {
   left: 3.5%;
   right: 3.5%;
   top: 2.5%;
-  height: 60%;
+  height: 63%;
   border-radius: var(--r-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 10px;
   background:
     radial-gradient(104% 96% at 50% 30%, var(--velvet-100) 0%, var(--velvet-300) 56%, var(--velvet-400) 100%);
   box-shadow:
@@ -152,16 +152,17 @@ body {
     inset 0 12px 20px -12px rgba(96, 70, 40, .6);
 }
 
-/* 盒盖一掀开，两只挂件就躺在绒布上 */
+/* 盒盖一掀开，两只挂件就躺在绒布上。
+   用 contain 不裁切 —— 原片里手挡着挂件，裁掉任何一边都会缺一块 */
 .inbox-charm {
-  width: 31%;
-  height: 58%;
-  object-fit: cover;
+  width: 42%;
+  height: 84%;
+  object-fit: contain;
   border-radius: 3px;
-  box-shadow: 0 5px 12px -5px rgba(80, 56, 30, .72);
+  box-shadow: 0 6px 14px -7px rgba(80, 56, 30, .65);
   opacity: 0;
-  transform: scale(.86);
-  transition: opacity .45s var(--ease) .34s, transform .65s var(--ease-back) .34s;
+  transform: translateY(9px) scale(.88);
+  transition: opacity .45s var(--ease) .34s, transform .7s var(--ease-back) .34s;
 }
 
 .box.is-open .inbox-charm { opacity: 1; transform: scale(1); }
