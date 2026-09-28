@@ -1,0 +1,13 @@
+{
+  "name": "day2026",
+  "version": "1.0.0",
+  "private": true,
+  "description": "第 2026 天 · 给邹静雯的纪念网站",
+  "type": "module",
+  "scripts": {
+    "copy:export": "node tools/copy.mjs --export",
+    "copy:build": "node tools/copy.mjs --build",
+    "copy:check": "node tools/copy.mjs --check",
+    "preview": "python -m http.server 8123"
+  }
+}

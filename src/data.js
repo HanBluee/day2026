@@ -1,12 +1,24 @@
-// 内容层。文字都可以随她改；改完刷新即可，不需要重新构建。
+// 结构层：谁在哪一幕、用什么布景、图标怎么画。
+//
+// ⚠️ 这个文件里**不放给人看的文字**。所有文案都在根目录的 文案.txt 里，
+//   由 tools/copy.mjs 生成 content.js 供这里读取（键名一致的 T('…')）。
+//     node tools/copy.mjs --build    改完文案后重新生成
 
-export const START = { y: 2021, m: 3, d: 14 };   // 第 1 天
+import COPY from './content.js';
+
+const T = (key) => {
+  if (key in COPY) return COPY[key];
+  console.warn('[文案缺失]', key);
+  return `〔${key}〕`;
+};
+
+export const START = { y: 2021, m: 3, d: 14 };     // 第 1 天
 export const UNCLE_DAY = { y: 2026, m: 9, d: 29 }; // 第 2026 天
 
-export const ME = { name: '王蕴瑶', nick: '丫丫' };   // 蓝
-export const HER = { name: '邹静雯', nick: '小静雯' }; // 绿
+export const ME = { name: T('me.name'), nick: T('me.nick') };   // 蓝
+export const HER = { name: T('her.name'), nick: T('her.nick') }; // 绿
 
-/* ── 盒内物件：既是装饰，也是章节入口 ───────────────────── */
+/* ── 图标（纯结构，不是文案） ───────────────────────────── */
 
 const svg = (body, stroke = 'currentColor') =>
   `<svg viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.4"
@@ -25,52 +37,39 @@ export const ICONS = {
   person: svg('<circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/>'),
 };
 
-/* 盒内布局：前 8 格是第一章带日期的回忆，中间放挂件，最后两格待写 */
+/* ── 盒内布局：8 格高中回忆，然后是第二章入口和附录 ─────── */
+
 export const BOX_ITEMS = [
-  { id: 's1', icon: 'desk',     label: '分班那天',   meta: '2021.03.14' },
-  { id: 's2', icon: 'card',     label: '一起去食堂', meta: '高二 · 高三' },
-  { id: 's3', icon: 'cards',    label: '泡面危机',   meta: '小游戏' },
-  { id: 's4', icon: 'ticket',   label: '恐怖片',     meta: '放假 · 她家' },
-  { id: 's5', icon: 'lamp',     label: '床上夜谈',   meta: '熄灯之后' },
-  { id: 's6', icon: 'notebook', label: '抽查单词',   meta: 'ABANDON' },
-  { id: 's7', icon: 'calendar', label: '那本日历',   meta: '2022 / 2023' },
-  { id: 's8', icon: 'train',    label: '高考之后',   meta: '广州 ↔ 湖北' },
+  { id: 's1', icon: 'desk',     label: T('box.1.label'), meta: T('box.1.meta') },
+  { id: 's2', icon: 'card',     label: T('box.2.label'), meta: T('box.2.meta') },
+  { id: 's3', icon: 'cards',    label: T('box.3.label'), meta: T('box.3.meta') },
+  { id: 's4', icon: 'ticket',   label: T('box.4.label'), meta: T('box.4.meta') },
+  { id: 's5', icon: 'lamp',     label: T('box.5.label'), meta: T('box.5.meta') },
+  { id: 's6', icon: 'notebook', label: T('box.6.label'), meta: T('box.6.meta') },
+  { id: 's7', icon: 'calendar', label: T('box.7.label'), meta: T('box.7.meta') },
+  { id: 's8', icon: 'train',    label: T('box.8.label'), meta: T('box.8.meta') },
 ];
 
-/* 第二章的入口。它不是"待写"，是真的可以点进去 */
-export const UNI_ENTRY = {
-  id: 'u1',
-  icon: 'bowl',
-  label: '大学篇 · 假如我们同校',
-  note: '两个城市的距离，用一段我编的日常来量',
-};
+export const UNI_ENTRY = { id: 'u1', icon: 'bowl', label: T('uni.label'), note: T('uni.note') };
 
-/* 跟时间线无关，但我想单独说的一页 */
 export const EXTRAS = [
-  { id: 'profile', icon: 'person', label: '性格卡', note: '你是谁、她是谁、我们为什么会像' },
+  { id: 'profile', icon: 'person', label: T('extra.label'), note: T('extra.note') },
 ];
 
-/* ── 第一章八幕 ─────────────────────────────────────────── */
+/* ── 第一幕到第八幕：高中（真实发生） ───────────────────── */
 
-export const SCENES = [
+const HS = [
   {
     id: 's1',
-    eyebrow: '2021.03.14 · 高二下学期',
-    title: '从今天开始数',
-    body: '高二分班，我们在同一间教室碰上了。\n\n那时候谁也不知道，这一天是要拿来数很多年的。\n今天是第 <em>2026</em> 天。',
+    eyebrow: T('s1.eyebrow'), title: T('s1.title'), body: T('s1.body'),
     stage: { bg: 'linear-gradient(175deg,#E8EEF4 0%,#D7E2EC 58%,#C3D2DF 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'shy', jing: 'laugh' },
-    bubbles: [
-      { who: 'jing', text: '你好呀' },
-      { who: 'ya', text: '……你好' },
-    ],
+    bubbles: [{ who: 'jing', text: T('s1.bubble.1') }, { who: 'ya', text: T('s1.bubble.2') }],
   },
   {
     id: 's2',
-    eyebrow: '高二 · 高三 · 日常',
-    title: '没什么大事的那种日常',
-    body: '一起上课，一起去食堂。\n\n我们的日常里没发生过什么大事。\n后来才明白，最难被替代的偏偏就是这种没什么大事的日常。',
+    eyebrow: T('s2.eyebrow'), title: T('s2.title'), body: T('s2.body'),
     stage: { photo: 'assets/photo/together.jpg', bg: 'linear-gradient(175deg,#DCE6F0 0%,#C8D6E6 100%)', dim: .22 },
     actors: [],
     faces: { ya: 'laugh', jing: 'laugh' },
@@ -78,31 +77,25 @@ export const SCENES = [
   },
   {
     id: 's3',
-    eyebrow: '高三 · 宿舍',
-    title: '把东西藏起来',
-    body: '整个宿舍堆满了好东西：自热火锅、零食、薯片、相机、手机，还有一副扑克牌。\n\n我们拿衣服把窗玻璃挡住——\n然后宿管阿姨一把拉开窗户，掀开了那件衣服。',
+    eyebrow: T('s3.eyebrow'), title: T('s3.title'), body: T('s3.body'),
     stage: { photo: 'assets/photo/dorm.jpg', bg: 'linear-gradient(175deg,#2A2A32 0%,#1C1B21 100%)', dim: .42 },
     actors: [],
     faces: { ya: 'shock', jing: 'shock' },
     bubbles: [],
     play: 'noodles',
-    playLabel: '帮我藏一下',
+    playLabel: T('s3.playLabel'),
   },
   {
     id: 's4',
-    eyebrow: '放假 · 她家',
-    title: '她放恐怖片',
-    body: '放假我去她家，她放恐怖片。\n\n她爱看。我不敢看，又想看。\n她就坐在旁边逗我。\n\n看完我们出去散步，走了很久。',
+    eyebrow: T('s4.eyebrow'), title: T('s4.title'), body: T('s4.body'),
     stage: { bg: 'linear-gradient(178deg,#1E1B26 0%,#2C2734 62%,#171520 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'shy', jing: 'laugh' },
-    bubbles: [{ who: 'jing', text: '这段最吓人，你看着' }],
+    bubbles: [{ who: 'jing', text: T('s4.bubble.1') }],
   },
   {
     id: 's5',
-    eyebrow: '宿舍 · 熄灯之后',
-    title: '溜到她床上',
-    body: '宿管阿姨巡逻结束之后，我从自己的床上溜过去。\n\n两个人挤在一张床上说话，说到很晚。\n说了什么我记不太清了，但我记得那种感觉。',
+    eyebrow: T('s5.eyebrow'), title: T('s5.title'), body: T('s5.body'),
     stage: { bg: 'linear-gradient(178deg,#161320 0%,#221D2E 54%,#100D18 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'shy', jing: 'shy' },
@@ -110,22 +103,15 @@ export const SCENES = [
   },
   {
     id: 's6',
-    eyebrow: '高三 · 教室',
-    title: '我说我背好了',
-    body: '我跟她说，单词我背好了。\n\n她真的开始抽我。\n\n……结果还是不会。',
+    eyebrow: T('s6.eyebrow'), title: T('s6.title'), body: T('s6.body'),
     stage: { bg: 'linear-gradient(175deg,#EFEDE4 0%,#DEDACE 60%,#CFC9BA 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'cry', jing: 'angry' },
-    bubbles: [
-      { who: 'ya', text: '这次真的背了' },
-      { who: 'jing', text: 'abandon 后面的那个' },
-    ],
+    bubbles: [{ who: 'ya', text: T('s6.bubble.1') }, { who: 'jing', text: T('s6.bubble.2') }],
   },
   {
     id: 's7',
-    eyebrow: '高三 · 跨年',
-    title: '一云雾幻想一',
-    body: '高三那年一起冲刺高考。\n\n跨年的时候她送了我一本日历，2022 / 2023。\n紫色的，包装很好看。\n\n我很喜欢。',
+    eyebrow: T('s7.eyebrow'), title: T('s7.title'), body: T('s7.body'),
     stage: { photo: 'assets/photo/calendar.jpg', bg: 'linear-gradient(175deg,#E7E2F2 0%,#CFC6E6 100%)', dim: .18 },
     actors: [],
     faces: { ya: 'laugh', jing: 'shy' },
@@ -133,83 +119,60 @@ export const SCENES = [
   },
   {
     id: 's8',
-    eyebrow: '2024 · 高考之后',
-    title: '两条裙子还没有一起穿过',
-    body: '高考结束，她去了湖北，我去了广州。\n\n生日的时候我们互相送了裙子：\n她送我的是蓝色长裙吊带，我送她的是绿色中裙吊带。\n\n到现在，我们还没有一起穿过。',
+    eyebrow: T('s8.eyebrow'), title: T('s8.title'), body: T('s8.body'),
     stage: { bg: 'linear-gradient(178deg,#E4EAF0 0%,#C9D6E2 56%,#A9BCCE 100%)' },
     actors: ['ya', 'jing'],
     gap: 'wide',
     faces: { ya: 'down', jing: 'down' },
     bubbles: [],
   },
+];
 
-  /* ── 第二章：大学 · 假如 ──────────────────────────────
-     这一段全是虚构的。开篇和收尾都明确说了"这是我编的"，
-     中间才是编出来的日常——不然就成了撒谎。 */
+/* ── 第二章：大学 · 假如 ──────────────────────────────────
+   这一段全是虚构的。开篇和收尾都明确写了"这是我编的"，
+   中间才是编出来的日常——不然就成了撒谎。 */
 
+const UNI = [
   {
     id: 'u1',
-    chapter: 'uni',
-    tone: 'cool',
-    set: 'uni',
-    eyebrow: '第二章 · 假如我们同校，还是舍友',
-    title: '先说清楚：这一段是我编的',
-    body: '我们没在同一所大学。她在湖北，我在广州。\n\n所以下面这些场景，都是我写出来的——假如我们不但是同一所大学，还是同一个宿舍。\n\n我还是想写，是因为异地里最想要的从来不是"一起去旅行"，是"<em>一起去食堂</em>"。',
+    chapter: 'uni', tone: 'cool', set: 'uni',
+    eyebrow: T('u1.eyebrow'), title: T('u1.title'), body: T('u1.body'),
     stage: { bg: 'linear-gradient(178deg,#EDF3F8 0%,#D6E4EF 58%,#BDD2E3 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'shy', jing: 'laugh' },
-    bubbles: [{ who: 'ya', text: '那，从头来一次' }],
+    bubbles: [{ who: 'ya', text: T('u1.bubble.1') }],
   },
   {
     id: 'u2',
-    chapter: 'uni',
-    tone: 'cool',
-    set: 'uni',
-    eyebrow: '假如 · 中午和下午',
-    title: '一起去食堂，一起写作业',
-    body: '她先到，占两个位置。我端着餐盘过去。\n\n下午在图书馆，她做题，我写我自己的。\n她中途转过来问我一个单词，我说不知道。',
+    chapter: 'uni', tone: 'cool', set: 'uni',
+    eyebrow: T('u2.eyebrow'), title: T('u2.title'), body: T('u2.body'),
     stage: { bg: 'linear-gradient(178deg,#F3F1E9 0%,#E3E0D3 58%,#D0CDBF 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'laugh', jing: 'angry' },
-    bubbles: [
-      { who: 'jing', text: '你连这个都不知道' },
-      { who: 'ya', text: '……那你教我' },
-    ],
+    bubbles: [{ who: 'jing', text: T('u2.bubble.1') }, { who: 'ya', text: T('u2.bubble.2') }],
   },
   {
     id: 'u3',
-    chapter: 'uni',
-    tone: 'cool',
-    set: 'uni',
-    eyebrow: '假如 · 随舞路演',
-    title: '她站在台下',
-    body: '我上台随舞的时候，她站在最前排。\n\n她其实不太跳舞，也不太听 kpop。\n但那一整场她都拍了，回去还剪了一段发给我。',
+    chapter: 'uni', tone: 'cool', set: 'uni',
+    eyebrow: T('u3.eyebrow'), title: T('u3.title'), body: T('u3.body'),
     stage: { bg: 'linear-gradient(178deg,#1D1B26 0%,#2C2738 56%,#15121C 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'laugh', jing: 'laugh' },
-    bubbles: [{ who: 'jing', text: '拍好了，回去给你看' }],
+    bubbles: [{ who: 'jing', text: T('u3.bubble.1') }],
   },
   {
     id: 'u4',
-    chapter: 'uni',
-    tone: 'cool',
-    set: 'uni',
-    eyebrow: '假如 · 宿舍，关灯以后',
-    title: '这次换我陪她看',
-    body: '《怪奇物语》她全部看完了，我陪她重看。\n\n高中是她放恐怖片逗我，现在灯关着，我照样捂着眼睛，她也照样在旁边笑我。\n\n有些东西异地也没变。',
+    chapter: 'uni', tone: 'cool', set: 'uni',
+    eyebrow: T('u4.eyebrow'), title: T('u4.title'), body: T('u4.body'),
     stage: { bg: 'linear-gradient(178deg,#161322 0%,#241D33 58%,#0E0B17 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'shy', jing: 'laugh' },
-    bubbles: [{ who: 'jing', text: '这段最吓人，你看着' }],
+    bubbles: [{ who: 'jing', text: T('u4.bubble.1') }],
   },
   {
     id: 'u5',
-    chapter: 'uni',
-    tone: 'cool',
-    set: 'uni',
-    eyebrow: '假如 · 生日',
-    title: '那两条裙子，终于一起穿上了',
-    body: '她送我的是蓝色长裙吊带，我送她的是绿色中裙吊带。\n\n买的时候我们没说好，但都挑了对方喜欢的颜色。\n\n在这个版本里，我们终于一起穿上了。',
+    chapter: 'uni', tone: 'cool', set: 'uni',
+    eyebrow: T('u5.eyebrow'), title: T('u5.title'), body: T('u5.body'),
     stage: { photo: 'assets/photo/dresses.jpg', bg: 'linear-gradient(175deg,#DCEBD8 0%,#C6DCC4 100%)', dim: .08 },
     actors: [],
     faces: { ya: 'laugh', jing: 'shy' },
@@ -217,154 +180,98 @@ export const SCENES = [
   },
   {
     id: 'u6',
-    chapter: 'uni',
-    tone: 'cool',
-    set: 'uni',
-    eyebrow: '第二章 · 到此为止',
-    title: '编不下去了',
-    body: '再往下就不能编了。\n\n真实的我们，是两个城市、每天微信、每年生日各自寄一箱东西。\n\n也没有不好。只是我现在很想你。',
+    chapter: 'uni', tone: 'cool', set: 'uni',
+    eyebrow: T('u6.eyebrow'), title: T('u6.title'), body: T('u6.body'),
     stage: { bg: 'linear-gradient(178deg,#E9EEF3 0%,#CBD8E4 58%,#ADC1D3 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'down', jing: 'down' },
     bubbles: [],
   },
+];
 
-  /* 编不下去之后回到真的。这一件真事跟那两条裙子是同一个模式——
-     没商量，却挑了同一个东西。编的六幕日常，反而没有这一件打动人。 */
+/* ── 编不下去之后回到真的。这一件真事跟那两条裙子是同一个模式——
+   没商量，却挑了同一个东西。编的六幕日常，反而没有这一件打动人。 */
 
+const REAL = [
   {
     id: 'r1',
-    chapter: 'real',
-    set: 'uni',
-    eyebrow: '这一段不是编的',
-    title: '同一件东西，我们各买了一个',
-    body: '《怪奇物语》她全部看完了。\n\n我想送她一只食人花书，都已经下单了。\n然后她突然跟我说：她有了。\n\n我就跟她坦白了——我刚好也给你买了一个。\n\n最后退掉了。可是这件事我记到现在。\n跟那两条裙子一样：<em>我们没商量，却挑了同一个东西</em>。',
+    chapter: 'real', set: 'uni',
+    eyebrow: T('r1.eyebrow'), title: T('r1.title'), body: T('r1.body'),
     stage: { bg: 'linear-gradient(178deg,#F5F0E6 0%,#E7DFCE 58%,#D5C8B1 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'laugh', jing: 'shy' },
-    bubbles: [
-      { who: 'jing', text: '我有了诶' },
-      { who: 'ya', text: '……我刚好也给你买了一个' },
-    ],
+    bubbles: [{ who: 'jing', text: T('r1.bubble.1') }, { who: 'ya', text: T('r1.bubble.2') }],
     end: true,
   },
 ];
 
+export const SCENES = [...HS, ...UNI, ...REAL];
+
 /* ── 微游戏：泡面危机 ───────────────────────────────────── */
 
 export const NOODLES = {
-  intro: '阿姨在敲门了。先把东西藏起来——<b>点一件东西，再点一个地方</b>。',
+  intro: T('noodles.intro'),
   spots: [
-    { id: 'cabinet', name: '柜子' },
-    { id: 'under', name: '床底' },
-    { id: 'quilt', name: '被窝' },
+    { id: 'cabinet', name: T('noodles.spot.1') },
+    { id: 'under', name: T('noodles.spot.2') },
+    { id: 'quilt', name: T('noodles.spot.3') },
   ],
   items: [
-    { id: 'hotpot', label: '自热火锅', risk: true },
-    { id: 'snack', label: '零食' },
-    { id: 'chips', label: '薯片' },
-    { id: 'camera', label: '相机' },
-    { id: 'phone', label: '手机' },
-    { id: 'cards', label: '扑克牌' },
+    { id: 'hotpot', label: T('noodles.item.1'), risk: true },
+    { id: 'snack', label: T('noodles.item.2') },
+    { id: 'chips', label: T('noodles.item.3') },
+    { id: 'camera', label: T('noodles.item.4') },
+    { id: 'phone', label: T('noodles.item.5') },
+    { id: 'cards', label: T('noodles.item.6') },
   ],
   // 阿姨逐个开柜子，但结果一定是化险为夷——这是真事
   opens: [
-    { spot: 'cabinet', line: '阿姨进来，先拉开了柜子。' },
-    { spot: 'quilt', line: '她顺手掀了一下被窝。' },
+    { spot: 'cabinet', line: T('noodles.open.1') },
+    { spot: 'quilt', line: T('noodles.open.2') },
   ],
-  luck: '她拉开的是 —— 那个<b>什么都没藏</b>的柜子。',
-  near: '她把手电筒往里照了照，你压在最底下的那件东西没露出来。',
-  outcome: [
-    '阿姨在宿舍里转了一圈，把我们训了两句。',
-    '最后她翻出来的，只有<b>一颗瓜子</b>。',
-    '我们谁都没敢出声。她一关门，整个宿舍同时松了一口气。',
-  ],
+  luck: T('noodles.luck'),
+  near: T('noodles.near'),
+  outcome: [T('noodles.outcome.1'), T('noodles.outcome.2'), T('noodles.outcome.3')],
 };
 
 /* ── 终章 ───────────────────────────────────────────────── */
 
 export const FINALE = {
   days: 2026,
-  letter:
-    '我们隔着两座城市，但还是每天都说话。\n' +
-    '我们两个都是 INFJ——她原来不是，是后来变成的。\n' +
-    '我知道她因为我改了一些东西，我也因为她庆幸了很多。\n' +
-    '我们从同一间教室开始，现在在两个地方各自长大。\n\n' +
-    '今天是我们认识的第 2026 天。\n' +
-    '我把这些话全放进这个盒子里，等你打开。',
-  sign: '王蕴瑶 · 丫丫',
-  slotTitle: '这一格留给你',
-  slotNote: '我们约好要过纪念日，但我不知道你在做什么，你也不知道我在做什么。\n所以这里先空着。',
-  foot: '2021.03.14 — 2026.09.29',
+  letter: T('finale.letter'),
+  sign: T('finale.sign'),
+  slotTitle: T('finale.slotTitle'),
+  slotNote: T('finale.slotNote'),
+  foot: T('finale.foot'),
 };
 
 /* ── 附录：性格卡 ───────────────────────────────────────── */
 
+const jingPoints = [1, 2, 3].map((i) => ({
+  t: T(`profile.jing.p${i}.t`),
+  d: T(`profile.jing.p${i}.d`),
+}));
+const yaPoints = [1, 2].map((i) => ({
+  t: T(`profile.ya.p${i}.t`),
+  d: T(`profile.ya.p${i}.d`),
+}));
+
 export const PROFILE = {
-  eyebrow: 'APPENDIX · 性格卡',
-  title: '我们是什么样的人',
-  lead: '两个心思都细的人凑在一起，会变成什么样。',
+  eyebrow: T('profile.eyebrow'),
+  title: T('profile.title'),
+  lead: T('profile.lead'),
   blocks: [
-    {
-      type: 'pair',
-      caption: '我们两个都是 INFJ。她原来不是。',
-    },
-    {
-      type: 'who',
-      who: 'jing',
-      name: HER.name,
-      nick: HER.nick,
-      tag: '湖北 · JK · 怪奇物语',
-      points: [
-        {
-          t: '她不只是喜欢，她要把它做到最好',
-          d: '班上要讲 PPT，她讲自己喜欢的《怪奇物语》，做到极好，后来还接了单、拿了奖。喜欢对她来说不是消遣，是拿得出手的东西。',
-        },
-        {
-          t: '个子最小，做事最认真',
-          d: '她比你矮半个头。但她想做的事，就会真的去做。',
-        },
-        {
-          t: '她的 MBTI 本来不是 INFJ',
-          d: '原来是 ISTJ-A。我没有把她变成另一个人——我只是让她本来就有的那部分，从"认真"，长出了"感受"。',
-        },
-      ],
-    },
-    {
-      type: 'who',
-      who: 'ya',
-      name: ME.name,
-      nick: ME.nick,
-      tag: '广州 · 跳舞 · 韩知城',
-      points: [
-        {
-          t: '你把情绪交给身体',
-          d: '你追的韩知城自己写歌、公开谈焦虑、把情绪做成作品；你每个周末都去随舞路演。对一个 INFJ 来说，在人前这样暴露自己是勇气，不是外向。',
-        },
-        {
-          t: '你负责把在意变成行动',
-          d: '约好要过纪念日、每年的生日祝福、还有这个盒子——你不会让在意停在心里。',
-        },
-      ],
-    },
+    { type: 'pair', caption: T('profile.pair.caption') },
+    { type: 'who', who: 'jing', name: HER.name, nick: HER.nick, tag: T('profile.jing.tag'), points: jingPoints },
+    { type: 'who', who: 'ya', name: ME.name, nick: ME.nick, tag: T('profile.ya.tag'), points: yaPoints },
     {
       type: 'bridge',
-      title: '我们为什么会像',
-      lead: '不是因为性格一样，是互相补上了对方缺的那一块。',
-      left: {
-        label: '我给她的',
-        text: '可以不那么认真。泡面、自热火锅、恐怖片、随舞——我让她知道有些事允许胡闹、允许不完美。',
-      },
-      right: {
-        label: '她给我的',
-        text: '把热爱做成东西。喜欢一样东西，可以认真到把它变成作品。',
-      },
-      tail: '所以她更敢玩、更松弛了；你更会把热爱变成东西了。',
+      title: T('profile.bridge.title'),
+      lead: T('profile.bridge.lead'),
+      left: { label: T('profile.bridge.leftLabel'), text: T('profile.bridge.leftText') },
+      right: { label: T('profile.bridge.rightLabel'), text: T('profile.bridge.rightText') },
+      tail: T('profile.bridge.tail'),
     },
-    {
-      type: 'quote',
-      text: '你有没有发现——这个盒子，就是我用她的方式在做的事。\n把一个"喜欢"，认真做成一件拿得出手的东西。',
-      sign: '（她大概会在这里笑我。）',
-    },
+    { type: 'quote', text: T('profile.quote.text'), sign: T('profile.quote.sign') },
   ],
 };
