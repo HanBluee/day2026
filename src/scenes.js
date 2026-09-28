@@ -147,6 +147,22 @@ export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
 
   // 第一章穿校服（hs），第二章换大学那套（uni）
   const cast = scene.set || 'hs';
+
+  // 「两地合一」：两个人各自站一块，地名先飘出来，然后合到一起。
+  // 第二章第一页用它，让画面跟着文字走，而不是干站着。
+  if (scene.fx === 'merge') {
+    stage.append(h('div', { class: 'merge' },
+      h('span', { class: 'merge__divider' }),
+      h('span', { class: 'merge__city merge__city--jing', text: scene.cities.jing }),
+      h('span', { class: 'merge__city merge__city--ya', text: scene.cities.ya }),
+      h('span', { class: 'merge__glow' }),
+      h('div', { class: 'merge__pair' },
+        h('img', { class: 'merge__actor merge__actor--jing', src: `${ART}/${cast}-jing.png`, alt: '' }),
+        h('img', { class: 'merge__actor merge__actor--ya', src: `${ART}/${cast}-ya.png`, alt: '' }),
+      ),
+    ));
+  }
+
   if (scene.actors.length) {
     const wide = scene.gap === 'wide' ? ' actors--wide' : '';
     stage.append(h('div', { class: `actors${wide}` },

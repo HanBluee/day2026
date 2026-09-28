@@ -58,6 +58,10 @@ async function collect() {
       f(`${s.id}.bubble.${i + 1}`, `对白 ${i + 1} · ${b.who === 'ya' ? '我说的' : '她说的'}`, b.text);
     });
     if (s.playLabel) f(`${s.id}.playLabel`, '进入小游戏的按钮', s.playLabel);
+    if (s.cities) {
+      f(`${s.id}.city.jing`, '左边飘出来的地名（她那边）', s.cities.jing);
+      f(`${s.id}.city.ya`, '右边飘出来的地名（我这边）', s.cities.ya);
+    }
   };
 
   head('第一章 · 高中（这些是真事）', '盒内目录点第 1～8 格；或者从盒子一路点「下一段」');
@@ -73,7 +77,7 @@ async function collect() {
 
   head('回到真实（真事）', '大学篇六页之后紧接着');
   D.SCENES.filter((s) => s.chapter === 'real').forEach((s) => {
-    sceneBlock(s, '食人花书', '大学篇「编不下去了」之后的下一页');
+    sceneBlock(s, '食人花书', '大学篇最后一页之后紧接着');
   });
 
   head('小游戏 · 泡面危机', '第一章第 3 幕里点「帮我藏一下」按钮进入');

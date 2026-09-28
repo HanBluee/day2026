@@ -139,7 +139,10 @@ const UNI = [
     chapter: 'uni', tone: 'cool', set: 'uni',
     eyebrow: T('u1.eyebrow'), title: T('u1.title'), body: T('u1.body'),
     stage: { bg: 'linear-gradient(178deg,#EDF3F8 0%,#D6E4EF 58%,#BDD2E3 100%)' },
-    actors: ['ya', 'jing'],
+    // 这一幕不用「站着」的立绘：两个城市各自一块，然后合到一起
+    fx: 'merge',
+    cities: { jing: T('u1.city.jing'), ya: T('u1.city.ya') },
+    actors: [],
     faces: { ya: 'shy', jing: 'laugh' },
     bubbles: [{ who: 'ya', text: T('u1.bubble.1') }],
   },

@@ -42,6 +42,7 @@ FLAT_FEATHER = 1.0
 FLAT_HALO_BRIGHT = 246   # 亮到这个值以上、又贴着轮廓 = 挂件自带的柔投影/背景
 FLAT_HALO_SAT = 16
 FLAT_BAND = 8            # 「贴着轮廓」的判定半径：要盖住那层柔投影
+FLAT_CLOSE = 16          # 闭运算半径：用来封住背景钻进来的细缝
 
 DEFAULT_NAMES = ["front", "side", "back"]
 
@@ -263,6 +264,37 @@ def _refine_flat(fg, im, w, h):
     return bytearray((solid.astype(np.uint8) * 255).tobytes())
 
 
+def _close_and_fill(fg, w, h, r):
+    """形态学闭运算 + 补洞。
+
+    毛绒的边缘是软过渡：只要有一段足够亮，洪水就会顺着钻进来，在身体上
+    啃掉一角（看起来像"缺了一块"）。闭运算（先膨胀再腐蚀）能把这种细缝
+    封住，封住以后那块就成了洞，补洞就能把颜色还回来。
+    """
+    import numpy as np
+    keep = np.frombuffer(bytes(fg), dtype=np.uint8).reshape(h, w).astype(bool)
+
+    d = keep.copy()
+    for k in range(-r, r + 1):
+        d |= np.roll(keep, k, axis=1)
+    t = d.copy()
+    for k in range(-r, r + 1):
+        t |= np.roll(d, k, axis=0)
+
+    e = t.copy()
+    for k in range(-r, r + 1):
+        e &= np.roll(t, k, axis=1)
+    u = e.copy()
+    for k in range(-r, r + 1):
+        u &= np.roll(e, k, axis=0)
+
+    bgc = (~u).astype(np.uint8).tobytes()
+    outer = _reachable(bytearray(bgc), w, h)
+    o = np.frombuffer(bytes(outer), dtype=np.uint8).reshape(h, w).astype(bool)
+    u |= (~u & ~o)          # 走不到画外的背景 = 洞 -> 归入前景
+    return bytearray(u.astype(np.uint8).tobytes())
+
+
 def to_transparent_flat(im):
     """纯白背景上的单件物品（比如毛绒挂件）。
 
@@ -287,6 +319,7 @@ def to_transparent_flat(im):
     for i in range(w * h):
         if bgc[i] and not outer[i]:
             fg[i] = 1
+    fg = _close_and_fill(fg, w, h, FLAT_CLOSE)
     fg = _largest_blob(fg, w, h)
     soft = _refine_flat(fg, im, w, h)
 
