@@ -1,6 +1,6 @@
 // 四个场景：序章盒子 / 盒内目录 / 回忆一幕 / 终章。
 
-import { BOX_ITEMS, UNI_ENTRY, EXTRAS, SCENES, FINALE, ANIM_PAGE, MEET, ICONS, START, UNCLE_DAY } from './data.js';
+import { BOX_ITEMS, UNI_ITEMS, EXTRAS, SCENES, FINALE, ANIM_PAGE, MEET, ICONS, START, UNCLE_DAY } from './data.js';
 import { chapter1Done } from './progress.js';
 import { sfx } from './audio.js';
 import { h } from './dom.js';
@@ -74,7 +74,7 @@ export function buildBox({ onOpen }) {
 /* ── 盒内：物件目录 ────────────────────────────────────── */
 
 export function buildInside({ onPick, onCharm }) {
-  // 高中没看完之前，中间那格是空的——挂件还没会合，大学篇也进不去
+  // 高中没看完之前，中间那格是空的、第二章也进不去
   const done = chapter1Done();
 
   const charms = done
@@ -88,47 +88,36 @@ export function buildInside({ onPick, onCharm }) {
       h('span', { class: 'charms__locked', text: MEET.lockedHint }),
     );
 
-  const compartments = h('div', { class: 'compartments' },
-    BOX_ITEMS.map((item) =>
-      h('button', { class: 'compartment', type: 'button', onclick: () => onPick(item.id) },
-        h('span', { class: 'compartment__icon', html: ICONS[item.icon] }),
-        h('span', { class: 'compartment__label', text: item.label }),
-        h('span', { class: 'compartment__meta', text: item.meta }),
-      )),
-    h('button', {
-      class: `compartment compartment--wide compartment--uni${done ? '' : ' is-locked'}`,
-      type: 'button',
-      disabled: !done || null,
-      onclick: () => { if (done) onPick(UNI_ENTRY.id); },
-    },
-      h('span', { class: 'compartment__icon', html: ICONS[UNI_ENTRY.icon] }),
-      h('span', { class: 'compartment__stack' },
-        h('span', { class: 'compartment__label', text: UNI_ENTRY.label }),
-        h('span', { class: 'compartment__meta', text: UNI_ENTRY.note }),
-      ),
-    ),
-    EXTRAS.map((x) =>
-      h('button', {
-        class: 'compartment compartment--wide compartment--extra',
-        type: 'button',
-        onclick: () => onPick(x.id),
-      },
-        h('span', { class: 'compartment__icon', html: ICONS[x.icon] }),
-        h('span', { class: 'compartment__stack' },
-          h('span', { class: 'compartment__label', text: x.label }),
-          h('span', { class: 'compartment__meta', text: x.note }),
-        ),
-      )),
+  // 两章用同一套格子，只是第二章多一个"锁着"的状态
+  const cell = (item, locked) => h('button', {
+    class: `compartment${locked ? ' is-locked' : ''}`,
+    type: 'button',
+    disabled: locked || null,
+    onclick: () => { if (!locked) onPick(item.id); },
+  },
+    h('span', { class: 'compartment__icon', html: ICONS[item.icon] }),
+    h('span', { class: 'compartment__label', text: item.label }),
+    h('span', { class: 'compartment__meta', text: item.meta }),
+  );
+
+  const plaque = (eyebrow, title, lock) => h('div', { class: 'cavity__plaque' },
+    h('span', { class: 'cavity__eyebrow', text: eyebrow }),
+    h('span', { class: 'cavity__title', text: title }),
+    lock ? h('span', { class: 'cavity__lock', text: lock }) : null,
   );
 
   const cavity = h('div', { class: 'cavity' },
-    h('div', { class: 'cavity__plaque' },
-      h('span', { class: 'cavity__eyebrow', text: 'CHAPTER 01' }),
-      h('span', { class: 'cavity__title', text: '高中 · 我们' }),
-    ),
+    plaque('CHAPTER 01', '高中 · 我们'),
     charms,
     done ? h('p', { class: 'charms__caption', text: MEET.charmsCaption }) : null,
-    compartments,
+    h('div', { class: 'compartments' }, BOX_ITEMS.map((it) => cell(it, false))),
+
+    plaque('CHAPTER 02', '大学 · 假如', done ? null : MEET.lockedHint),
+    h('div', { class: `compartments${done ? '' : ' compartments--locked'}` },
+      UNI_ITEMS.map((it) => cell(it, !done))),
+
+    h('div', { class: 'compartments compartments--single' },
+      EXTRAS.map((it) => cell(it, false))),
   );
 
   const elapsed = countDays(START, UNCLE_DAY);

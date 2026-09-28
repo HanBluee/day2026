@@ -27,82 +27,73 @@ async function collect() {
   const head = (title, where) => out.push({ head: title, where });
   const f = (key, note, value) => out.push({ key, note, value });
 
-  gap('这份文件就是网站里所有的字。');
-  gap('改法：只改「### 键名」底下的内容，### 那一行不要动。空行会被保留（正文里空一行就是分段）。');
-  gap('正文里可以用 <em>…</em> 做高亮、<b>…</b> 加粗。');
-  gap('改完在本目录下跑：  node tools/copy.mjs --build');
+  // ── 开头的说明与导览 ──────────────────────────────────
+  gap('第 2026 天 · 全部文案');
+  gap('');
+  gap('【怎么改】');
+  gap('   · 只改「### 键名」底下的内容，### 那一行不要动');
+  gap('   · 空行会保留 —— 正文里空一行就是分段');
+  gap('   · <em>文字</em> 是粉色高亮，<b>文字</b> 是加粗');
+  gap('   · 改完双击 发布.cmd（或跑 node tools/copy.mjs --build）');
+  gap('');
+  gap('【网站的顺序】照着这个找你要改的地方');
+  gap('');
+  gap('   序章           盒子开盖，点一下掀开');
+  gap('   第一章 高中     8 幕（真事）············ s1 ~ s8');
+  gap('        └ 第 3 幕里还有：小剧场「泡面危机」+ 可以自己玩的小游戏');
+  gap('   会合           小猫和寿司吸在一起······· meet');
+  gap('   第二章 大学     6 页（假如）··········· u1 ~ u6');
+  gap('   霸王花         那件真事················ r1');
+  gap('   小动画         四段···················· anim');
+  gap('   终章           那封信·················· finale');
+  gap('');
+  gap('   另外：盒子里格子的名字是 box.* / unibox.*，');
+  gap('         小游戏台词是 noodles.*，小剧场台词是 comic.*。');
+  gap('');
 
-  head('名字', '到处都会用到，主要是终章落款和性格卡');
+  // ── 正文（顺序跟网站上走一遍的顺序一致） ──────────────
+  head('名字', '到处都会用到');
   f('me.name', '我的名字', D.ME.name);
   f('me.nick', '我的外号', D.ME.nick);
   f('her.name', '她的名字', D.HER.name);
   f('her.nick', '我给她起的备注', D.HER.nick);
 
-  head('盒内目录的格子', '打开盒子以后，绒布上的那几格');
+  head('盒子目录 · 第一章的八格', '打开盒子，第一排八格');
   D.BOX_ITEMS.forEach((it, i) => {
-    f(`box.${i + 1}.label`, `第 ${i + 1} 格 · 大标题（${it.id}）`, it.label);
-    f(`box.${i + 1}.meta`, `第 ${i + 1} 格 · 下面的小字`, it.meta);
+    f(`box.${i + 1}.label`, `第 ${i + 1} 格 · 名字`, it.label);
+    f(`box.${i + 1}.meta`, `第 ${i + 1} 格 · 小字`, it.meta);
   });
-  f('uni.label', '「大学篇」那一格的标题', D.UNI_ENTRY.label);
-  f('uni.note', '「大学篇」那一格的小字', D.UNI_ENTRY.note);
-  f('extra.label', '「小动画」那一格的标题', D.EXTRAS[0].label);
+  f('box.locked', '高中没看完时，中间那格的小字', D.MEET.lockedHint);
+  f('box.charms', '挂件下面那句（看完高中才出现）', D.MEET.charmsCaption);
+
+  head('盒子目录 · 第二章的六格', '打开盒子，第二排六格');
+  D.UNI_ITEMS.forEach((it, i) => {
+    f(`unibox.${i + 1}.label`, `第 ${i + 1} 格 · 名字`, it.label);
+    f(`unibox.${i + 1}.meta`, `第 ${i + 1} 格 · 小字`, it.meta);
+  });
+  f('extra.label', '「小动画」那一格的名字', D.EXTRAS[0].label);
   f('extra.note', '「小动画」那一格的小字', D.EXTRAS[0].note);
 
   const sceneBlock = (s, roman, where) => {
     gap('');
     head(roman, where);
-    f(`${s.id}.eyebrow`, '灰字小标（在最上面）', s.eyebrow);
+    f(`${s.id}.eyebrow`, '灰字小标（最上面那行）', s.eyebrow);
     f(`${s.id}.title`, '大标题', s.title);
     f(`${s.id}.body`, '正文（空行分段）', s.body);
     s.bubbles.forEach((b, i) => {
       f(`${s.id}.bubble.${i + 1}`, `对白 ${i + 1} · ${b.who === 'ya' ? '我说的' : '她说的'}`, b.text);
     });
-    if (s.playLabel) f(`${s.id}.playLabel`, '进入小游戏的按钮', s.playLabel);
+    if (s.playLabel) f(`${s.id}.playLabel`, '进入小剧场的按钮', s.playLabel);
     if (s.cities) {
       f(`${s.id}.city.jing`, '左边飘出来的地名（她那边）', s.cities.jing);
       f(`${s.id}.city.ya`, '右边飘出来的地名（我这边）', s.cities.ya);
     }
   };
 
-  head('第一章 · 高中（这些是真事）', '盒内目录点第 1～8 格；或者从盒子一路点「下一段」');
+  head('第一章 · 高中（八幕，都是真事）', '盒子里第一排的八格，或者从盒子一路「下一段」');
   D.SCENES.filter((s) => !s.chapter).forEach((s, i) => {
-    const box = D.BOX_ITEMS[i];
-    sceneBlock(s, `第 ${i + 1} 幕`, `对应盒内第 ${i + 1} 格「${box.label}」`);
+    sceneBlock(s, `第 ${i + 1} 幕`, `盒子第一排第 ${i + 1} 格「${D.BOX_ITEMS[i].label}」`);
   });
-
-  head('第二章 · 大学（这一段是编的）', '盒内目录点蓝色那一格「大学篇」');
-  D.SCENES.filter((s) => s.chapter === 'uni').forEach((s, i) => {
-    sceneBlock(s, `大学第 ${i + 1} 页`, `第一章最后一幕之后，或从盒内「大学篇」进入`);
-  });
-
-  head('回到真实 · 霸王花那件事', '大学篇六页之后紧接着');
-  D.SCENES.filter((s) => s.chapter === 'real').forEach((s) => {
-    sceneBlock(s, '霸王花', '大学篇最后一页之后紧接着');
-  });
-
-  head('小游戏 · 泡面危机', '第一章第 3 幕里点「帮我藏一下」按钮进入');
-  f('noodles.intro', '开场提示', D.NOODLES.intro);
-  D.NOODLES.spots.forEach((s, i) => f(`noodles.spot.${i + 1}`, `第 ${i + 1} 个藏匿点的名字`, s.name));
-  D.NOODLES.items.forEach((it, i) => f(`noodles.item.${i + 1}`, `要藏的第 ${i + 1} 件东西`, it.label));
-  D.NOODLES.opens.forEach((o, i) => f(`noodles.open.${i + 1}`, `阿姨的第 ${i + 1} 个动作`, o.line));
-  f('noodles.luck', '阿姨拉开空柜子时的话', D.NOODLES.luck);
-  f('noodles.near', '阿姨照了手电时的话', D.NOODLES.near);
-  D.NOODLES.outcome.forEach((t, i) => f(`noodles.outcome.${i + 1}`, `结局第 ${i + 1} 句`, t));
-
-  head('终章', '两只挂件吸合之后的那一屏');
-  f('finale.letter', '那封信（最该换成你自己的话）', D.FINALE.letter);
-  f('finale.sign', '落款', D.FINALE.sign);
-  f('finale.slotTitle', '「留给她的那一格」标题', D.FINALE.slotTitle);
-  f('finale.slotNote', '「留给她的那一格」说明', D.FINALE.slotNote);
-  f('finale.foot', '最底下的日期', D.FINALE.foot);
-
-  head('会合（高中看完之后才出现）', '高中最后一幕之后；或在盒子里点中间那格');
-  f('meet.eyebrow', '页眉小字', D.MEET.eyebrow);
-  f('meet.title', '大标题', D.MEET.title);
-  f('meet.body', '正文', D.MEET.body);
-  f('meet.action', '进入大学篇的按钮', D.MEET.action);
-  f('box.locked', '还没看完高中时，盒子中间那格的小字', D.MEET.lockedHint);
-  f('box.charms', '挂件下面那句（看完高中之后才显示）', D.MEET.charmsCaption);
 
   head('小剧场 · 泡面危机（分镜）', '第一章第 3 幕点「帮我藏一下」之后先放这个');
   f('comic.from', '左上角的小标', D.COMIC.from);
@@ -112,21 +103,54 @@ async function collect() {
   f('comic.endBack', '结束页 · 第三个按钮', D.COMIC.endBack);
   D.COMIC.beats.forEach((b, i) => {
     f(`comic.${b.key}.sub`, `第 ${i + 1} 格 · 底部的字幕`, b.sub);
-    if (b.bubble) f(`comic.${b.key}.bubble`, `第 ${i + 1} 格 · 对白气泡（${b.bubble === 'ya' ? '我说的' : b.bubble === 'jing' ? '她说的' : '画外音'}）`, b.bubbleText);
+    if (b.bubble) {
+      const who = b.bubble === 'ya' ? '我说的' : b.bubble === 'jing' ? '她说的' : '画外音';
+      f(`comic.${b.key}.bubble`, `第 ${i + 1} 格 · 对白（${who}）`, b.bubbleText);
+    }
   });
 
-  head('小动画', '盒内目录点「小动画」；或第一章之后一路「下一段」');
+  head('小游戏 · 泡面危机（自己玩的那版）', '小剧场放完之后点「自己试一次」');
+  f('noodles.intro', '开场提示', D.NOODLES.intro);
+  D.NOODLES.spots.forEach((s, i) => f(`noodles.spot.${i + 1}`, `第 ${i + 1} 个藏匿点的名字`, s.name));
+  D.NOODLES.items.forEach((it, i) => f(`noodles.item.${i + 1}`, `要藏的第 ${i + 1} 件东西`, it.label));
+  D.NOODLES.opens.forEach((o, i) => f(`noodles.open.${i + 1}`, `阿姨的第 ${i + 1} 个动作`, o.line));
+  f('noodles.luck', '阿姨拉开空柜子时的话', D.NOODLES.luck);
+  f('noodles.near', '阿姨照了手电时的话', D.NOODLES.near);
+  D.NOODLES.outcome.forEach((t, i) => f(`noodles.outcome.${i + 1}`, `结局第 ${i + 1} 句`, t));
+
+  head('会合（高中看完之后才出现）', '高中最后一幕之后；或在盒子里点中间那格');
+  f('meet.eyebrow', '页眉小字', D.MEET.eyebrow);
+  f('meet.title', '大标题', D.MEET.title);
+  f('meet.body', '正文', D.MEET.body);
+  f('meet.action', '进入第二章的按钮', D.MEET.action);
+
+  head('第二章 · 大学（六页，这一段是假如）', '盒子里第二排的六格');
+  D.SCENES.filter((s) => s.chapter === 'uni').forEach((s, i) => {
+    sceneBlock(s, `第 ${i + 1} 页`, `盒子第二排第 ${i + 1} 格「${D.UNI_ITEMS[i].label}」`);
+  });
+
+  head('霸王花 · 那件真事', '第二章最后一页之后紧接着');
+  D.SCENES.filter((s) => s.chapter === 'real').forEach((s) => sceneBlock(s, '霸王花', '第二章最后一页之后'));
+
+  head('小动画 · 四段', '盒子里「小动画」那一格');
   f('anim.eyebrow', '页眉小字', D.ANIM_PAGE.eyebrow);
   f('anim.title', '大标题', D.ANIM_PAGE.title);
   f('anim.lead', '副标题', D.ANIM_PAGE.lead);
   D.ANIM_PAGE.items.forEach((v, i) => {
-    f(`anim.${i + 1}.title`, `第 ${i + 1} 段动画的标题（${v.kind}）`, v.title);
-    f(`anim.${i + 1}.cap`, `第 ${i + 1} 段动画下面的说明`, v.cap);
-    if (v.msg) f(`anim.${i + 1}.msg`, `第 ${i + 1} 段里飞来飞去的那句话`, v.msg);
+    f(`anim.${i + 1}.title`, `第 ${i + 1} 段 · 标题`, v.title);
+    f(`anim.${i + 1}.cap`, `第 ${i + 1} 段 · 下面的说明`, v.cap);
+    if (v.msg) f(`anim.${i + 1}.msg`, `第 ${i + 1} 段 · 飘来飘去的那句话`, v.msg);
   });
-  f('anim.bridge', '四段动画之后那段「我们为什么会像」', D.ANIM_PAGE.bridge);
+  f('anim.bridge', '四段之后「我们为什么会像」', D.ANIM_PAGE.bridge);
   f('anim.quote', '整页最末那段引文', D.ANIM_PAGE.quote);
   f('anim.quoteSign', '引文后面的小字', D.ANIM_PAGE.quoteSign);
+
+  head('终章', '两只挂件吸合之后那一屏');
+  f('finale.letter', '那封信（最该换成你自己的话）', D.FINALE.letter);
+  f('finale.sign', '落款', D.FINALE.sign);
+  f('finale.slotTitle', '「留给她的那一格」标题', D.FINALE.slotTitle);
+  f('finale.slotNote', '「留给她的那一格」说明', D.FINALE.slotNote);
+  f('finale.foot', '最底下的日期', D.FINALE.foot);
 
   return out;
 }
@@ -138,14 +162,17 @@ const HEAVY = '═'.repeat(38);
 
 function toText(fields) {
   const lines = [];
+  const bar = '═'.repeat(46);
   for (const e of fields) {
-    if (e.gap !== undefined) { lines.push(e.gap, ''); continue; }
+    if (e.gap !== undefined) { lines.push(e.gap); continue; }
     if (e.head) {
-      lines.push('', HEAVY, e.head, `出现在：${e.where}`, HEAVY, '');
+      lines.push('', bar, '  ' + e.head);
+      if (e.where) lines.push('  位置：' + e.where);
+      lines.push(bar, '');
       continue;
     }
-    if (e.note) lines.push(`# ${e.note}`);
-    lines.push(`### ${e.key}`, String(e.value), '');
+    if (e.note) lines.push('# ' + e.note);
+    lines.push('### ' + e.key, String(e.value), '');
   }
   return lines.join('\n').replace(/\n{4,}/g, '\n\n\n') + '\n';
 }

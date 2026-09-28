@@ -1889,3 +1889,25 @@
   cursor: default;
   filter: grayscale(.5);
 }
+
+/* 第二章的章节牌：跟第一章同一行版式，多一个"锁着"的提示 */
+.cavity__plaque { margin-top: 22px; }
+
+.cavity__plaque:first-child { margin-top: 0; }
+
+.cavity__lock {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: .1em;
+  color: var(--brass-600);
+  white-space: nowrap;
+}
+
+.compartment.is-locked {
+  opacity: .42;
+  cursor: default;
+  filter: grayscale(.55);
+}
+
+.compartments--single { margin-top: 10px; grid-template-columns: 1fr; }

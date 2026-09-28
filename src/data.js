@@ -36,6 +36,11 @@ export const ICONS = {
   bowl: svg('<path d="M3.5 11.5h17c0 4.7-3.8 8.5-8.5 8.5s-8.5-3.8-8.5-8.5z"/><path d="M12 20v2.5M16 3.5l-2 7M18.5 4.5l-1.8 6"/>'),
   person: svg('<circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/>'),
   play: svg('<circle cx="12" cy="12" r="8.5"/><path d="M10.2 8.6l5.6 3.4-5.6 3.4z"/>'),
+  door: svg('<rect x="5" y="3" width="14" height="18" rx="1.5"/><circle cx="15.4" cy="12" r=".9"/><path d="M10 21v-1.6"/>'),
+  music: svg('<path d="M9 17.5V5l10-2v12.5"/><circle cx="6.6" cy="17.6" r="2.5"/><circle cx="16.6" cy="15.6" r="2.5"/>'),
+  tv: svg('<rect x="2.5" y="6.5" width="19" height="12.5" rx="1.5"/><path d="M8 3l4 3.2L16 3"/>'),
+  dress: svg('<path d="M9.2 3.4L12 5.6l2.8-2.2M12 5.6v2.6"/><path d="M12 8.2c-3.6 1.2-6.2 4.8-6.2 9.6h12.4c0-4.8-2.6-8.4-6.2-9.6z"/>'),
+  cloud: svg('<path d="M7.2 18h9.3a3.6 3.6 0 000-7.2 5.1 5.1 0 00-9.8-1.2A4 4 0 007.2 18z"/>'),
 };
 
 /* ── 盒内布局：8 格高中回忆，然后是第二章入口和附录 ─────── */
@@ -51,7 +56,16 @@ export const BOX_ITEMS = [
   { id: 's8', icon: 'train',    label: T('box.8.label'), meta: T('box.8.meta') },
 ];
 
-export const UNI_ENTRY = { id: 'u1', icon: 'bowl', label: T('uni.label'), note: T('uni.note') };
+// 第二章跟第一章一样，也是一格格摆在盒子里
+export const UNI_ITEMS = [
+  { id: 'u1', icon: 'door',  label: T('unibox.1.label'), meta: T('unibox.1.meta') },
+  { id: 'u2', icon: 'bowl',  label: T('unibox.2.label'), meta: T('unibox.2.meta') },
+  { id: 'u3', icon: 'music', label: T('unibox.3.label'), meta: T('unibox.3.meta') },
+  { id: 'u4', icon: 'tv',    label: T('unibox.4.label'), meta: T('unibox.4.meta') },
+  { id: 'u5', icon: 'dress', label: T('unibox.5.label'), meta: T('unibox.5.meta') },
+  { id: 'u6', icon: 'cloud', label: T('unibox.6.label'), meta: T('unibox.6.meta') },
+];
+
 
 export const EXTRAS = [
   { id: 'anim', icon: 'play', label: T('extra.label'), note: T('extra.note') },
