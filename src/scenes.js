@@ -112,7 +112,7 @@ export function buildInside({ onPick, onCharm }) {
     done ? h('p', { class: 'charms__caption', text: MEET.charmsCaption }) : null,
     h('div', { class: 'compartments' }, BOX_ITEMS.map((it) => cell(it, false))),
 
-    plaque('CHAPTER 02', '大学 · 假如', done ? null : MEET.lockedHint),
+    plaque('CHAPTER 02', '大学 · 假如', done ? null : MEET.uniLocked),
     h('div', { class: `compartments${done ? '' : ' compartments--locked'}` },
       UNI_ITEMS.map((it) => cell(it, !done))),
 

@@ -270,6 +270,7 @@ export const MEET = {
   body: T('meet.body'),
   action: T('meet.action'),
   lockedHint: T('box.locked'),
+  uniLocked: T('uni.locked'),
   charmsCaption: T('box.charms'),
 };
 

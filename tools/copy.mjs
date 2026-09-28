@@ -63,7 +63,8 @@ async function collect() {
     f(`box.${i + 1}.label`, `第 ${i + 1} 格 · 名字`, it.label);
     f(`box.${i + 1}.meta`, `第 ${i + 1} 格 · 小字`, it.meta);
   });
-  f('box.locked', '高中没看完时，中间那格的小字', D.MEET.lockedHint);
+  f('box.locked', '高中没看完时，盒子中间那格的小字', D.MEET.lockedHint);
+  f('uni.locked', '高中没看完时，第二章标题旁边的提示', D.MEET.uniLocked);
   f('box.charms', '挂件下面那句（看完高中才出现）', D.MEET.charmsCaption);
 
   head('盒子目录 · 第二章的六格', '打开盒子，第二排六格');
