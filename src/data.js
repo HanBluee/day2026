@@ -177,10 +177,13 @@ const UNI = [
   },
   {
     id: 'u5',
-    chapter: 'uni', tone: 'cool', set: 'uni',
+    chapter: 'uni', tone: 'cool', set: 'dress',
     eyebrow: T('u5.eyebrow'), title: T('u5.title'), body: T('u5.body'),
-    stage: { photo: 'assets/photo/dresses.jpg', bg: 'linear-gradient(175deg,#DCEBD8 0%,#C6DCC4 100%)', dim: .08 },
-    actors: [],
+    // 不用那张静态插画了：换成穿着裙子的立绘，在野餐垫上动起来
+    fx: 'picnic',
+    stage: { bg: 'linear-gradient(178deg,#EAF2E4 0%,#D8E7CE 52%,#C2D6B6 100%)' },
+    props: ['sun', 'blanket', 'cake', 'bucket', 'flower1', 'flower2', 'flower3'],
+    actors: ['ya', 'jing'],
     faces: { ya: 'laugh', jing: 'shy' },
     bubbles: [],
   },

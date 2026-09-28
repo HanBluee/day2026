@@ -69,6 +69,7 @@ python tools/cutout.py   assets/raw/hs-pair.jpg assets/char hs 2 jing,ya  # 两�
 python tools/cutout.py   assets/raw/ya-uni.jpg  assets/char ya 3 front    # 三视图只取正面
 python tools/cutout.py   assets/raw/charm-cat-clean.jpg assets/photo charm 1 cat  # 单只挂件
 python tools/emotions.py assets/raw/ya-uni-emo.jpg assets/face ya         # 3x2 表情组
+python tools/cutout.py   assets/raw/charm-cat-clean.jpg assets/photo charm 1 cat --flat  # 纯色底的单件物品
 python tools/photos.py                                                    # 布景照片压缩
 ```
 
@@ -77,7 +78,7 @@ python tools/photos.py                                                    # 布�
 
 产出目录：
 
-- `assets/char/` — 立绘。`hs-` 是高中校服版，`uni-` 是大学版
+- `assets/char/` — 立绘。`hs-` 高中校服版，`uni-` 大学版，`dress-` 穿裙子那版
 - `assets/face/` — 对白气泡里的小头像，六种表情
 - `assets/photo/` — 挂件的透明抠图 + 布景照片
 

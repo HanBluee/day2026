@@ -39,6 +39,7 @@ FLAT_SATURATION = 8
 FLAT_FEATHER = 1.0
 # 轮廓外那圈光晕：亮度 248~255（珠链中位只有 166，差得很开）。
 # 只清「贴着轮廓外沿、又很亮」的像素 —— 毛内部的亮块不在边上，珠链整体够暗。
+FLAT_BG_MARGIN = 30      # 背景暗端往下留这么多，算作阈值
 FLAT_HALO_BRIGHT = 246   # 亮到这个值以上、又贴着轮廓 = 挂件自带的柔投影/背景
 FLAT_HALO_SAT = 16
 FLAT_BAND = 8            # 「贴着轮廓」的判定半径：要盖住那层柔投影
@@ -304,11 +305,25 @@ def to_transparent_flat(im):
     """
     w, h = im.size
     px = im.load()
+
+    # 背景色不一定是纯白（有的是 246 的灰白），所以先从四边量一遍再定阈值
+    ring = []
+    for x in range(0, w, 7):
+        ring += [max(px[x, 5]), max(px[x, h - 6])]
+    for y in range(0, h, 7):
+        ring += [max(px[5, y]), max(px[w - 6, y])]
+    ring.sort()
+    # 用背景的暗端（5% 分位）来定阈值，这样背景上的噪点也算背景，
+    # 否则噪点会变成一堆前景碎点、再把它们连起来。
+    bg_dark = ring[int(len(ring) * 0.05)]
+    thresh = max(200, bg_dark - FLAT_BG_MARGIN)
+    print(f"   背景暗端 {bg_dark} -> 阈值 {thresh}")
+
     passable = bytearray(w * h)
     for y in range(h):
         for x in range(w):
             c = px[x, y]
-            if min(c) >= FLAT_THRESHOLD and (max(c) - min(c)) <= FLAT_SATURATION:
+            if min(c) >= thresh and (max(c) - min(c)) <= FLAT_SATURATION:
                 passable[y * w + x] = 1
 
     bg = _reachable(passable, w, h)

@@ -132,7 +132,7 @@ export function buildInside({ onPick, onCharm }) {
 /* ── 回忆一幕 ──────────────────────────────────────────── */
 
 export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
-  const stage = h('div', { class: 'story__stage' });
+  const stage = h('div', { class: `story__stage${scene.fx === 'picnic' ? ' stage--picnic' : ''}` });
   if (scene.stage.bg) stage.style.background = scene.stage.bg;
   if (scene.stage.photo) {
     stage.append(h('img', { class: 'stage__photo', src: scene.stage.photo, alt: '', loading: 'lazy' }));
