@@ -1,6 +1,6 @@
 // 四个场景：序章盒子 / 盒内目录 / 回忆一幕 / 终章。
 
-import { BOX_ITEMS, UNI_ENTRY, EXTRAS, SCENES, FINALE, PROFILE, ICONS, START, UNCLE_DAY, ME, HER } from './data.js';
+import { BOX_ITEMS, UNI_ENTRY, EXTRAS, SCENES, FINALE, ANIM_PAGE, ICONS, START, UNCLE_DAY } from './data.js';
 import { sfx } from './audio.js';
 import { h } from './dom.js';
 
@@ -242,81 +242,66 @@ export function buildFinale({ onExit }) {
   return root;
 }
 
-/* ── 附录：性格卡 ──────────────────────────────────────── */
+/* ── 附录：用形象做的几段小动画 ──────────────────────────
+   全是 CSS 循环动画，没有定时器、没有 canvas；只用 transform / opacity，
+   手机上跑起来不费电。每段的结构在这里，文字在 文案.txt。 */
 
-export function buildProfile({ onNext, onExit }) {
-  return h('section', { class: 'scene scene--profile' },
+export function buildAnim({ onNext, onExit }) {
+  return h('section', { class: 'scene scene--anim' },
     h('button', { class: 'back-to-box', type: 'button', text: '目录', onclick: onExit }),
-    h('div', { class: 'profile' },
-      h('div', { class: 'profile__head' },
-        h('div', { class: 'profile__eyebrow', text: PROFILE.eyebrow }),
-        h('h2', { class: 'profile__title', text: PROFILE.title }),
-        h('p', { class: 'profile__lead', text: PROFILE.lead }),
+    h('div', { class: 'anim' },
+      h('div', { class: 'anim__head' },
+        h('div', { class: 'anim__eyebrow', text: ANIM_PAGE.eyebrow }),
+        h('h2', { class: 'anim__title', text: ANIM_PAGE.title }),
+        h('p', { class: 'anim__lead', text: ANIM_PAGE.lead }),
       ),
-      PROFILE.blocks.map(profileBlock),
+      ANIM_PAGE.items.map(vignette),
+      h('p', { class: 'anim__bridge', text: ANIM_PAGE.bridge }),
+      h('div', { class: 'anim__quote' },
+        h('p', { class: 'anim__quote-text', text: ANIM_PAGE.quote }),
+        h('p', { class: 'anim__quote-sign', text: ANIM_PAGE.quoteSign }),
+      ),
       h('button', { class: 'btn', type: 'button', text: '打开最中间那一格', onclick: onNext }),
     ),
   );
 }
 
-function profileBlock(b) {
-  if (b.type === 'pair') {
-    return h('div', { class: 'pcard pcard--pair' },
-      h('div', { class: 'ppair' },
-        ['jing', 'ya'].map((who) => {
-          const person = who === 'jing' ? HER : ME;
-          return h('div', { class: `pface pface--${who}` },
-            h('img', { class: 'pface__img', src: `${FACE}/${who}-laugh.png`, alt: '' }),
-            h('span', { class: 'pface__name', text: person.name }),
-            h('span', { class: 'pface__nick', text: person.nick }),
-          );
-        }),
-      ),
-      h('p', { class: 'pcard__caption', text: b.caption }),
+function vignette(v) {
+  const stage = h('div', { class: `vig__stage vig__stage--${v.kind}` });
+
+  if (v.kind === 'dance') {
+    stage.append(
+      h('i', { class: 'beam beam--1' }), h('i', { class: 'beam beam--2' }),
+      ...[1, 2, 3, 4, 5].map((n) => h('i', { class: `spark spark--${n}` })),
+    );
+  }
+  if (v.kind === 'ppt') {
+    stage.append(
+      h('span', { class: 'laptop' }, h('i'), h('i'), h('i')),
+      h('b', { class: 'vig__tag', text: '接单 · 拿奖' }),
+    );
+  }
+  if (v.kind === 'tv') {
+    stage.append(h('span', { class: 'tv' }, h('i')));
+  }
+  if (v.kind === 'far') {
+    stage.append(
+      h('i', { class: 'link' }),
+      h('b', { class: 'msg', text: v.msg }),
     );
   }
 
-  if (b.type === 'who') {
-    return h('div', { class: `pcard pcard--who pcard--${b.who}` },
-      h('div', { class: 'pcard__head' },
-        h('img', { class: 'pcard__face', src: `${FACE}/${b.who}-laugh.png`, alt: '' }),
-        h('div', { class: 'pcard__ident' },
-          h('span', { class: 'pcard__name', text: b.name }),
-          h('span', { class: 'pcard__tag', text: b.tag }),
-        ),
-      ),
-      h('ul', { class: 'ppoints' },
-        b.points.map((p) => h('li', { class: 'ppoint' },
-          h('div', { class: 'ppoint__t', text: p.t }),
-          h('div', { class: 'ppoint__d', text: p.d }),
-        )),
-      ),
-    );
-  }
+  v.actors.forEach((who) => stage.append(
+    h('img', { class: `vig__actor vig__actor--${who}`, src: `${ART}/${v.set}-${who}.png`, alt: '' }),
+  ));
 
-  if (b.type === 'bridge') {
-    return h('div', { class: 'pcard pcard--bridge' },
-      h('h3', { class: 'pcard__title', text: b.title }),
-      h('p', { class: 'pcard__lead', text: b.lead }),
-      h('div', { class: 'pbridge' },
-        [b.left, b.right].map((side, i) =>
-          h('div', { class: `pbridge__side pbridge__side--${i === 0 ? 'ya' : 'jing'}` },
-            h('div', { class: 'pbridge__label', text: side.label }),
-            h('p', { class: 'pbridge__text', text: side.text }),
-          )),
-      ),
-      h('p', { class: 'pbridge__tail', text: b.tail }),
-    );
-  }
-
-  if (b.type === 'quote') {
-    return h('div', { class: 'pquote' },
-      h('p', { class: 'pquote__text', text: b.text }),
-      h('p', { class: 'pquote__sign', text: b.sign }),
-    );
-  }
-
-  return null;
+  return h('div', { class: `vig vig--${v.kind}` },
+    stage,
+    h('div', { class: 'vig__text' },
+      h('h3', { class: 'vig__title', text: v.title }),
+      h('p', { class: 'vig__cap', text: v.cap }),
+    ),
+  );
 }
 
 /* ── 小工具 ────────────────────────────────────────────── */

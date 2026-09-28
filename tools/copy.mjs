@@ -45,8 +45,8 @@ async function collect() {
   });
   f('uni.label', '「大学篇」那一格的标题', D.UNI_ENTRY.label);
   f('uni.note', '「大学篇」那一格的小字', D.UNI_ENTRY.note);
-  f('extra.label', '「性格卡」那一格的标题', D.EXTRAS[0].label);
-  f('extra.note', '「性格卡」那一格的小字', D.EXTRAS[0].note);
+  f('extra.label', '「小动画」那一格的标题', D.EXTRAS[0].label);
+  f('extra.note', '「小动画」那一格的小字', D.EXTRAS[0].note);
 
   const sceneBlock = (s, roman, where) => {
     gap('');
@@ -92,30 +92,18 @@ async function collect() {
   f('finale.slotNote', '「留给她的那一格」说明', D.FINALE.slotNote);
   f('finale.foot', '最底下的日期', D.FINALE.foot);
 
-  head('性格卡', '盒内目录点「性格卡」；或第一章之后一路「下一段」');
-  f('profile.eyebrow', '页眉小字', D.PROFILE.eyebrow);
-  f('profile.title', '大标题', D.PROFILE.title);
-  f('profile.lead', '副标题', D.PROFILE.lead);
-  f('profile.pair.caption', '两张脸下面那句', D.PROFILE.blocks[0].caption);
-  ['jing', 'ya'].forEach((who, bi) => {
-    const b = D.PROFILE.blocks[bi + 1];
-    f(`profile.${who}.tag`, `「${b.name}」名字后面那串小字`, b.tag);
-    b.points.forEach((p, i) => {
-      f(`profile.${who}.p${i + 1}.t`, `${b.name} · 第 ${i + 1} 条的小标题`, p.t);
-      f(`profile.${who}.p${i + 1}.d`, `${b.name} · 第 ${i + 1} 条的正文`, p.d);
-    });
+  head('小动画', '盒内目录点「小动画」；或第一章之后一路「下一段」');
+  f('anim.eyebrow', '页眉小字', D.ANIM_PAGE.eyebrow);
+  f('anim.title', '大标题', D.ANIM_PAGE.title);
+  f('anim.lead', '副标题', D.ANIM_PAGE.lead);
+  D.ANIM_PAGE.items.forEach((v, i) => {
+    f(`anim.${i + 1}.title`, `第 ${i + 1} 段动画的标题（${v.kind}）`, v.title);
+    f(`anim.${i + 1}.cap`, `第 ${i + 1} 段动画下面的说明`, v.cap);
+    if (v.msg) f(`anim.${i + 1}.msg`, `第 ${i + 1} 段里飞来飞去的那句话`, v.msg);
   });
-  const br = D.PROFILE.blocks[3];
-  f('profile.bridge.title', '「我们为什么会像」标题', br.title);
-  f('profile.bridge.lead', '「我们为什么会像」副标题', br.lead);
-  f('profile.bridge.leftLabel', '左栏标签', br.left.label);
-  f('profile.bridge.leftText', '左栏正文', br.left.text);
-  f('profile.bridge.rightLabel', '右栏标签', br.right.label);
-  f('profile.bridge.rightText', '右栏正文', br.right.text);
-  f('profile.bridge.tail', '「我们为什么会像」的收尾一句', br.tail);
-  const q = D.PROFILE.blocks[4];
-  f('profile.quote.text', '这一页最末那段引文', q.text);
-  f('profile.quote.sign', '引文后面的小字', q.sign);
+  f('anim.bridge', '四段动画之后那段「我们为什么会像」', D.ANIM_PAGE.bridge);
+  f('anim.quote', '整页最末那段引文', D.ANIM_PAGE.quote);
+  f('anim.quoteSign', '引文后面的小字', D.ANIM_PAGE.quoteSign);
 
   return out;
 }

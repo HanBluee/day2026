@@ -35,6 +35,7 @@ export const ICONS = {
   train: svg('<rect x="5" y="3.5" width="14" height="13" rx="2.5"/><path d="M5 11h14M9 20l-1.5 2M15 20l1.5 2M8.5 16.5h7"/><circle cx="9" cy="13.6" r=".9"/><circle cx="15" cy="13.6" r=".9"/>'),
   bowl: svg('<path d="M3.5 11.5h17c0 4.7-3.8 8.5-8.5 8.5s-8.5-3.8-8.5-8.5z"/><path d="M12 20v2.5M16 3.5l-2 7M18.5 4.5l-1.8 6"/>'),
   person: svg('<circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6"/>'),
+  play: svg('<circle cx="12" cy="12" r="8.5"/><path d="M10.2 8.6l5.6 3.4-5.6 3.4z"/>'),
 };
 
 /* ── 盒内布局：8 格高中回忆，然后是第二章入口和附录 ─────── */
@@ -53,7 +54,7 @@ export const BOX_ITEMS = [
 export const UNI_ENTRY = { id: 'u1', icon: 'bowl', label: T('uni.label'), note: T('uni.note') };
 
 export const EXTRAS = [
-  { id: 'profile', icon: 'person', label: T('extra.label'), note: T('extra.note') },
+  { id: 'anim', icon: 'play', label: T('extra.label'), note: T('extra.note') },
 ];
 
 /* ── 第一幕到第八幕：高中（真实发生） ───────────────────── */
@@ -245,33 +246,21 @@ export const FINALE = {
   foot: T('finale.foot'),
 };
 
-/* ── 附录：性格卡 ───────────────────────────────────────── */
+/* ── 附录：用形象做的几段小动画 ───────────────────────────
+   与其用形容词说她们是什么样的人，不如把几段日常动起来。
+   每段的结构（谁出场、什么布景）在这里，文字全在 文案.txt。 */
 
-const jingPoints = [1, 2, 3].map((i) => ({
-  t: T(`profile.jing.p${i}.t`),
-  d: T(`profile.jing.p${i}.d`),
-}));
-const yaPoints = [1, 2].map((i) => ({
-  t: T(`profile.ya.p${i}.t`),
-  d: T(`profile.ya.p${i}.d`),
-}));
-
-export const PROFILE = {
-  eyebrow: T('profile.eyebrow'),
-  title: T('profile.title'),
-  lead: T('profile.lead'),
-  blocks: [
-    { type: 'pair', caption: T('profile.pair.caption') },
-    { type: 'who', who: 'jing', name: HER.name, nick: HER.nick, tag: T('profile.jing.tag'), points: jingPoints },
-    { type: 'who', who: 'ya', name: ME.name, nick: ME.nick, tag: T('profile.ya.tag'), points: yaPoints },
-    {
-      type: 'bridge',
-      title: T('profile.bridge.title'),
-      lead: T('profile.bridge.lead'),
-      left: { label: T('profile.bridge.leftLabel'), text: T('profile.bridge.leftText') },
-      right: { label: T('profile.bridge.rightLabel'), text: T('profile.bridge.rightText') },
-      tail: T('profile.bridge.tail'),
-    },
-    { type: 'quote', text: T('profile.quote.text'), sign: T('profile.quote.sign') },
+export const ANIM_PAGE = {
+  eyebrow: T('anim.eyebrow'),
+  title: T('anim.title'),
+  lead: T('anim.lead'),
+  items: [
+    { kind: 'dance', set: 'uni', actors: ['ya'],        title: T('anim.1.title'), cap: T('anim.1.cap') },
+    { kind: 'ppt',   set: 'uni', actors: ['jing'],      title: T('anim.2.title'), cap: T('anim.2.cap') },
+    { kind: 'tv',    set: 'uni', actors: ['jing'],      title: T('anim.3.title'), cap: T('anim.3.cap') },
+    { kind: 'far',   set: 'uni', actors: ['ya', 'jing'], title: T('anim.4.title'), cap: T('anim.4.cap'), msg: T('anim.4.msg') },
   ],
+  bridge: T('anim.bridge'),
+  quote: T('anim.quote'),
+  quoteSign: T('anim.quoteSign'),
 };
