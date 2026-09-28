@@ -279,6 +279,12 @@ if (mode === '--export') {
     process.exit(1);
   }
 
+  // 覆盖前一律先留一份备份 —— 就算加了 --force，也不能真的把东西弄丢
+  if (unbuilt.length) {
+    const backup = TXT.replace(/\.txt$/, '') + '_覆盖前备份.txt';
+    writeFileSync(backup, readFileSync(TXT, 'utf8'), 'utf8');
+    console.log(`（覆盖前已备份到 ${backup}）`);
+  }
   writeFileSync(TXT, toText(fields), 'utf8');
   console.log(`导出 ${expected.length} 条文案 -> 文案.txt`);
 } else {
