@@ -75,9 +75,9 @@ async function collect() {
     sceneBlock(s, `大学第 ${i + 1} 页`, `第一章最后一幕之后，或从盒内「大学篇」进入`);
   });
 
-  head('回到真实（真事）', '大学篇六页之后紧接着');
+  head('回到真实 · 霸王花那件事', '大学篇六页之后紧接着');
   D.SCENES.filter((s) => s.chapter === 'real').forEach((s) => {
-    sceneBlock(s, '食人花书', '大学篇最后一页之后紧接着');
+    sceneBlock(s, '霸王花', '大学篇最后一页之后紧接着');
   });
 
   head('小游戏 · 泡面危机', '第一章第 3 幕里点「帮我藏一下」按钮进入');
