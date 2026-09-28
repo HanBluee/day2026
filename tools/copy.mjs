@@ -199,6 +199,35 @@ function parse(text) {
   return map;
 }
 
+/* ── 兜底：文件里的 ### 标记被删掉时 ─────────────────────
+   作者编辑的时候可能把 `#` / `###` 当杂音删掉。键名还在、顺序没变，
+   所以可以按顺序对：值 = 键名之后，到下一条注释（注释行要去掉）或分隔线之前。 */
+
+function parseUnmarked(text, expected, notes) {
+  const norm = (t) => t.replace(/\s+/g, '').replace(/・/g, '·').replace(/·/g, '·');
+  const noteSet = new Set(notes.map(norm));
+  const map = new Map();
+  let i = 0;
+  let cur = null;
+  let buf = [];
+  const close = () => {
+    if (cur === null) return;
+    while (buf.length && noteSet.has(norm(buf[buf.length - 1]))) buf.pop();
+    while (buf.length && !buf[buf.length - 1].trim()) buf.pop();
+    map.set(cur, buf.join('\n'));
+    cur = null;
+    buf = [];
+  };
+  for (const line of text.split(/\r?\n/)) {
+    const t = line.trim();
+    if (t.startsWith('═')) { close(); continue; }
+    if (i < expected.length && t === expected[i]) { close(); cur = expected[i]; i += 1; buf = []; continue; }
+    if (cur !== null) buf.push(line);
+  }
+  close();
+  return map;
+}
+
 /* ── 主流程 ─────────────────────────────────────────────── */
 
 const mode = process.argv[2] || '--build';
@@ -236,7 +265,16 @@ if (mode === '--export') {
   try { text = readFileSync(TXT, 'utf8'); }
   catch { console.error('找不到 文案.txt，先跑：node tools/copy.mjs --export'); process.exit(1); }
 
-  const map = parse(text);
+  let map = parse(text);
+  if (map.size < expected.length) {
+    // 没找到（或只找到一部分）标记 —— 多半是编辑时把 ### 删了。按顺序兜底对一遍。
+    const notes = fields.filter((e) => e.key && e.note).map((e) => e.note);
+    const fallback = parseUnmarked(text, expected, notes);
+    if (fallback.size > map.size) {
+      console.log(`（文案.txt 里没有 ### 标记，已按顺序识别出 ${fallback.size} 条 —— 建议下次保留 ### 那一行）`);
+      map = fallback;
+    }
+  }
   const missing = expected.filter((k) => !map.has(k));
   const extra = [...map.keys()].filter((k) => !expected.includes(k));
   if (missing.length) {
