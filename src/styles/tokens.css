@@ -61,7 +61,9 @@
   --r-lg: 8px;
 
   /* 字体：不引 Google Fonts（微信内会加载失败），走系统栈 */
-  --font-serif: "Songti SC", "Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN", STSong, SimSun, serif;
+  /* 显示层（标题 / 按钮 / 信件）：自托管霞鹜文楷子集。
+     子集只含当前文案用到的字，缺字时退回系统楷体、再退回宋体，不会出现豆腐块 */
+  --font-display: "LXGW WenKai", "Kaiti SC", STKaiti, KaiTi, "Songti SC", "Noto Serif SC", "Source Han Serif SC", STSong, SimSun, serif;
   --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "JetBrains Mono", monospace;
 

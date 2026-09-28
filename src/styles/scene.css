@@ -165,7 +165,7 @@
 .story__title {
   position: relative;
   margin: 7px 0 10px;
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 21px;
   font-weight: 400;
   letter-spacing: .05em;
@@ -270,7 +270,7 @@
 }
 
 .game__say {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 14.5px;
   line-height: 1.7;
   color: var(--velvet-200);
@@ -310,7 +310,7 @@
 }
 
 .spot__name {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 12.5px;
   color: var(--velvet-200);
   letter-spacing: .06em;
@@ -359,7 +359,7 @@
   border: 1px solid rgba(217, 182, 117, .34);
   background: linear-gradient(180deg, rgba(217, 182, 117, .16), rgba(217, 182, 117, .04));
   color: var(--velvet-100);
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 13px;
   cursor: pointer;
   transition: transform .22s var(--ease), border-color .22s var(--ease), opacity .3s var(--ease);
@@ -387,7 +387,7 @@
 .game__hint {
   font-size: 12px;
   color: var(--ink-300);
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
 }
 
 /* 结局卡 */
@@ -401,7 +401,7 @@
 
 .outcome h3 {
   margin: 0 0 10px;
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 19px;
   font-weight: 400;
   color: var(--ink-900);
@@ -515,8 +515,9 @@
   border-radius: var(--r-md);
   background: radial-gradient(120% 130% at 18% 0%, var(--velvet-100), var(--velvet-300));
   box-shadow: inset 0 0 0 1px rgba(142, 106, 56, .3);
-  font-size: 14px;
-  line-height: 2;
+  font-family: var(--font-display);
+  font-size: 15px;
+  line-height: 2.05;
   color: var(--ink-700);
   white-space: pre-line;
 }
@@ -525,7 +526,7 @@
   display: block;
   margin-top: 10px;
   text-align: right;
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   color: var(--ink-900);
 }
 
@@ -539,7 +540,7 @@
 }
 
 .slot__title {
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   font-size: 14px;
   color: var(--brass-300);
   letter-spacing: .06em;

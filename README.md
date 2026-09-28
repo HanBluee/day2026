@@ -69,6 +69,26 @@ python tools/photos.py                                                    # 挂�
 
 ---
 
+## 字体
+
+标题、按钮、终章那封信用的是**霞鹜文楷**（LXGW WenKai，OFL 开源），已经按当前文案
+做成子集放进 `assets/fonts/lxgw-wenkai.woff2`，自托管，不依赖任何外部 CDN
+（这点很关键：Google Fonts 在微信里加载不出来）。
+
+**大幅改动文案之后**（比如新增了很多原本没出现过的字），重跑一次：
+
+```bash
+cd /tmp && npm pack @fontsource/lxgw-wenkai && tar -xzf fontsource-lxgw-wenkai-*.tgz
+cd - && python tools/fonts.py /tmp/package
+```
+
+不跑也不会坏：字体栈里保留了系统楷体、宋体的兜底，子集里没有的字
+只会换一种字体显示，不会变成豆腐块。
+
+正文用的是系统黑体（iOS 上是苹方、安卓上是思源黑体），不额外下载。
+
+---
+
 ## 发布
 
 推到 GitHub 后，仓库 `Settings → Pages → Deploy from a branch → main / (root)`。
