@@ -3,6 +3,7 @@
 import { SCENES } from './data.js';
 import { buildBox, buildInside, buildStory, buildAnim, buildFinale } from './scenes.js';
 import { buildNoodles } from './noodles.js';
+import { buildComic } from './comic.js';
 
 const view = document.getElementById('view');
 let current = null;
@@ -39,12 +40,20 @@ function toStory(index) {
     onPrev: () => toStory(idx - 1),
     onNext: () => (idx === SCENES.length - 1 ? toAnim() : toStory(idx + 1)),
     onExit: toInside,
-    onPlay: () => toGame(idx),
+    onPlay: () => toComic(idx),
   }));
 }
 
 function toAnim() {
   show(buildAnim({ onNext: toFinale, onExit: toInside }));
+}
+
+// 先看一遍分镜，再自己上手玩
+function toComic(returnIndex) {
+  show(buildComic({
+    onPlay: () => toGame(returnIndex),
+    onExit: () => toStory(returnIndex),
+  }));
 }
 
 function toGame(returnIndex) {
@@ -63,6 +72,7 @@ function route() {
   if (id === 'finale') return toFinale();
   if (id === 'anim') return toAnim();
   if (id === 'game') return toGame(2);
+  if (id === 'comic') return toComic(2);
   const i = SCENES.findIndex((s) => s.id === id);
   return i >= 0 ? toStory(i) : toBox();
 }

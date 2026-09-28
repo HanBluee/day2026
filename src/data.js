@@ -83,7 +83,7 @@ const HS = [
     actors: [],
     faces: { ya: 'shock', jing: 'shock' },
     bubbles: [],
-    play: 'noodles',
+    play: 'comic',
     playLabel: T('s3.playLabel'),
   },
   {
@@ -233,6 +233,36 @@ export const NOODLES = {
   luck: T('noodles.luck'),
   near: T('noodles.near'),
   outcome: [T('noodles.outcome.1'), T('noodles.outcome.2'), T('noodles.outcome.3')],
+};
+
+/* ── 小剧场：泡面危机（分镜） ─────────────────────────────
+   kind 决定这一格画什么、镜头怎么动、什么时候出字幕；
+   台词和旁白全在 文案.txt 的 comic.* 里。 */
+
+export const COMIC = {
+  from: T('comic.from'),
+  hint: T('comic.hint'),
+  endPlay: T('comic.endPlay'),
+  endReplay: T('comic.endReplay'),
+  endBack: T('comic.endBack'),
+  beats: [
+    { key: 'c1', kind: 'dorm',    cam: 'push',     dur: 5400, sub: T('comic.c1.sub') },
+    { key: 'c2', kind: 'cover',   cam: 'push',     dur: 4400, sub: T('comic.c2.sub'),
+      actors: ['ya', 'jing'], faces: { ya: 'shock', jing: 'laugh' },
+      bubble: 'jing', bubbleText: T('comic.c2.bubble') },
+    { key: 'c3', kind: 'window',  cam: 'shake',    dur: 4000, sub: T('comic.c3.sub'),
+      bubble: 'none', bubbleText: T('comic.c3.bubble') },
+    { key: 'c4', kind: 'panic',   cam: 'push',     dur: 4400, sub: T('comic.c4.sub'),
+      actors: ['ya', 'jing'], faces: { ya: 'shock', jing: 'shock' } },
+    { key: 'c5', kind: 'cabinet', cam: 'push',     dur: 5200, sub: T('comic.c5.sub'),
+      bubble: 'none', bubbleText: T('comic.c5.bubble') },
+    { key: 'c6', kind: 'relief',  cam: 'hold',     dur: 3800, sub: T('comic.c6.sub'),
+      actors: ['ya', 'jing'], faces: { ya: 'shy', jing: 'shy' } },
+    { key: 'c7', kind: 'seed',    cam: 'pushSlow', dur: 4800, sub: T('comic.c7.sub') },
+    { key: 'c8', kind: 'relief',  cam: 'hold',     dur: 5400, sub: T('comic.c8.sub'),
+      actors: ['ya', 'jing'], faces: { ya: 'laugh', jing: 'laugh' },
+      bubble: 'ya', bubbleText: T('comic.c8.bubble') },
+  ],
 };
 
 /* ── 终章 ───────────────────────────────────────────────── */

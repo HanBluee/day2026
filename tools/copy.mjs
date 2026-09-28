@@ -92,6 +92,17 @@ async function collect() {
   f('finale.slotNote', '「留给她的那一格」说明', D.FINALE.slotNote);
   f('finale.foot', '最底下的日期', D.FINALE.foot);
 
+  head('小剧场 · 泡面危机（分镜）', '第一章第 3 幕点「帮我藏一下」之后先放这个');
+  f('comic.from', '左上角的小标', D.COMIC.from);
+  f('comic.hint', '底部的操作提示', D.COMIC.hint);
+  f('comic.endPlay', '结束页 · 第一个按钮', D.COMIC.endPlay);
+  f('comic.endReplay', '结束页 · 第二个按钮', D.COMIC.endReplay);
+  f('comic.endBack', '结束页 · 第三个按钮', D.COMIC.endBack);
+  D.COMIC.beats.forEach((b, i) => {
+    f(`comic.${b.key}.sub`, `第 ${i + 1} 格 · 底部的字幕`, b.sub);
+    if (b.bubble) f(`comic.${b.key}.bubble`, `第 ${i + 1} 格 · 对白气泡（${b.bubble === 'ya' ? '我说的' : b.bubble === 'jing' ? '她说的' : '画外音'}）`, b.bubbleText);
+  });
+
   head('小动画', '盒内目录点「小动画」；或第一章之后一路「下一段」');
   f('anim.eyebrow', '页眉小字', D.ANIM_PAGE.eyebrow);
   f('anim.title', '大标题', D.ANIM_PAGE.title);

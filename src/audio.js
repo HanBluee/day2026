@@ -112,4 +112,24 @@ export const sfx = {
     tone(659.25, { dur: 0.55, gain: 0.06, delay: 0.1 });
     tone(783.99, { dur: 0.9, gain: 0.055, delay: 0.2 });
   },
+
+  /** 分镜翻页 */
+  whoosh() {
+    if (muted) return;
+    burst({ dur: 0.22, freq: 900, q: 0.6, gain: 0.07 });
+    tone(420, { dur: 0.22, type: 'triangle', gain: 0.035, slide: -160 });
+  },
+
+  /** 字幕出现前的轻响 */
+  blip() {
+    if (muted) return;
+    tone(1240, { dur: 0.05, type: 'sine', gain: 0.03 });
+  },
+
+  /** 窗户被拉开 */
+  curtain() {
+    if (muted) return;
+    burst({ dur: 0.28, freq: 1400, q: 0.9, gain: 0.14 });
+    tone(260, { dur: 0.22, type: 'square', gain: 0.04, slide: -120 });
+  },
 };

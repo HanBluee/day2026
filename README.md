@@ -118,13 +118,14 @@ index.html            入口
 src/
   main.js             场景路由
   scenes.js           四个场景：序章盒子 / 盒内目录 / 回忆一幕 / 终章
-  noodles.js          泡面危机小游戏
+  noodles.js          泡面危机小游戏（自己藏一遍）
+  comic.js            小剧场：同一段事的分镜播放（先看一遍）
   data.js             全部文案与内容配置 ← 改这里
   audio.js            音效（WebAudio 现场合成，无音频文件）
   dom.js              建元素的小辅助
   styles/
     tokens.css        配色与字体 token
     app.css           基础 + 序章 + 盒内
-    scene.css         回忆幕 + 小游戏 + 终章
+    scene.css         回忆幕 + 小游戏 + 小动画 + 小剧场 + 终章
 tools/                素材处理脚本（不参与运行）
 ```
