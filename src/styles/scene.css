@@ -1036,7 +1036,8 @@
   animation: cloth-off 1.15s var(--ease) .7s both;
 }
 @keyframes cloth-off {
-  to { transform: translate(-50%, -50%) translateX(126%) rotate(16deg); opacity: .12; }
+  from { transform: translate(-50%, -50%) translateX(0) rotate(0deg); opacity: 1; }
+  to   { transform: translate(-50%, -50%) translateX(126%) rotate(16deg); opacity: .12; }
 }
 
 /* 手忙脚乱的动线 */
@@ -1078,7 +1079,10 @@
   transform-origin: 0% 50%;
   animation: cab-open 1.5s var(--ease) .85s both;
 }
-@keyframes cab-open { to { transform: rotateY(-104deg); } }
+@keyframes cab-open {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(-104deg); }
+}
 
 /* 那颗瓜子 */
 .table {
