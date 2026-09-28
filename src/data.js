@@ -150,9 +150,9 @@ export const SCENES = [
     chapter: 'uni',
     tone: 'cool',
     set: 'uni',
-    eyebrow: '第二章 · 假如我们在同一所大学',
+    eyebrow: '第二章 · 假如我们同校，还是舍友',
     title: '先说清楚：这一段是我编的',
-    body: '我们没在同一所大学。她在湖北，我在广州。\n\n所以下面这些场景，都是我写出来的。\n\n我还是想写，是因为异地里最想要的从来不是"一起去旅行"，是"<em>一起去食堂</em>"。',
+    body: '我们没在同一所大学。她在湖北，我在广州。\n\n所以下面这些场景，都是我写出来的——假如我们不但是同一所大学，还是同一个宿舍。\n\n我还是想写，是因为异地里最想要的从来不是"一起去旅行"，是"<em>一起去食堂</em>"。',
     stage: { bg: 'linear-gradient(178deg,#EDF3F8 0%,#D6E4EF 58%,#BDD2E3 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'shy', jing: 'laugh' },
@@ -192,9 +192,9 @@ export const SCENES = [
     chapter: 'uni',
     tone: 'cool',
     set: 'uni',
-    eyebrow: '假如 · 关灯以后',
+    eyebrow: '假如 · 宿舍，关灯以后',
     title: '这次换我陪她看',
-    body: '她爱看《怪奇物语》，我陪她看。\n\n高中是她放恐怖片逗我，现在灯关着，我照样捂着眼睛，她也照样在旁边笑我。\n\n有些东西异地也没变。',
+    body: '《怪奇物语》她全部看完了，我陪她重看。\n\n高中是她放恐怖片逗我，现在灯关着，我照样捂着眼睛，她也照样在旁边笑我。\n\n有些东西异地也没变。',
     stage: { bg: 'linear-gradient(178deg,#161322 0%,#241D33 58%,#0E0B17 100%)' },
     actors: ['ya', 'jing'],
     faces: { ya: 'shy', jing: 'laugh' },
@@ -225,6 +225,25 @@ export const SCENES = [
     actors: ['ya', 'jing'],
     faces: { ya: 'down', jing: 'down' },
     bubbles: [],
+  },
+
+  /* 编不下去之后回到真的。这一件真事跟那两条裙子是同一个模式——
+     没商量，却挑了同一个东西。编的六幕日常，反而没有这一件打动人。 */
+
+  {
+    id: 'r1',
+    chapter: 'real',
+    set: 'uni',
+    eyebrow: '这一段不是编的',
+    title: '同一件东西，我们各买了一个',
+    body: '《怪奇物语》她全部看完了。\n\n我想送她一只食人花书，都已经下单了。\n然后她突然跟我说：她有了。\n\n我就跟她坦白了——我刚好也给你买了一个。\n\n最后退掉了。可是这件事我记到现在。\n跟那两条裙子一样：<em>我们没商量，却挑了同一个东西</em>。',
+    stage: { bg: 'linear-gradient(178deg,#F5F0E6 0%,#E7DFCE 58%,#D5C8B1 100%)' },
+    actors: ['ya', 'jing'],
+    faces: { ya: 'laugh', jing: 'shy' },
+    bubbles: [
+      { who: 'jing', text: '我有了诶' },
+      { who: 'ya', text: '……我刚好也给你买了一个' },
+    ],
     end: true,
   },
 ];
