@@ -171,12 +171,31 @@ const fields = await collect();
 const expected = fields.filter((e) => e.key).map((e) => e.key);
 
 if (mode === '--export') {
+  // 危险动作：导出会用代码里的值重写 文案.txt。如果 文案.txt 里有还没构建过的改动，
+  // 那说明有人正在改文案——这时候覆盖就等于把他的改动删掉。
+  // 所以先比对，发现未构建的改动就备份 + 拒绝，除非显式给 --force。
   const before = (() => { try { return parse(readFileSync(TXT, 'utf8')); } catch { return new Map(); } })();
-  // 导出不改内容，只重排；顺手确认一下没有值发生变化
-  const stale = fields.filter((e) => e.key && before.has(e.key) && before.get(e.key) !== String(e.value));
+  const unbuilt = fields.filter((e) => e.key && before.has(e.key) && before.get(e.key) !== String(e.value));
+
+  if (unbuilt.length && !process.argv.includes('--force')) {
+    const backup = TXT.replace(/\.txt$/, '') + '_未构建的备份.txt';
+    writeFileSync(backup, readFileSync(TXT, 'utf8'), 'utf8');
+    console.error(`文案.txt 里有 ${unbuilt.length} 条改动还没有构建进网站：`);
+    for (const e of unbuilt.slice(0, 8)) {
+      console.error(`  ${e.key}
+    文件里：${JSON.stringify(before.get(e.key)).slice(0, 60)}
+    代码里：${JSON.stringify(String(e.value)).slice(0, 60)}`);
+    }
+    console.error(`
+拒绝导出（导出去会用代码里的旧值覆盖这些改动）。`);
+    console.error(`你的改动已备份到：${backup}`);
+    console.error(`先跑  node tools/copy.mjs --build  把这些改动构建进去；`);
+    console.error(`确实想丢弃它们，再跑  node tools/copy.mjs --export --force`);
+    process.exit(1);
+  }
+
   writeFileSync(TXT, toText(fields), 'utf8');
   console.log(`导出 ${expected.length} 条文案 -> 文案.txt`);
-  if (stale.length) console.log(`注意：有 ${stale.length} 条的值与上一版不同，已用当前代码里的值覆盖`);
 } else {
   let text;
   try { text = readFileSync(TXT, 'utf8'); }
