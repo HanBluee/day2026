@@ -132,6 +132,7 @@ export function buildInside({ onPick, onCharm }) {
 export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
   const stage = h('div', { class: `story__stage${scene.fx === 'picnic' ? ' stage--picnic' : ''}` });
   if (scene.stage.bg) stage.style.background = scene.stage.bg;
+  if (scene.stage.blur) stage.classList.add('stage--softphoto');
   if (scene.stage.photo) {
     stage.append(h('img', { class: 'stage__photo', src: scene.stage.photo, alt: '', loading: 'lazy' }));
     if (scene.stage.dim) {
@@ -142,8 +143,14 @@ export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
   }
   stage.append(h('div', { class: 'story__floor' }));
   stage.append(h('div', { class: 'stage__no', text: String(index + 1).padStart(2, '0') }));
-  // 布景小道具：纯 CSS 画的（桌子、外卖、床、长椅、奶茶…），按 scene.props 里的名字渲染
-  (scene.props || []).forEach((name) => stage.append(h('span', { class: `sprop sprop--${name}` })));
+  // 布景小道具：纯 CSS 画的（桌子、外卖、床、长椅、奶茶…），按 scene.props 里的名字渲染。
+  // 名字可以写成 { name, text }，那样里面还能带一两句小字（比如"第 1 天"）。
+  (scene.props || []).forEach((p) => {
+    const name = typeof p === 'string' ? p : p.name;
+    const el = h('span', { class: `sprop sprop--${name}` });
+    if (typeof p === 'object' && p.text) el.append(h('span', { class: 'sprop__text', text: p.text }));
+    stage.append(el);
+  });
 
   // 穿裙子那一页：画面上飘着他们那天聊的几句微信
   if (scene.chat) {

@@ -18,6 +18,12 @@ export const UNCLE_DAY = { y: 2026, m: 9, d: 29 }; // 第 2026 天
 export const ME = { name: T('me.name'), nick: T('me.nick') };   // 蓝
 export const HER = { name: T('her.name'), nick: T('her.nick') }; // 绿
 
+/* 有些场景要显示一两句小字（比如"第 1 天"），单独放这儿 */
+export const SCENE_TEXT = {
+  s1: { day1: T('s1.day1'), wx: T('s1.wx') },
+  s2: { chat: T('s2.chat') },
+};
+
 /* ── 图标（纯结构，不是文案） ───────────────────────────── */
 
 const svg = (body, stroke = 'currentColor') =>
@@ -77,7 +83,15 @@ const HS = [
   {
     id: 's1',
     eyebrow: T('s1.eyebrow'), title: T('s1.title'), body: T('s1.body'),
-    stage: { bg: 'linear-gradient(175deg,#E8EEF4 0%,#D7E2EC 58%,#C3D2DF 100%)' },
+    // 春日教室：斜阳、樱花瓣、课桌和摊开的课本、微信加好友的小窗
+    stage: { bg: 'linear-gradient(176deg,#FDF3E4 0%,#F7E7D2 42%,#E9DCC8 70%,#D8CFBC 100%)' },
+    props: [
+      'sunray',
+      'desk', 'book', 'pen',
+      'petal1', 'petal2', 'petal3', 'petal4', 'petal5', 'petal6',
+      { name: 'wxadd', text: SCENE_TEXT.s1.wx },
+      { name: 'day1', text: SCENE_TEXT.s1.day1 },
+    ],
     actors: ['ya', 'jing'],
     faces: { ya: 'shy', jing: 'laugh' },
     bubbles: [{ who: 'jing', text: T('s1.bubble.1') }, { who: 'ya', text: T('s1.bubble.2') }],
@@ -85,8 +99,10 @@ const HS = [
   {
     id: 's2',
     eyebrow: T('s2.eyebrow'), title: T('s2.title'), body: T('s2.body'),
-    stage: { photo: 'assets/photo/together.jpg', bg: 'linear-gradient(175deg,#DCE6F0 0%,#C8D6E6 100%)', dim: .22 },
-    actors: [],
+    // 合照当柔焦底，前面摆一排日常的痕迹：两套课本、两支笔、餐盘、饭盒、椅子
+    stage: { photo: 'assets/photo/together.jpg', bg: 'linear-gradient(178deg,#EDE7DA 0%,#DED5C4 100%)', dim: .46, blur: true },
+    props: ['books', 'pens', 'tray', 'lunchbox', 'chairs', { name: 'chatter', text: SCENE_TEXT.s2.chat }],
+    actors: ['ya', 'jing'],
     faces: { ya: 'laugh', jing: 'laugh' },
     bubbles: [],
   },
@@ -236,30 +252,42 @@ export const SCENES = [...HS, ...UNI, ...REAL];
 
 export const NOODLES = {
   intro: T('noodles.intro'),
-  spots: [
-    { id: 'cabinet', name: T('noodles.spot.1') },
-    { id: 'under', name: T('noodles.spot.2') },
-    { id: 'quilt', name: T('noodles.spot.3') },
+  guideTitle: T('noodles.guideTitle'),
+  guide: [T('noodles.guide1'), T('noodles.guide2'), T('noodles.guide3')],
+  clothHint: T('noodles.clothHint'),
+  clothDone: T('noodles.clothDone'),
+  rumble: T('noodles.rumble'),
+  knock: T('noodles.knock'),
+  spotCabinet: T('noodles.spotCabinet'),
+  spotBed: T('noodles.spotBed'),
+  // 四个柜子 + 两张上下铺（一共四张床）
+  zones: [
+    { id: 'c1', kind: 'cabinet', label: '柜子 1' },
+    { id: 'c2', kind: 'cabinet', label: '柜子 2' },
+    { id: 'c3', kind: 'cabinet', label: '柜子 3' },
+    { id: 'c4', kind: 'cabinet', label: '柜子 4' },
+    { id: 'b1u', kind: 'bed', label: '左 · 上铺' },
+    { id: 'b1d', kind: 'bed', label: '左 · 下铺' },
+    { id: 'b2u', kind: 'bed', label: '右 · 上铺' },
+    { id: 'b2d', kind: 'bed', label: '右 · 下铺' },
   ],
   items: [
-    { id: 'hotpot', label: T('noodles.item.1'), risk: true },
-    { id: 'snack', label: T('noodles.item.2') },
-    { id: 'chips', label: T('noodles.item.3') },
-    { id: 'camera', label: T('noodles.item.4') },
-    { id: 'phone', label: T('noodles.item.5') },
-    { id: 'cards', label: T('noodles.item.6') },
+    { id: 'hotpot', label: T('noodles.item.1'), short: '锅' },
+    { id: 'snack', label: T('noodles.item.2'), short: '零' },
+    { id: 'chips', label: T('noodles.item.3'), short: '薯' },
+    { id: 'camera', label: T('noodles.item.4'), short: '机' },
+    { id: 'phone', label: T('noodles.item.5'), short: '手' },
+    { id: 'cards', label: T('noodles.item.6'), short: '牌' },
   ],
   // 阿姨逐个开柜子，但结果一定是化险为夷——这是真事
-  opens: [
-    { spot: 'cabinet', line: T('noodles.open.1') },
-    { spot: 'quilt', line: T('noodles.open.2') },
-  ],
+  opens: ['c1', 'b2d'],
   luck: T('noodles.luck'),
   near: T('noodles.near'),
-  outcome: [T('noodles.outcome.1'), T('noodles.outcome.2'), T('noodles.outcome.3')],
+  outcome: [T('noodles.outcome1'), T('noodles.outcome2'), T('noodles.outcome3')],
 };
 
-/* 穿裙子那一页，画面上飘着的四句微信 */
+/* ── 终章 ───────────────────────────────────────────────── */
+
 export const CHAT_U5 = [T('u5.chat.1'), T('u5.chat.2'), T('u5.chat.3'), T('u5.chat.4')];
 
 /* ── 会合：高中看完之后，两只挂件才出现 ─────────────────── */
@@ -305,7 +333,6 @@ export const COMIC = {
 };
 
 /* ── 终章 ───────────────────────────────────────────────── */
-
 export const FINALE = {
   days: 2026,
   letter: T('finale.letter'),

@@ -96,6 +96,13 @@ async function collect() {
     sceneBlock(s, `第 ${i + 1} 幕`, `盒子第一排第 ${i + 1} 格「${D.BOX_ITEMS[i].label}」`);
   });
 
+  head('初遇那一页的画面小字', '第一章第 1 幕，桌角和窗边飘出来的');
+  f('s1.day1', '淡淡的「第几天」计数', D.SCENE_TEXT.s1.day1);
+  f('s1.wx', '微信加好友小窗上的那句话', D.SCENE_TEXT.s1.wx);
+
+  head('日常那一页的画面小字', '第一章第 2 幕，课桌旁飘出来的气泡');
+  f('s2.chat', '课间随口的吐槽（气泡里的那句）', D.SCENE_TEXT.s2.chat);
+
   head('小剧场 · 泡面危机（分镜）', '第一章第 3 幕点「帮我藏一下」之后先放这个');
   f('comic.from', '左上角的小标', D.COMIC.from);
   f('comic.hint', '底部的操作提示', D.COMIC.hint);
@@ -110,14 +117,24 @@ async function collect() {
     }
   });
 
-  head('小游戏 · 泡面危机（自己玩的那版）', '小剧场放完之后点「自己试一次」');
-  f('noodles.intro', '开场提示', D.NOODLES.intro);
-  D.NOODLES.spots.forEach((s, i) => f(`noodles.spot.${i + 1}`, `第 ${i + 1} 个藏匿点的名字`, s.name));
-  D.NOODLES.items.forEach((it, i) => f(`noodles.item.${i + 1}`, `要藏的第 ${i + 1} 件东西`, it.label));
-  D.NOODLES.opens.forEach((o, i) => f(`noodles.open.${i + 1}`, `阿姨的第 ${i + 1} 个动作`, o.line));
+  head('小游戏 · 泡面危机（拖拽版）', '第一章第 3 幕点「开始藏」按钮进入');
+  f('noodles.intro', '开场那句话', D.NOODLES.intro);
+  f('noodles.guideTitle', '攻略面板的标题', D.NOODLES.guideTitle);
+  f('noodles.guide1', '攻略第 1 条', D.NOODLES.guide[0]);
+  f('noodles.guide2', '攻略第 2 条', D.NOODLES.guide[1]);
+  f('noodles.guide3', '攻略第 3 条', D.NOODLES.guide[2]);
+  f('noodles.clothHint', '挡窗户那一步的提示', D.NOODLES.clothHint);
+  f('noodles.clothDone', '挡好之后的话', D.NOODLES.clothDone);
+  f('noodles.rumble', '走廊里的动静', D.NOODLES.rumble);
+  f('noodles.knock', '阿姨敲门', D.NOODLES.knock);
+  f('noodles.spotCabinet', '柜子的名字', D.NOODLES.spotCabinet);
+  f('noodles.spotBed', '床的名字', D.NOODLES.spotBed);
   f('noodles.luck', '阿姨拉开空柜子时的话', D.NOODLES.luck);
   f('noodles.near', '阿姨照了手电时的话', D.NOODLES.near);
-  D.NOODLES.outcome.forEach((t, i) => f(`noodles.outcome.${i + 1}`, `结局第 ${i + 1} 句`, t));
+  f('noodles.outcome1', '结局第 1 句', D.NOODLES.outcome[0]);
+  f('noodles.outcome2', '结局第 2 句', D.NOODLES.outcome[1]);
+  f('noodles.outcome3', '结局第 3 句', D.NOODLES.outcome[2]);
+  D.NOODLES.items.forEach((it, i) => f(`noodles.item.${i + 1}`, `要藏的第 ${i + 1} 样东西`, it.label));
 
   head('会合（高中看完之后才出现）', '高中最后一幕之后；或在盒子里点中间那格');
   f('meet.eyebrow', '页眉小字', D.MEET.eyebrow);
