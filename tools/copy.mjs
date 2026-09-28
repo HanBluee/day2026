@@ -106,6 +106,22 @@ async function collect() {
   head('放假那一页的画面小字', '第一章第 4 幕，手机屏幕上飘出来的');
   f('s4.chat', '狼人杀里那句对白', D.SCENE_TEXT.s4.chat);
 
+  head('背单词那一页的画面小字', '第一章第 6 幕，黑板上和飘出来的');
+  f('s6.board', '黑板角落那行字', D.SCENE_TEXT.s6.board);
+  f('s6.word1', '飘出来的第 1 个小气泡', D.SCENE_TEXT.s6.word1);
+  f('s6.word2', '飘出来的第 2 个小气泡', D.SCENE_TEXT.s6.word2);
+  f('s6.word3', '飘出来的第 3 个小气泡', D.SCENE_TEXT.s6.word3);
+
+
+
+  head('第二章最后一页', '盒子里第二排第 6 格');
+  f('u6.msg1', '微信气泡第 1 句', D.SCENE_TEXT.u6.msgs[0]);
+  f('u6.msg2', '微信气泡第 2 句', D.SCENE_TEXT.u6.msgs[1]);
+  f('u6.msg3', '微信气泡第 3 句', D.SCENE_TEXT.u6.msgs[2]);
+  f('u6.nextLabel', '这一页「下一段」按钮上的字', D.SCENE_TEXT.u6.nextLabel);
+  f('nav.next', '正文页「下一段」按钮（通用）', D.NAV.next);
+  f('nav.nextEnd', '最后一页那个按钮（通用）', D.NAV.nextEnd);
+
   head('小剧场 · 泡面危机（分镜）', '第一章第 3 幕点「帮我藏一下」之后先放这个');
   f('comic.from', '左上角的小标', D.COMIC.from);
   f('comic.hint', '底部的操作提示', D.COMIC.hint);
@@ -170,6 +186,8 @@ async function collect() {
   f('anim.quoteSign', '引文后面的小字', D.ANIM_PAGE.quoteSign);
 
   head('终章', '两只挂件吸合之后那一屏');
+  f('finale.eyebrow', '终章 · 页眉小字', D.FINALE.eyebrow);
+  f('finale.title', '终章 · 大标题', D.FINALE.title);
   f('finale.letter', '那封信（最该换成你自己的话）', D.FINALE.letter);
   f('finale.sign', '落款', D.FINALE.sign);
   f('finale.slotTitle', '「留给她的那一格」标题', D.FINALE.slotTitle);

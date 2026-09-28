@@ -1,6 +1,6 @@
 // 四个场景：序章盒子 / 盒内目录 / 回忆一幕 / 终章。
 
-import { BOX_ITEMS, UNI_ITEMS, EXTRAS, SCENES, FINALE, ANIM_PAGE, MEET, CHAT_U5, ICONS, START, UNCLE_DAY } from './data.js';
+import { BOX_ITEMS, UNI_ITEMS, EXTRAS, SCENES, FINALE, ANIM_PAGE, MEET, CHAT_U5, NAV, ICONS, START, UNCLE_DAY } from './data.js';
 import { chapter1Done } from './progress.js';
 import { sfx } from './audio.js';
 import { h } from './dom.js';
@@ -177,6 +177,11 @@ export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
         h('path', { class: 'merge__arc', d: 'M8 30 Q50 2 92 30' }),
         h('circle', { class: 'merge__pin merge__pin--jing', cx: 8, cy: 30, r: 2.4 }),
         h('circle', { class: 'merge__pin merge__pin--ya', cx: 92, cy: 30, r: 2.4 }),
+        // 两点之间来回流动的小光点
+        h('circle', { class: 'merge__dot', r: 1.6 },
+          h('animateMotion', { dur: '3s', repeatCount: 'indefinite', path: 'M8 30 Q50 2 92 30' })),
+        h('circle', { class: 'merge__dot', r: 1.6 },
+          h('animateMotion', { dur: '3s', begin: '1.5s', repeatCount: 'indefinite', path: 'M8 30 Q50 2 92 30' })),
       ),
       h('span', { class: 'merge__city merge__city--jing', text: scene.cities.jing }),
       h('span', { class: 'merge__city merge__city--ya', text: scene.cities.ya }),
@@ -202,12 +207,12 @@ export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
     ));
   }
 
-  for (const b of scene.bubbles) {
-    stage.append(h('div', { class: `bubble bubble--${b.who}` },
+  scene.bubbles.forEach((b, i) => {
+    stage.append(h('div', { class: `bubble bubble--${b.who} bubble--k${i}` },
       h('img', { class: 'bubble__face', src: `${FACE}/${b.who}-${scene.faces[b.who] || 'laugh'}.png`, alt: '' }),
       h('span', { class: 'bubble__text', text: b.text }),
     ));
-  }
+  });
 
   const panel = h('div', { class: 'story__panel' },
     h('div', { class: 'story__eyebrow', text: scene.eyebrow }),
@@ -231,7 +236,7 @@ export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
       disabled: index === 0 || null,
       onclick: onPrev,
     }),
-    h('button', { class: 'btn', type: 'button', text: scene.end ? '打开最中间那一格' : '下一段', onclick: onNext }),
+    h('button', { class: 'btn', type: 'button', text: scene.nextLabel || (scene.end ? NAV.nextEnd : NAV.next), onclick: onNext }),
   );
 
   return h('section', { class: `scene scene--story${scene.tone === 'cool' ? ' tone-cool' : ''}` },
@@ -257,6 +262,10 @@ export function buildFinale({ onExit }) {
         h('span', { class: 'label', text: '相识' }),
         h('span', { class: 'num', text: String(FINALE.days) }),
         h('span', { class: 'label', text: '天' }),
+      ),
+      h('div', { class: 'finale__head' },
+        h('div', { class: 'finale__eyebrow', text: FINALE.eyebrow }),
+        h('h2', { class: 'finale__title', text: FINALE.title }),
       ),
       h('div', { class: 'finale__letter' },
         FINALE.letter,
@@ -298,6 +307,11 @@ export function buildMeet({ onNext, onExit }) {
   );
   const inner = h('div', { class: 'meet' },
     h('div', { class: 'meet__eyebrow', text: MEET.eyebrow }),
+    // 两只挂件中间那条柔和的连线，两端是两座城市
+    h('div', { class: 'meet__cities' },
+      h('span', { class: 'meet__city', text: MEET.cities.jing }),
+      h('i', { class: 'meet__link' }),
+      h('span', { class: 'meet__city', text: MEET.cities.ya })),
     stage,
     h('h2', { class: 'meet__title', text: MEET.title }),
     h('p', { class: 'meet__body', text: MEET.body }),

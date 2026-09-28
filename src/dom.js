@@ -6,7 +6,7 @@ const SVG_NS = 'http://www.w3.org/2000/svg';
 const SVG_TAGS = new Set([
   'svg', 'g', 'path', 'circle', 'ellipse', 'rect', 'line', 'polyline', 'polygon',
   'defs', 'linearGradient', 'radialGradient', 'stop', 'clipPath', 'mask', 'use',
-  'text', 'tspan', 'filter', 'feGaussianBlur',
+  'text', 'tspan', 'filter', 'feGaussianBlur', 'animateMotion', 'mpath',
 ]);
 
 export function h(tag, attrs = {}, ...kids) {

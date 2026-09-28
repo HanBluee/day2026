@@ -12,6 +12,8 @@ const T = (key) => {
   return `〔${key}〕`;
 };
 
+export const NAV = { next: T('nav.next'), nextEnd: T('nav.nextEnd') };
+
 export const START = { y: 2021, m: 3, d: 14 };     // 第 1 天
 export const UNCLE_DAY = { y: 2026, m: 9, d: 29 }; // 第 2026 天
 
@@ -23,6 +25,15 @@ export const SCENE_TEXT = {
   s1: { day1: T('s1.day1'), wx: T('s1.wx') },
   s2: { chat: T('s2.chat') },
   s4: { chat: T('s4.chat') },
+  u6: {
+    msgs: [T('u6.msg1'), T('u6.msg2'), T('u6.msg3')],
+    nextLabel: T('u6.nextLabel'),
+  },
+  s6: {
+    board: T('s6.board'),
+    words: [T('s6.word1'), T('s6.word2'), T('s6.word3')],
+  },
+
 };
 
 /* ── 图标（纯结构，不是文案） ───────────────────────────── */
@@ -141,27 +152,55 @@ const HS = [
   {
     id: 's6',
     eyebrow: T('s6.eyebrow'), title: T('s6.title'), body: T('s6.body'),
-    stage: { bg: 'linear-gradient(175deg,#EFEDE4 0%,#DEDACE 60%,#CFC9BA 100%)' },
+    // 高三教室：黑板角上的倒计时、窗边的光、摊开的词汇书、旁边做题的同学
+    stage: { bg: 'linear-gradient(176deg,#F4F0E3 0%,#E5DFCD 52%,#D0C8B3 100%)' },
+    props: [
+      'classroom',
+      { name: 'board', text: SCENE_TEXT.s6.board },
+      'classmates', 'vocab',
+      { name: 'word1', text: SCENE_TEXT.s6.words[0] },
+      { name: 'word2', text: SCENE_TEXT.s6.words[1] },
+      { name: 'word3', text: SCENE_TEXT.s6.words[2] },
+    ],
     actors: ['ya', 'jing'],
     faces: { ya: 'cry', jing: 'angry' },
-    bubbles: [{ who: 'ya', text: T('s6.bubble.1') }, { who: 'jing', text: T('s6.bubble.2') }],
+    bubbles: [
+      { who: 'ya', text: T('s6.bubble.1') },
+      { who: 'jing', text: T('s6.bubble.2') },
+      { who: 'ya', text: T('s6.bubble.3') },
+      { who: 'jing', text: T('s6.bubble.4') },
+    ],
   },
   {
     id: 's7',
     eyebrow: T('s7.eyebrow'), title: T('s7.title'), body: T('s7.body'),
-    stage: { photo: 'assets/photo/calendar.jpg', bg: 'linear-gradient(175deg,#E7E2F2 0%,#CFC6E6 100%)', dim: .18 },
-    actors: [],
+    // 高三跨年：堆满试卷的课桌、紫调日历自己一页页翻、摊开的信、窗外星光
+    stage: { bg: 'linear-gradient(176deg,#2A2438 0%,#3A3050 46%,#241E33 100%)' },
+    props: ['starnight', 'papersdesk', 'calendar', 'letter', 'sparkles'],
+    actors: ['ya', 'jing'],
     faces: { ya: 'laugh', jing: 'shy' },
-    bubbles: [],
+    bubbles: [
+      { who: 'jing', text: T('s7.bubble.1') },
+      { who: 'ya', text: T('s7.bubble.2') },
+    ],
   },
   {
     id: 's8',
     eyebrow: T('s8.eyebrow'), title: T('s8.title'), body: T('s8.body'),
-    stage: { bg: 'linear-gradient(178deg,#E4EAF0 0%,#C9D6E2 56%,#A9BCCE 100%)' },
+    // 拆快递：敞开的纸箱、铺满的缓冲纸、露出来的裙子和高跟鞋；
+    // 上面浮着「广州—湖北」两个地名，中间一条柔和的线
+    stage: { bg: 'linear-gradient(176deg,#E9EFF5 0%,#D2DEE9 52%,#B6C7D8 100%)' },
+    props: [
+      { name: 'cityLeft', text: T('u1.city.jing') },
+      { name: 'cityRight', text: T('u1.city.ya') },
+      'citylink', 'parcel', 'sparkle',
+    ],
     actors: ['ya', 'jing'],
-    gap: 'wide',
-    faces: { ya: 'down', jing: 'down' },
-    bubbles: [],
+    faces: { ya: 'laugh', jing: 'laugh' },
+    bubbles: [
+      { who: 'jing', text: T('s8.bubble.1') },
+      { who: 'ya', text: T('s8.bubble.2') },
+    ],
   },
 ];
 
@@ -177,6 +216,7 @@ const UNI = [
     stage: { bg: 'linear-gradient(178deg,#EDF3F8 0%,#D6E4EF 58%,#BDD2E3 100%)' },
     // 这一幕不用「站着」的立绘：两个城市各自一块，然后合到一起
     fx: 'merge',
+    props: ['campus'],
     cities: { jing: T('u1.city.jing'), ya: T('u1.city.ya') },
     actors: [],
     faces: { ya: 'shy', jing: 'laugh' },
@@ -187,7 +227,7 @@ const UNI = [
     chapter: 'uni', tone: 'cool', set: 'uni',
     eyebrow: T('u2.eyebrow'), title: T('u2.title'), body: T('u2.body'),
     stage: { bg: 'linear-gradient(178deg,#2E2A32 0%,#25222B 58%,#1A171F 100%)' },
-    props: ['desk', 'box1', 'box2', 'cup', 'pc'],
+    props: ['bedghost', 'lamp2', 'desk', 'box1', 'box2', 'cup', 'phoneghost'],
     actors: ['ya', 'jing'],
     faces: { ya: 'laugh', jing: 'laugh' },
     bubbles: [{ who: 'jing', text: T('u2.bubble.1') }, { who: 'ya', text: T('u2.bubble.2') }],
@@ -196,7 +236,10 @@ const UNI = [
     id: 'u3',
     chapter: 'uni', tone: 'cool', set: 'uni',
     eyebrow: T('u3.eyebrow'), title: T('u3.title'), body: T('u3.body'),
-    stage: { bg: 'linear-gradient(178deg,#1D1B26 0%,#2C2738 56%,#15121C 100%)' },
+    // 随舞现场：舞台暖光打在你身上，她在台下手举手机录，
+    // 旁边浮出录到的画面，再变成聊天里的视频消息
+    stage: { bg: 'linear-gradient(178deg,#241B2E 0%,#332438 52%,#18121F 100%)' },
+    props: ['stageglow', 'crowd', 'phoneshot', 'videomsg'],
     actors: ['ya', 'jing'],
     faces: { ya: 'laugh', jing: 'laugh' },
     bubbles: [{ who: 'jing', text: T('u3.bubble.1') }],
@@ -205,11 +248,14 @@ const UNI = [
     id: 'u4',
     chapter: 'uni', tone: 'cool', set: 'uni',
     eyebrow: T('u4.eyebrow'), title: T('u4.title'), body: T('u4.body'),
-    stage: { bg: 'linear-gradient(178deg,#1A1626 0%,#2A2238 58%,#100C1A 100%)' },
-    props: ['bed', 'pillow', 'quilt', 'screen'],
+    stage: { bg: 'linear-gradient(178deg,#161322 0%,#241D33 58%,#0C0913 100%)' },
+    props: ['screenlight', 'bed', 'pillow', 'quilt', 'screen', 'twoscreens'],
     actors: ['ya', 'jing'],
     faces: { ya: 'shy', jing: 'laugh' },
-    bubbles: [{ who: 'jing', text: T('u4.bubble.1') }],
+    bubbles: [
+      { who: 'jing', text: T('u4.bubble.1') },
+      { who: 'ya', text: T('u4.bubble.2') },
+    ],
   },
   {
     id: 'u5',
@@ -229,10 +275,21 @@ const UNI = [
     id: 'u6',
     chapter: 'uni', tone: 'cool', set: 'uni',
     eyebrow: T('u6.eyebrow'), title: T('u6.title'), body: T('u6.body'),
-    stage: { bg: 'linear-gradient(178deg,#E9EEF3 0%,#CBD8E4 58%,#ADC1D3 100%)' },
+    // 夜里的淡蓝 -> 暖黄：两地、两只礼物箱、几句微信，最后收在一层暖光里
+    stage: { bg: 'linear-gradient(178deg,#1E2436 0%,#2C2739 44%,#4A3430 78%,#6B4630 100%)' },
+    props: [
+      { name: 'cityL', text: T('u1.city.ya') },
+      { name: 'cityR', text: T('u1.city.jing') },
+      'citytrack', 'parcelL', 'parcelR',
+      { name: 'msg1', text: SCENE_TEXT.u6.msgs[0] },
+      { name: 'msg2', text: SCENE_TEXT.u6.msgs[1] },
+      { name: 'msg3', text: SCENE_TEXT.u6.msgs[2] },
+      'warmglow', 'sparkle2',
+    ],
     actors: ['ya', 'jing'],
     faces: { ya: 'down', jing: 'down' },
     bubbles: [],
+    nextLabel: SCENE_TEXT.u6.nextLabel,
   },
 ];
 
@@ -244,10 +301,16 @@ const REAL = [
     id: 'r1',
     chapter: 'real', set: 'uni',
     eyebrow: T('r1.eyebrow'), title: T('r1.title'), body: T('r1.body'),
-    stage: { bg: 'linear-gradient(178deg,#F5F0E6 0%,#E7DFCE 58%,#D5C8B1 100%)' },
+    // 暗调、复古美剧感：中间那本食人花书、手机的订单虚影、细细的星光
+    stage: { bg: 'linear-gradient(178deg,#2A2530 0%,#211D28 52%,#16131B 100%)' },
+    props: ['book', 'orderghost', 'starlit'],
     actors: ['ya', 'jing'],
     faces: { ya: 'laugh', jing: 'shy' },
-    bubbles: [{ who: 'jing', text: T('r1.bubble.1') }, { who: 'ya', text: T('r1.bubble.2') }],
+    bubbles: [
+      { who: 'ya', text: T('r1.bubble.1') },
+      { who: 'jing', text: T('r1.bubble.2') },
+      { who: 'ya', text: T('r1.bubble.3') },
+    ],
     end: true,
   },
 ];
@@ -305,6 +368,7 @@ export const MEET = {
   action: T('meet.action'),
   lockedHint: T('box.locked'),
   uniLocked: T('uni.locked'),
+  cities: { jing: T('u1.city.jing'), ya: T('u1.city.ya') },
   charmsCaption: T('box.charms'),
 };
 
@@ -341,6 +405,8 @@ export const COMIC = {
 /* ── 终章 ───────────────────────────────────────────────── */
 export const FINALE = {
   days: 2026,
+  eyebrow: T('finale.eyebrow'),
+  title: T('finale.title'),
   letter: T('finale.letter'),
   sign: T('finale.sign'),
   slotTitle: T('finale.slotTitle'),
