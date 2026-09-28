@@ -18,126 +18,123 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const TXT = join(ROOT, '文案.txt');
 const OUT = join(ROOT, 'src', 'content.js');
 
-/* ── 字段表：键 -> 从哪里取值 / 显示在哪个小节 ───────────── */
+/* ── 收集字段：每一条都知道自己是谁、显示在哪 ───────────── */
 
 async function collect() {
   const D = await import(new URL('../src/data.js', import.meta.url));
-
   const out = [];
-  const sec = (name) => out.push({ section: name });
+  const gap = (text) => out.push({ gap: text });
+  const head = (title, where) => out.push({ head: title, where });
   const f = (key, note, value) => out.push({ key, note, value });
 
-  sec('两个人的名字');
+  gap('这份文件就是网站里所有的字。');
+  gap('改法：只改「### 键名」底下的内容，### 那一行不要动。空行会被保留（正文里空一行就是分段）。');
+  gap('正文里可以用 <em>…</em> 做高亮、<b>…</b> 加粗。');
+  gap('改完在本目录下跑：  node tools/copy.mjs --build');
+
+  head('名字', '到处都会用到，主要是终章落款和性格卡');
   f('me.name', '我的名字', D.ME.name);
   f('me.nick', '我的外号', D.ME.nick);
   f('her.name', '她的名字', D.HER.name);
   f('her.nick', '我给她起的备注', D.HER.nick);
 
-  sec('盒子里的格子');
+  head('盒内目录的格子', '打开盒子以后，绒布上的那几格');
   D.BOX_ITEMS.forEach((it, i) => {
-    f(`box.${i + 1}.label`, `${it.id} 标题`, it.label);
-    f(`box.${i + 1}.meta`, `${it.id} 小字`, it.meta);
+    f(`box.${i + 1}.label`, `第 ${i + 1} 格 · 大标题（${it.id}）`, it.label);
+    f(`box.${i + 1}.meta`, `第 ${i + 1} 格 · 下面的小字`, it.meta);
   });
-  f('uni.label', '大学篇 入口标题', D.UNI_ENTRY.label);
-  f('uni.note', '大学篇 入口说明', D.UNI_ENTRY.note);
-  f('extra.label', '性格卡 入口标题', D.EXTRAS[0].label);
-  f('extra.note', '性格卡 入口说明', D.EXTRAS[0].note);
+  f('uni.label', '「大学篇」那一格的标题', D.UNI_ENTRY.label);
+  f('uni.note', '「大学篇」那一格的小字', D.UNI_ENTRY.note);
+  f('extra.label', '「性格卡」那一格的标题', D.EXTRAS[0].label);
+  f('extra.note', '「性格卡」那一格的小字', D.EXTRAS[0].note);
 
-  sec('第一章 · 高中（真实发生）');
-  D.SCENES.filter((s) => s.chapter === undefined).forEach((s) => {
-    f(`${s.id}.eyebrow`, '小标题（灰色等宽字）', s.eyebrow);
+  const sceneBlock = (s, roman, where) => {
+    gap('');
+    head(roman, where);
+    f(`${s.id}.eyebrow`, '灰字小标（在最上面）', s.eyebrow);
     f(`${s.id}.title`, '大标题', s.title);
-    f(`${s.id}.body`, '正文（空行分段，可用 <em>…</em> 做高亮）', s.body);
+    f(`${s.id}.body`, '正文（空行分段）', s.body);
     s.bubbles.forEach((b, i) => {
-      f(`${s.id}.bubble.${i + 1}`, `对白 ${i + 1}（${b.who === 'ya' ? '我说的' : '她说的'}）`, b.text);
+      f(`${s.id}.bubble.${i + 1}`, `对白 ${i + 1} · ${b.who === 'ya' ? '我说的' : '她说的'}`, b.text);
     });
     if (s.playLabel) f(`${s.id}.playLabel`, '进入小游戏的按钮', s.playLabel);
+  };
+
+  head('第一章 · 高中（这些是真事）', '盒内目录点第 1～8 格；或者从盒子一路点「下一段」');
+  D.SCENES.filter((s) => !s.chapter).forEach((s, i) => {
+    const box = D.BOX_ITEMS[i];
+    sceneBlock(s, `第 ${i + 1} 幕`, `对应盒内第 ${i + 1} 格「${box.label}」`);
   });
 
-  sec('第二章 · 大学（这一段是编的）');
-  D.SCENES.filter((s) => s.chapter === 'uni').forEach((s) => {
-    f(`${s.id}.eyebrow`, '小标题', s.eyebrow);
-    f(`${s.id}.title`, '大标题', s.title);
-    f(`${s.id}.body`, '正文', s.body);
-    s.bubbles.forEach((b, i) => {
-      f(`${s.id}.bubble.${i + 1}`, `对白 ${i + 1}（${b.who === 'ya' ? '我说的' : '她说的'}）`, b.text);
-    });
+  head('第二章 · 大学（这一段是编的）', '盒内目录点蓝色那一格「大学篇」');
+  D.SCENES.filter((s) => s.chapter === 'uni').forEach((s, i) => {
+    sceneBlock(s, `大学第 ${i + 1} 页`, `第一章最后一幕之后，或从盒内「大学篇」进入`);
   });
 
-  sec('回到真实 · 食人花书');
+  head('回到真实（真事）', '大学篇六页之后紧接着');
   D.SCENES.filter((s) => s.chapter === 'real').forEach((s) => {
-    f(`${s.id}.eyebrow`, '小标题', s.eyebrow);
-    f(`${s.id}.title`, '大标题', s.title);
-    f(`${s.id}.body`, '正文', s.body);
-    s.bubbles.forEach((b, i) => {
-      f(`${s.id}.bubble.${i + 1}`, `对白 ${i + 1}`, b.text);
-    });
+    sceneBlock(s, '食人花书', '大学篇「编不下去了」之后的下一页');
   });
 
-  sec('小游戏 · 泡面危机');
+  head('小游戏 · 泡面危机', '第一章第 3 幕里点「帮我藏一下」按钮进入');
   f('noodles.intro', '开场提示', D.NOODLES.intro);
-  D.NOODLES.spots.forEach((s, i) => f(`noodles.spot.${i + 1}`, `藏匿点 ${i + 1}`, s.name));
+  D.NOODLES.spots.forEach((s, i) => f(`noodles.spot.${i + 1}`, `第 ${i + 1} 个藏匿点的名字`, s.name));
   D.NOODLES.items.forEach((it, i) => f(`noodles.item.${i + 1}`, `要藏的第 ${i + 1} 件东西`, it.label));
-  D.NOODLES.opens.forEach((o, i) => f(`noodles.open.${i + 1}`, `阿姨动作 ${i + 1}`, o.line));
-  f('noodles.luck', '阿姨开了空柜子时的话', D.NOODLES.luck);
+  D.NOODLES.opens.forEach((o, i) => f(`noodles.open.${i + 1}`, `阿姨的第 ${i + 1} 个动作`, o.line));
+  f('noodles.luck', '阿姨拉开空柜子时的话', D.NOODLES.luck);
   f('noodles.near', '阿姨照了手电时的话', D.NOODLES.near);
   D.NOODLES.outcome.forEach((t, i) => f(`noodles.outcome.${i + 1}`, `结局第 ${i + 1} 句`, t));
 
-  sec('终章');
-  f('finale.letter', '那封信', D.FINALE.letter);
-  f('finale.sign', '署名', D.FINALE.sign);
-  f('finale.slotTitle', '留给她的那一格 标题', D.FINALE.slotTitle);
-  f('finale.slotNote', '留给她的那一格 说明', D.FINALE.slotNote);
-  f('finale.foot', '底部的日期', D.FINALE.foot);
+  head('终章', '两只挂件吸合之后的那一屏');
+  f('finale.letter', '那封信（最该换成你自己的话）', D.FINALE.letter);
+  f('finale.sign', '落款', D.FINALE.sign);
+  f('finale.slotTitle', '「留给她的那一格」标题', D.FINALE.slotTitle);
+  f('finale.slotNote', '「留给她的那一格」说明', D.FINALE.slotNote);
+  f('finale.foot', '最底下的日期', D.FINALE.foot);
 
-  sec('性格卡');
+  head('性格卡', '盒内目录点「性格卡」；或第一章之后一路「下一段」');
   f('profile.eyebrow', '页眉小字', D.PROFILE.eyebrow);
   f('profile.title', '大标题', D.PROFILE.title);
   f('profile.lead', '副标题', D.PROFILE.lead);
   f('profile.pair.caption', '两张脸下面那句', D.PROFILE.blocks[0].caption);
   ['jing', 'ya'].forEach((who, bi) => {
     const b = D.PROFILE.blocks[bi + 1];
-    f(`profile.${who}.tag`, `${b.name} 后面那串小字`, b.tag);
+    f(`profile.${who}.tag`, `「${b.name}」名字后面那串小字`, b.tag);
     b.points.forEach((p, i) => {
-      f(`profile.${who}.p${i + 1}.t`, `${b.name} 第 ${i + 1} 条 小标题`, p.t);
-      f(`profile.${who}.p${i + 1}.d`, `${b.name} 第 ${i + 1} 条 正文`, p.d);
+      f(`profile.${who}.p${i + 1}.t`, `${b.name} · 第 ${i + 1} 条的小标题`, p.t);
+      f(`profile.${who}.p${i + 1}.d`, `${b.name} · 第 ${i + 1} 条的正文`, p.d);
     });
   });
   const br = D.PROFILE.blocks[3];
   f('profile.bridge.title', '「我们为什么会像」标题', br.title);
   f('profile.bridge.lead', '「我们为什么会像」副标题', br.lead);
-  f('profile.bridge.leftLabel', '左边那栏的标签', br.left.label);
-  f('profile.bridge.leftText', '左边那栏的正文', br.left.text);
-  f('profile.bridge.rightLabel', '右边那栏的标签', br.right.label);
-  f('profile.bridge.rightText', '右边那栏的正文', br.right.text);
-  f('profile.bridge.tail', '「我们为什么会像」收尾', br.tail);
+  f('profile.bridge.leftLabel', '左栏标签', br.left.label);
+  f('profile.bridge.leftText', '左栏正文', br.left.text);
+  f('profile.bridge.rightLabel', '右栏标签', br.right.label);
+  f('profile.bridge.rightText', '右栏正文', br.right.text);
+  f('profile.bridge.tail', '「我们为什么会像」的收尾一句', br.tail);
   const q = D.PROFILE.blocks[4];
-  f('profile.quote.text', '最末那段引文', q.text);
+  f('profile.quote.text', '这一页最末那段引文', q.text);
   f('profile.quote.sign', '引文后面的小字', q.sign);
 
-  return out.filter((e) => e.section || e.key);
+  return out;
 }
 
 /* ── 导出成文本 ─────────────────────────────────────────── */
 
+const BAR = '─'.repeat(38);
+const HEAVY = '═'.repeat(38);
+
 function toText(fields) {
-  const lines = [
-    '第 2026 天 · 全部文案',
-    '',
-    '改法：直接改下面「### 键名」底下的内容，键名那一行不要动。',
-    '空行会保留（正文里空一行就是分段）。',
-    '正文里可以用 <em>…</em> 把几个字做成粉色高亮，<b>…</b> 加粗。',
-    '改完在这个目录下跑：  node tools/copy.mjs --build',
-    '',
-  ];
+  const lines = [];
   for (const e of fields) {
-    if (e.section) {
-      lines.push('', '══════════════════════════════════════', e.section,
-        '══════════════════════════════════════', '');
-    } else {
-      if (e.note) lines.push(`# ${e.note}`);
-      lines.push(`### ${e.key}`, String(e.value), '');
+    if (e.gap !== undefined) { lines.push(e.gap, ''); continue; }
+    if (e.head) {
+      lines.push('', HEAVY, e.head, `出现在：${e.where}`, HEAVY, '');
+      continue;
     }
+    if (e.note) lines.push(`# ${e.note}`);
+    lines.push(`### ${e.key}`, String(e.value), '');
   }
   return lines.join('\n').replace(/\n{4,}/g, '\n\n\n') + '\n';
 }
@@ -156,10 +153,9 @@ function parse(text) {
   for (const line of text.split(/\r?\n/)) {
     const m = /^###\s+(\S+)\s*$/.exec(line);
     if (m) { flush(); key = m[1]; continue; }
-    if (/^═+/.test(line)) { flush(); continue; }
-    if (/^#{1,2}\s/.test(line) && !m) { continue; }
+    if (/^[═─]+/.test(line)) { flush(); continue; }
+    if (/^#\s/.test(line)) { flush(); continue; }
     if (key) buf.push(line);
-    else if (/^[^#\s]/.test(line) && line.trim()) { /* 说明区，忽略 */ }
   }
   flush();
   return map;
@@ -172,9 +168,12 @@ const fields = await collect();
 const expected = fields.filter((e) => e.key).map((e) => e.key);
 
 if (mode === '--export') {
-  const text = toText(fields);
-  if (!process.env.DRY) writeFileSync(TXT, text, 'utf8');
+  const before = (() => { try { return parse(readFileSync(TXT, 'utf8')); } catch { return new Map(); } })();
+  // 导出不改内容，只重排；顺手确认一下没有值发生变化
+  const stale = fields.filter((e) => e.key && before.has(e.key) && before.get(e.key) !== String(e.value));
+  writeFileSync(TXT, toText(fields), 'utf8');
   console.log(`导出 ${expected.length} 条文案 -> 文案.txt`);
+  if (stale.length) console.log(`注意：有 ${stale.length} 条的值与上一版不同，已用当前代码里的值覆盖`);
 } else {
   let text;
   try { text = readFileSync(TXT, 'utf8'); }
@@ -185,7 +184,7 @@ if (mode === '--export') {
   const extra = [...map.keys()].filter((k) => !expected.includes(k));
   if (missing.length) {
     console.error(`文案.txt 缺了 ${missing.length} 条：\n  ${missing.join('\n  ')}`);
-    console.error('（键名那一行被删掉或改动了？从 --export 的备份里补回来，或让我处理。）');
+    console.error('（是不是把「### 键名」那一行删掉或改动了？从 --export 的备份里补回来，或者告诉我。）');
     process.exit(1);
   }
   if (extra.length) console.warn(`注意：文案.txt 里有 ${extra.length} 条多余的键，会被忽略：\n  ${extra.join('\n  ')}`);
@@ -197,6 +196,5 @@ if (mode === '--export') {
     '// 要改文字请改 文案.txt，然后跑：node tools/copy.mjs --build\n' +
     'export default ' + JSON.stringify(obj, null, 2) + ';\n', 'utf8');
 
-  if (mode === '--check') console.log(`检查通过：${expected.length} 条文案都在`);
-  else console.log(`生成 src/content.js：${expected.length} 条文案`);
+  console.log(mode === '--check' ? `检查通过：${expected.length} 条文案都在` : `生成 src/content.js：${expected.length} 条文案`);
 }
