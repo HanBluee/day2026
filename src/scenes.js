@@ -1,6 +1,6 @@
 // 四个场景：序章盒子 / 盒内目录 / 回忆一幕 / 终章。
 
-import { BOX_ITEMS, UNI_ITEMS, EXTRAS, SCENES, FINALE, ANIM_PAGE, MEET, ICONS, START, UNCLE_DAY } from './data.js';
+import { BOX_ITEMS, UNI_ITEMS, EXTRAS, SCENES, FINALE, ANIM_PAGE, MEET, CHAT_U5, ICONS, START, UNCLE_DAY } from './data.js';
 import { chapter1Done } from './progress.js';
 import { sfx } from './audio.js';
 import { h } from './dom.js';
@@ -142,8 +142,19 @@ export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
   }
   stage.append(h('div', { class: 'story__floor' }));
   stage.append(h('div', { class: 'stage__no', text: String(index + 1).padStart(2, '0') }));
-  // 布景小道具：纯 CSS 画的（桌子、外卖、床…），按 scene.props 里的名字渲染
+  // 布景小道具：纯 CSS 画的（桌子、外卖、床、长椅、奶茶…），按 scene.props 里的名字渲染
   (scene.props || []).forEach((name) => stage.append(h('span', { class: `sprop sprop--${name}` })));
+
+  // 穿裙子那一页：画面上飘着他们那天聊的几句微信
+  if (scene.chat) {
+    stage.append(h('div', { class: 'wxbox' },
+      CHAT_U5.map((line, i) => h('span', {
+        class: `wxbox__line ${i % 2 ? 'wxbox__line--me' : 'wxbox__line--her'}`,
+        style: `animation-delay:${(i * 1.1).toFixed(2)}s`,
+        text: line,
+      })),
+    ));
+  }
 
   // 第一章穿校服（hs），第二章换大学那套（uni）
   const cast = scene.set || 'hs';

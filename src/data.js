@@ -195,8 +195,10 @@ const UNI = [
     eyebrow: T('u5.eyebrow'), title: T('u5.title'), body: T('u5.body'),
     // 不用那张静态插画了：换成穿着裙子的立绘，在野餐垫上动起来
     fx: 'picnic',
-    stage: { bg: 'linear-gradient(178deg,#EAF2E4 0%,#D8E7CE 52%,#C2D6B6 100%)' },
-    props: ['sun', 'blanket', 'cake', 'bucket', 'flower1', 'flower2', 'flower3'],
+    stage: { bg: 'linear-gradient(178deg,#FBE4C6 0%,#F2D3AC 40%,#CFC9A4 62%,#A9BC8E 100%)' },
+    // 公园黄昏：树影、长椅、路灯、地上的票和奶茶、拍立得、那本书、一束花
+    props: ['dusk', 'tree', 'bench', 'lamp', 'bouquet', 'book', 'tickets', 'tea1', 'tea2', 'polaroid'],
+    chat: true,
     actors: ['ya', 'jing'],
     faces: { ya: 'laugh', jing: 'shy' },
     bubbles: [],
@@ -256,6 +258,9 @@ export const NOODLES = {
   near: T('noodles.near'),
   outcome: [T('noodles.outcome.1'), T('noodles.outcome.2'), T('noodles.outcome.3')],
 };
+
+/* 穿裙子那一页，画面上飘着的四句微信 */
+export const CHAT_U5 = [T('u5.chat.1'), T('u5.chat.2'), T('u5.chat.3'), T('u5.chat.4')];
 
 /* ── 会合：高中看完之后，两只挂件才出现 ─────────────────── */
 

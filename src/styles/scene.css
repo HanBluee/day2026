@@ -1650,115 +1650,11 @@
 /* ── 野餐那一幕（第二章 · 生日 / 穿裙子） ───────────────── */
 
 /* 斜着照下来的日光 */
-.sprop--sun {
-  left: -10%;
-  top: -20%;
-  width: 70%;
-  height: 90%;
-  background: linear-gradient(112deg, rgba(255, 240, 190, .55) 0%, rgba(255, 240, 190, 0) 62%);
-  transform: rotate(-6deg);
-  z-index: 0;
-}
-
 /* 野餐垫：格纹 */
-.sprop--blanket {
-  left: -4%;
-  right: -4%;
-  bottom: -2%;
-  height: 36%;
-  z-index: 1;
-  background:
-    repeating-linear-gradient(90deg, rgba(255, 255, 255, .34) 0 14px, rgba(255, 255, 255, 0) 14px 28px),
-    repeating-linear-gradient(0deg, rgba(214, 150, 140, .36) 0 14px, rgba(214, 150, 140, .12) 14px 28px),
-    linear-gradient(180deg, #F0E2D0, #DCC9B0);
-  box-shadow: inset 0 3px 10px -4px rgba(120, 90, 55, .4);
-}
-
 /* 蛋糕：一根蜡烛在晃 */
-.sprop--cake {
-  left: 9%;
-  bottom: 15%;
-  width: 42px;
-  height: 26px;
-  z-index: 3;
-  border-radius: 4px 4px 3px 3px;
-  background: linear-gradient(180deg, #FBF3E4 0 34%, #E6C9A8 34%, #D2AE86 100%);
-  box-shadow: 0 5px 11px -6px rgba(90, 60, 30, .8), inset 0 -2px 0 rgba(150, 110, 70, .35);
-}
-
-.sprop--cake::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  width: 3px;
-  height: 13px;
-  margin-left: -1.5px;
-  border-radius: 2px;
-  background: linear-gradient(180deg, #FFF6DC, #D9B98A);
-}
-
-.sprop--cake::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 12px);
-  width: 7px;
-  height: 11px;
-  margin-left: -3.5px;
-  border-radius: 50% 50% 46% 46%;
-  background: radial-gradient(60% 60% at 50% 66%, #FFE9A8, #FF9E4D 62%, rgba(255, 120, 60, 0) 100%);
-  animation: sprop-flame 1.1s ease-in-out infinite;
-}
-
-@keyframes sprop-flame {
-  0%, 100% { transform: scale(1) translateY(0); opacity: .95; }
-  50%      { transform: scale(1.16) translateY(-1.5px); opacity: 1; }
-}
 
 /* 疯狂星期四那只桶 */
-.sprop--bucket {
-  right: 8%;
-  bottom: 14%;
-  width: 34px;
-  height: 30px;
-  z-index: 3;
-  border-radius: 4px 4px 3px 3px;
-  background: repeating-linear-gradient(0deg, #E24B3F 0 7px, #F4F1E8 7px 14px);
-  box-shadow: 0 5px 11px -6px rgba(90, 40, 30, .8);
-  transform: rotate(3deg);
-}
-
-.sprop--bucket::before {
-  content: "";
-  position: absolute;
-  left: -3px;
-  right: -3px;
-  top: -4px;
-  height: 6px;
-  border-radius: 3px;
-  background: #C93B31;
-}
-
 /* 散在垫子上的花 */
-.sprop--flower1,
-.sprop--flower2,
-.sprop--flower3 {
-  width: 15px;
-  height: 15px;
-  bottom: 18%;
-  border-radius: 50%;
-  background: radial-gradient(46% 46% at 50% 50%, #FFF3C9 0 30%, rgba(0, 0, 0, 0) 31%),
-              radial-gradient(circle at 50% 50%, #F2A0B4 0 100%);
-  box-shadow: 0 2px 5px -3px rgba(90, 50, 60, .7);
-  z-index: 2;
-}
-
-.sprop--flower1 { left: 33%; }
-.sprop--flower2 { left: 44%; bottom: 21%; }
-.sprop--flower3 { right: 32%; }
-
-
 /* 野餐那幕：两个人轻轻晃（风吹过的感觉），身高也留出位置给垫子和道具 */
 .stage--picnic .actors {
   --h: clamp(118px, 23vh, 168px);
@@ -1911,3 +1807,233 @@
 }
 
 .compartments--single { margin-top: 10px; grid-template-columns: 1fr; }
+
+/* ── 公园黄昏那一幕（第二章 · 生日 / 穿裙子） ────────────
+   人物周围摆一圈"那天会做的事"的痕迹，让画面有叙事感。 */
+
+/* 落日：光从右上斜下来 */
+.sprop--dusk {
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(56% 44% at 84% 14%, rgba(255, 216, 152, .8) 0%, rgba(255, 216, 152, 0) 64%),
+    linear-gradient(178deg, rgba(255, 206, 156, .46) 0%, rgba(255, 206, 156, 0) 48%);
+}
+
+/* 树影：一团团投在地上的暗斑 */
+.sprop--tree {
+  left: -8%;
+  right: -8%;
+  bottom: 0;
+  height: 54%;
+  z-index: 1;
+  background:
+    radial-gradient(26% 38% at 16% 90%, rgba(58, 46, 38, .28), rgba(58, 46, 38, 0) 70%),
+    radial-gradient(18% 28% at 33% 98%, rgba(58, 46, 38, .22), rgba(58, 46, 38, 0) 70%),
+    radial-gradient(30% 32% at 71% 94%, rgba(58, 46, 38, .2), rgba(58, 46, 38, 0) 72%),
+    radial-gradient(15% 24% at 91% 88%, rgba(58, 46, 38, .18), rgba(58, 46, 38, 0) 70%);
+}
+
+/* 公园长椅：椅面 + 两条腿 + 靠背 */
+.sprop--bench {
+  left: 9%;
+  right: 9%;
+  bottom: 33%;
+  height: 7px;
+  z-index: 1;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #B07C4E, #6E4A2C);
+  box-shadow: 0 5px 11px -7px rgba(60, 34, 16, .85);
+}
+
+.sprop--bench::before,
+.sprop--bench::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  width: 4px;
+  height: 15px;
+  border-radius: 0 0 2px 2px;
+  background: #5C3E24;
+}
+
+.sprop--bench::before { left: 13%; }
+.sprop--bench::after  { right: 13%; }
+
+/* 路灯：杆 + 灯头（带光晕） */
+.sprop--lamp {
+  left: 4%;
+  bottom: 20%;
+  width: 3px;
+  height: 46%;
+  z-index: 2;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #4A4038, #2A241E);
+}
+
+.sprop--lamp::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  width: 23px;
+  height: 13px;
+  border-radius: 7px 7px 3px 3px;
+  background: linear-gradient(180deg, #FFEDC0, #E9C47C);
+  box-shadow: 0 0 30px 12px rgba(255, 220, 150, .55);
+}
+
+/* 一束花 */
+.sprop--bouquet {
+  right: 6%;
+  bottom: 21%;
+  width: 28px;
+  height: 32px;
+  z-index: 3;
+  border-radius: 52% 52% 40% 40%;
+  background:
+    radial-gradient(30% 30% at 30% 28%, #FFF2D4 0 42%, rgba(0, 0, 0, 0) 43%),
+    radial-gradient(32% 32% at 68% 24%, #F3A6BC 0 42%, rgba(0, 0, 0, 0) 43%),
+    radial-gradient(34% 34% at 48% 58%, #F7CBA2 0 42%, rgba(0, 0, 0, 0) 43%),
+    linear-gradient(180deg, #82A26C, #4B693D);
+  box-shadow: 0 6px 12px -7px rgba(60, 40, 20, .85);
+}
+
+/* 那本霸王花 */
+.sprop--book {
+  left: 11%;
+  bottom: 21%;
+  width: 31px;
+  height: 22px;
+  z-index: 3;
+  border-radius: 2px 3px 3px 2px;
+  background: linear-gradient(118deg, #3C5838 0 13%, #6E8F5E 13% 100%);
+  box-shadow: 0 5px 10px -6px rgba(28, 40, 24, .9), inset -2px 0 0 rgba(0, 0, 0, .22);
+  transform: rotate(-7deg);
+}
+
+.sprop--book::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  right: 6px;
+  top: 52%;
+  height: 1px;
+  background: rgba(255, 255, 255, .42);
+}
+
+/* 两张对着摆的电影票 */
+.sprop--tickets {
+  right: 26%;
+  bottom: 19%;
+  width: 36px;
+  height: 18px;
+  z-index: 3;
+  border-radius: 2px;
+  background: linear-gradient(90deg,
+    #F7F0E3 0 46%, rgba(0, 0, 0, .18) 46% 48%, #EFE5D4 48% 100%);
+  box-shadow: 0 4px 9px -6px rgba(60, 40, 20, .85);
+  transform: rotate(9deg);
+}
+
+.sprop--tickets::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 6px;
+  height: 1px;
+  background: rgba(120, 96, 60, .5);
+  box-shadow: 0 4px 0 rgba(120, 96, 60, .5);
+}
+
+/* 两杯奶茶 */
+.sprop--tea1,
+.sprop--tea2 {
+  bottom: 20%;
+  width: 15px;
+  height: 23px;
+  z-index: 3;
+  border-radius: 2px 2px 3px 3px;
+  background: linear-gradient(180deg, #F3E7D2 0 22%, #D9B98C 22%, #C39E6E 100%);
+  box-shadow: 0 4px 9px -6px rgba(60, 40, 20, .85);
+}
+
+.sprop--tea1 { left: 33%; transform: rotate(-4deg); }
+.sprop--tea2 { left: 41%; bottom: 21%; transform: rotate(5deg); }
+
+/* 拍立得：浮在右上，轻轻晃 */
+.sprop--polaroid {
+  right: 13%;
+  top: 15%;
+  width: 31px;
+  height: 37px;
+  z-index: 4;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #FFFFFF 0 73%, #EBE3D6 73% 100%);
+  box-shadow: 0 7px 14px -7px rgba(40, 30, 20, .85);
+  animation: sprop-float 5.6s ease-in-out infinite;
+}
+
+.sprop--polaroid::before {
+  content: "";
+  position: absolute;
+  inset: 3px 3px 11px;
+  border-radius: 1px;
+  background: linear-gradient(158deg, #D3E2F0, #A7C2D9);
+}
+
+@keyframes sprop-float {
+  0%, 100% { transform: rotate(9deg) translateY(0); }
+  50%      { transform: rotate(6deg) translateY(-5px); }
+}
+
+/* ── 画面上飘着的那几句微信 ─────────────────────────────── */
+
+.wxbox {
+  position: absolute;
+  left: 5%;
+  top: 6%;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-width: 62%;
+  align-items: flex-start;
+  pointer-events: none;
+  animation: wx-cycle 8.5s ease-in-out infinite;
+}
+
+.wxbox__line {
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: #1C1C1E;
+  opacity: 0;
+  box-shadow: 0 3px 9px -6px rgba(30, 40, 55, .65);
+  animation: wx-line 8.5s var(--ease) infinite;
+}
+
+.wxbox__line--her {
+  background: #FFFFFF;
+  border-bottom-left-radius: 3px;
+}
+
+.wxbox__line--me {
+  align-self: flex-end;
+  background: #95EC69;
+  color: #17301A;
+  border-bottom-right-radius: 3px;
+}
+
+@keyframes wx-cycle {
+  0%, 4%    { opacity: 0; }
+  9%, 90%   { opacity: 1; }
+  97%, 100% { opacity: 0; }
+}
+
+@keyframes wx-line {
+  0%, 6%   { opacity: 0; transform: translateY(7px); }
+  15%,100% { opacity: 1; transform: none; }
+}

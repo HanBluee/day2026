@@ -129,6 +129,9 @@ async function collect() {
     sceneBlock(s, `第 ${i + 1} 页`, `盒子第二排第 ${i + 1} 格「${D.UNI_ITEMS[i].label}」`);
   });
 
+  head('穿裙子那一页的微信聊天框', '第二章第 5 页，画面上飘着的那几句');
+  [1, 2, 3, 4].forEach((i) => f(`u5.chat.${i}`, `聊天框第 ${i} 句`, D.CHAT_U5[i - 1]));
+
   head('霸王花 · 那件真事', '第二章最后一页之后紧接着');
   D.SCENES.filter((s) => s.chapter === 'real').forEach((s) => sceneBlock(s, '霸王花', '第二章最后一页之后'));
 
