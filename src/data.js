@@ -148,6 +148,8 @@ const HS = [
     actors: ['ya', 'jing'],
     faces: { ya: 'shy', jing: 'shy' },
     bubbles: [],
+    play: 's5comic',
+    playLabel: T('s5.playLabel'),
   },
   {
     id: 's6',
@@ -372,6 +374,26 @@ export const MEET = {
   charmsCaption: T('box.charms'),
 };
 
+/* ── 宿舍夜谈那一幕的分镜（6 格） ─────────────────────── */
+
+export const S5_COMIC = {
+  from: T('s5c.from'),
+  hint: T('comic.hint'),
+  endReplay: T('comic.endReplay'),
+  endBack: T('comic.endBack'),
+  set: 'hs',
+  beats: [
+    { kind: 'darkroom',  cam: 'push',     dur: 5400, sub: T('s5c.1') },
+    { kind: 'sneak',     cam: 'hold',     dur: 5400, sub: T('s5c.2') },
+    { kind: 'intoBed',   cam: 'push',     dur: 4800, sub: T('s5c.3'),
+      bubble: 'jing', bubbleText: T('s5c.b3') },
+    { kind: 'quiltTalk', cam: 'hold',     dur: 5600, sub: T('s5c.4'),
+      bubble: 'ya', bubbleText: T('s5c.b4') },
+    { kind: 'fuzzy',     cam: 'pushSlow', dur: 5800, sub: T('s5c.5') },
+    { kind: 'pullBack',  cam: 'hold',     dur: 5600, sub: T('s5c.6') },
+  ],
+};
+
 /* ── 小剧场：泡面危机（分镜） ─────────────────────────────
    kind 决定这一格画什么、镜头怎么动、什么时候出字幕；
    台词和旁白全在 文案.txt 的 comic.* 里。 */
@@ -428,7 +450,16 @@ export const ANIM_PAGE = {
     { kind: 'tv',    set: 'uni', actors: ['ya', 'jing'], title: T('anim.3.title'), cap: T('anim.3.cap') },
     { kind: 'far',   set: 'uni', actors: ['ya', 'jing'], title: T('anim.4.title'), cap: T('anim.4.cap'), msg: T('anim.4.msg') },
   ],
-  bridge: T('anim.bridge'),
-  quote: T('anim.quote'),
-  quoteSign: T('anim.quoteSign'),
+  bridge: {
+    title: T('anim.bridgeTitle'),
+    lead: T('anim.bridgeLead'),
+    left: { label: T('anim.bridgeLeftLabel'), text: T('anim.bridgeLeftText') },
+    right: { label: T('anim.bridgeRightLabel'), text: T('anim.bridgeRightText') },
+    tail: T('anim.bridgeTail'),
+  },
+  closing: {
+    title: T('anim.closeTitle'),
+    body: T('anim.closeBody'),
+    sign: T('anim.closeSign'),
+  },
 };

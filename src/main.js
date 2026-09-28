@@ -1,10 +1,10 @@
 // 场景路由。没有框架，四个场景互相跳，切换时旧的淡出、新的淡入。
 
-import { SCENES } from './data.js';
+import { SCENES, COMIC, S5_COMIC } from './data.js';
 import { buildBox, buildInside, buildStory, buildMeet, buildAnim, buildFinale } from './scenes.js';
 import { markChapter1Done } from './progress.js';
 import { buildNoodles } from './noodles.js';
-import { buildComic } from './comic.js';
+import { playComic } from './comic.js';
 
 const view = document.getElementById('view');
 let current = null;
@@ -46,7 +46,7 @@ function toStory(index) {
       return SCENES[idx].id === 's8' ? toMeet() : toStory(idx + 1);
     },
     onExit: toInside,
-    onPlay: () => toComic(idx),
+    onPlay: () => toComic(idx, scene.play === 's5comic' ? S5_COMIC : COMIC),
   }));
 }
 
@@ -62,10 +62,11 @@ function toAnim() {
 }
 
 // 先看一遍分镜，再自己上手玩
-function toComic(returnIndex) {
-  show(buildComic({
-    onPlay: () => toGame(returnIndex),
-    onExit: () => toStory(returnIndex),
+function toComic(returnIndex, script = COMIC) {
+  show(playComic({
+    script,
+    onPlay: script === COMIC ? () => toGame(returnIndex) : null,
+    onDone: () => toStory(returnIndex),
   }));
 }
 
@@ -87,6 +88,7 @@ function route() {
   if (id === 'meet') return toMeet();
   if (id === 'game') return toGame(2);
   if (id === 'comic') return toComic(2);
+  if (id === 's5comic') return toComic(4, S5_COMIC);
   const i = SCENES.findIndex((s) => s.id === id);
   return i >= 0 ? toStory(i) : toBox();
 }

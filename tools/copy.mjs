@@ -108,9 +108,9 @@ async function collect() {
 
   head('背单词那一页的画面小字', '第一章第 6 幕，黑板上和飘出来的');
   f('s6.board', '黑板角落那行字', D.SCENE_TEXT.s6.board);
-  f('s6.word1', '飘出来的第 1 个小气泡', D.SCENE_TEXT.s6.word1);
-  f('s6.word2', '飘出来的第 2 个小气泡', D.SCENE_TEXT.s6.word2);
-  f('s6.word3', '飘出来的第 3 个小气泡', D.SCENE_TEXT.s6.word3);
+  f('s6.word1', '飘出来的第 1 个小气泡', D.SCENE_TEXT.s6.words[0]);
+  f('s6.word2', '飘出来的第 2 个小气泡', D.SCENE_TEXT.s6.words[1]);
+  f('s6.word3', '飘出来的第 3 个小气泡', D.SCENE_TEXT.s6.words[2]);
 
 
 
@@ -121,6 +121,15 @@ async function collect() {
   f('u6.nextLabel', '这一页「下一段」按钮上的字', D.SCENE_TEXT.u6.nextLabel);
   f('nav.next', '正文页「下一段」按钮（通用）', D.NAV.next);
   f('nav.nextEnd', '最后一页那个按钮（通用）', D.NAV.nextEnd);
+
+  head('宿舍夜谈 · 分镜（6 格）', '第一章第 5 幕点「看这一段」进入');
+  f('s5c.from', '左上角的小标', D.S5_COMIC.from);
+  D.S5_COMIC.beats.forEach((b, i) => {
+    f(`s5c.${i + 1}`, `第 ${i + 1} 格 · 底部字幕`, b.sub);
+    if (b.bubble) {
+      f(`s5c.b${i + 1}`, `第 ${i + 1} 格 · 对白（${b.bubble === 'ya' ? '我说的' : '她说的'}）`, b.bubbleText);
+    }
+  });
 
   head('小剧场 · 泡面危机（分镜）', '第一章第 3 幕点「帮我藏一下」之后先放这个');
   f('comic.from', '左上角的小标', D.COMIC.from);
@@ -181,9 +190,16 @@ async function collect() {
     f(`anim.${i + 1}.cap`, `第 ${i + 1} 段 · 下面的说明`, v.cap);
     if (v.msg) f(`anim.${i + 1}.msg`, `第 ${i + 1} 段 · 飘来飘去的那句话`, v.msg);
   });
-  f('anim.bridge', '四段之后「我们为什么会像」', D.ANIM_PAGE.bridge);
-  f('anim.quote', '整页最末那段引文', D.ANIM_PAGE.quote);
-  f('anim.quoteSign', '引文后面的小字', D.ANIM_PAGE.quoteSign);
+  f('anim.bridgeTitle', '05 那段的标题', D.ANIM_PAGE.bridge.title);
+  f('anim.bridgeLead', '05 那段的开头一句', D.ANIM_PAGE.bridge.lead);
+  f('anim.bridgeLeftLabel', '05 左栏标签（她教会我的）', D.ANIM_PAGE.bridge.left.label);
+  f('anim.bridgeLeftText', '05 左栏正文', D.ANIM_PAGE.bridge.left.text);
+  f('anim.bridgeRightLabel', '05 右栏标签（我带她的）', D.ANIM_PAGE.bridge.right.label);
+  f('anim.bridgeRightText', '05 右栏正文', D.ANIM_PAGE.bridge.right.text);
+  f('anim.bridgeTail', '05 那段的收尾一句', D.ANIM_PAGE.bridge.tail);
+  f('anim.closeTitle', '06 那段的标题', D.ANIM_PAGE.closing.title);
+  f('anim.closeBody', '06 那段的正文', D.ANIM_PAGE.closing.body);
+  f('anim.closeSign', '06 末尾那句小字', D.ANIM_PAGE.closing.sign);
 
   head('终章', '两只挂件吸合之后那一屏');
   f('finale.eyebrow', '终章 · 页眉小字', D.FINALE.eyebrow);
