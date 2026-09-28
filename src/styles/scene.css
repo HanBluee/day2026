@@ -609,3 +609,15 @@
   gap: 7px;
 }
 
+/* 异地那一幕：两个人之间空出一段距离 */
+.actors--wide { gap: clamp(46px, 26vw, 150px); }
+
+/* 第二章是"假如"，整体比第一章亮一档、偏冷，好和高中那几年区分开 */
+.tone-cool .story__panel {
+  background: radial-gradient(120% 130% at 20% 0%, #FCFEFF 0%, #ECF3F9 56%, #DCE8F1 100%);
+}
+
+.tone-cool .story__eyebrow { color: #3E6E9C; }
+.tone-cool .story__rule { background: var(--ya); }
+.tone-cool .story__body em { background: linear-gradient(transparent 62%, rgba(168, 196, 221, .65) 62%); }
+

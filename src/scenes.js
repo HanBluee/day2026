@@ -1,6 +1,6 @@
 // 四个场景：序章盒子 / 盒内目录 / 回忆一幕 / 终章。
 
-import { BOX_ITEMS, PENDING, SCENES, FINALE, ICONS, START, UNCLE_DAY } from './data.js';
+import { BOX_ITEMS, UNI_ENTRY, PENDING, SCENES, FINALE, ICONS, START, UNCLE_DAY } from './data.js';
 import { sfx } from './audio.js';
 import { h } from './dom.js';
 
@@ -87,6 +87,17 @@ export function buildInside({ onPick, onCharm }) {
         h('span', { class: 'compartment__label', text: item.label }),
         h('span', { class: 'compartment__meta', text: item.meta }),
       )),
+    h('button', {
+      class: 'compartment compartment--wide compartment--uni',
+      type: 'button',
+      onclick: () => onPick(UNI_ENTRY.id),
+    },
+      h('span', { class: 'compartment__icon', html: ICONS[UNI_ENTRY.icon] }),
+      h('span', { class: 'compartment--uni-text' },
+        h('span', { class: 'compartment__label', text: UNI_ENTRY.label }),
+        h('span', { class: 'compartment__meta', text: UNI_ENTRY.note }),
+      ),
+    ),
     PENDING.map((p) =>
       h('div', { class: 'compartment compartment--empty compartment--wide' },
         h('span', { class: 'compartment__label', text: `${p.label} · 还在写` }),
@@ -127,10 +138,11 @@ export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
   stage.append(h('div', { class: 'story__floor' }));
   stage.append(h('div', { class: 'stage__no', text: String(index + 1).padStart(2, '0') }));
 
-  // 第一章都发生在高中，穿校服；以后大学篇把 scene.set 设成 'uni' 就会换一套立绘
+  // 第一章穿校服（hs），第二章换大学那套（uni）
   const cast = scene.set || 'hs';
   if (scene.actors.length) {
-    stage.append(h('div', { class: 'actors' },
+    const wide = scene.gap === 'wide' ? ' actors--wide' : '';
+    stage.append(h('div', { class: `actors${wide}` },
       scene.actors.map((who, i) =>
         h('div', { class: `actor actor--${who}`, style: `animation-delay:${i * 0.12}s` },
           h('img', { src: `${ART}/${cast}-${who}.png`, alt: '' }))),
@@ -169,7 +181,7 @@ export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
     h('button', { class: 'btn', type: 'button', text: scene.end ? '打开最中间那一格' : '下一段', onclick: onNext }),
   );
 
-  return h('section', { class: 'scene scene--story' },
+  return h('section', { class: `scene scene--story${scene.tone === 'cool' ? ' tone-cool' : ''}` },
     h('div', { class: 'story' }, stage, panel, nav),
   );
 }

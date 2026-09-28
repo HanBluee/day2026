@@ -64,9 +64,9 @@ python tools/photos.py                                                    # 布�
 
 产出目录：
 
-- `assets/char/` — 立绘。`hs-` 前缀是高中校服版，无前缀是大学版
+- `assets/char/` — 立绘。`hs-` 是高中校服版，`uni-` 是大学版
 - `assets/face/` — 对白气泡里的小头像，六种表情
-- `assets/photo/` — 挂件实拍与布景照片
+- `assets/photo/` — 挂件的透明抠图 + 布景照片
 
 ---
 

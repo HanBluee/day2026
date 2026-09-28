@@ -21,6 +21,7 @@ export const ICONS = {
   notebook: svg('<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 3v18M12 8h4M12 12h4"/>'),
   calendar: svg('<rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><path d="M8 13h3v3H8z"/>'),
   train: svg('<rect x="5" y="3.5" width="14" height="13" rx="2.5"/><path d="M5 11h14M9 20l-1.5 2M15 20l1.5 2M8.5 16.5h7"/><circle cx="9" cy="13.6" r=".9"/><circle cx="15" cy="13.6" r=".9"/>'),
+  bowl: svg('<path d="M3.5 11.5h17c0 4.7-3.8 8.5-8.5 8.5s-8.5-3.8-8.5-8.5z"/><path d="M12 20v2.5M16 3.5l-2 7M18.5 4.5l-1.8 6"/>'),
 };
 
 /* 盒内布局：前 8 格是第一章带日期的回忆，中间放挂件，最后两格待写 */
@@ -35,8 +36,15 @@ export const BOX_ITEMS = [
   { id: 's8', icon: 'train',    label: '高考之后',   meta: '广州 ↔ 湖北' },
 ];
 
+/* 第二章的入口。它不是"待写"，是真的可以点进去 */
+export const UNI_ENTRY = {
+  id: 'u1',
+  icon: 'bowl',
+  label: '大学篇 · 假如我们同校',
+  note: '两个城市的距离，用一段我编的日常来量',
+};
+
 export const PENDING = [
-  { label: '大学篇', note: '如果我们在同一所大学，还是舍友' },
   { label: '性格卡', note: '你是谁、她是谁、我们为什么会像' },
 ];
 
@@ -126,8 +134,95 @@ export const SCENES = [
     eyebrow: '2024 · 高考之后',
     title: '两条裙子还没有一起穿过',
     body: '高考结束，她去了湖北，我去了广州。\n\n生日的时候我们互相送了裙子：\n她送我的是蓝色长裙吊带，我送她的是绿色中裙吊带。\n\n到现在，我们还没有一起穿过。',
-    stage: { photo: 'assets/photo/dresses.jpg', bg: 'linear-gradient(175deg,#DCEBD8 0%,#C6DCC4 100%)', dim: .1 },
+    stage: { bg: 'linear-gradient(178deg,#E4EAF0 0%,#C9D6E2 56%,#A9BCCE 100%)' },
+    actors: ['ya', 'jing'],
+    gap: 'wide',
+    faces: { ya: 'down', jing: 'down' },
+    bubbles: [],
+  },
+
+  /* ── 第二章：大学 · 假如 ──────────────────────────────
+     这一段全是虚构的。开篇和收尾都明确说了"这是我编的"，
+     中间才是编出来的日常——不然就成了撒谎。 */
+
+  {
+    id: 'u1',
+    chapter: 'uni',
+    tone: 'cool',
+    set: 'uni',
+    eyebrow: '第二章 · 假如我们在同一所大学',
+    title: '先说清楚：这一段是我编的',
+    body: '我们没在同一所大学。她在湖北，我在广州。\n\n所以下面这些场景，都是我写出来的。\n\n我还是想写，是因为异地里最想要的从来不是"一起去旅行"，是"<em>一起去食堂</em>"。',
+    stage: { bg: 'linear-gradient(178deg,#EDF3F8 0%,#D6E4EF 58%,#BDD2E3 100%)' },
+    actors: ['ya', 'jing'],
+    faces: { ya: 'shy', jing: 'laugh' },
+    bubbles: [{ who: 'ya', text: '那，从头来一次' }],
+  },
+  {
+    id: 'u2',
+    chapter: 'uni',
+    tone: 'cool',
+    set: 'uni',
+    eyebrow: '假如 · 中午和下午',
+    title: '一起去食堂，一起写作业',
+    body: '她先到，占两个位置。我端着餐盘过去。\n\n下午在图书馆，她做题，我写我自己的。\n她中途转过来问我一个单词，我说不知道。',
+    stage: { bg: 'linear-gradient(178deg,#F3F1E9 0%,#E3E0D3 58%,#D0CDBF 100%)' },
+    actors: ['ya', 'jing'],
+    faces: { ya: 'laugh', jing: 'angry' },
+    bubbles: [
+      { who: 'jing', text: '你连这个都不知道' },
+      { who: 'ya', text: '……那你教我' },
+    ],
+  },
+  {
+    id: 'u3',
+    chapter: 'uni',
+    tone: 'cool',
+    set: 'uni',
+    eyebrow: '假如 · 随舞路演',
+    title: '她站在台下',
+    body: '我上台随舞的时候，她站在最前排。\n\n她其实不太跳舞，也不太听 kpop。\n但那一整场她都拍了，回去还剪了一段发给我。',
+    stage: { bg: 'linear-gradient(178deg,#1D1B26 0%,#2C2738 56%,#15121C 100%)' },
+    actors: ['ya', 'jing'],
+    faces: { ya: 'laugh', jing: 'laugh' },
+    bubbles: [{ who: 'jing', text: '拍好了，回去给你看' }],
+  },
+  {
+    id: 'u4',
+    chapter: 'uni',
+    tone: 'cool',
+    set: 'uni',
+    eyebrow: '假如 · 关灯以后',
+    title: '这次换我陪她看',
+    body: '她爱看《怪奇物语》，我陪她看。\n\n高中是她放恐怖片逗我，现在灯关着，我照样捂着眼睛，她也照样在旁边笑我。\n\n有些东西异地也没变。',
+    stage: { bg: 'linear-gradient(178deg,#161322 0%,#241D33 58%,#0E0B17 100%)' },
+    actors: ['ya', 'jing'],
+    faces: { ya: 'shy', jing: 'laugh' },
+    bubbles: [{ who: 'jing', text: '这段最吓人，你看着' }],
+  },
+  {
+    id: 'u5',
+    chapter: 'uni',
+    tone: 'cool',
+    set: 'uni',
+    eyebrow: '假如 · 生日',
+    title: '那两条裙子，终于一起穿上了',
+    body: '她送我的是蓝色长裙吊带，我送她的是绿色中裙吊带。\n\n买的时候我们没说好，但都挑了对方喜欢的颜色。\n\n在这个版本里，我们终于一起穿上了。',
+    stage: { photo: 'assets/photo/dresses.jpg', bg: 'linear-gradient(175deg,#DCEBD8 0%,#C6DCC4 100%)', dim: .08 },
     actors: [],
+    faces: { ya: 'laugh', jing: 'shy' },
+    bubbles: [],
+  },
+  {
+    id: 'u6',
+    chapter: 'uni',
+    tone: 'cool',
+    set: 'uni',
+    eyebrow: '第二章 · 到此为止',
+    title: '编不下去了',
+    body: '再往下就不能编了。\n\n真实的我们，是两个城市、每天微信、每年生日各自寄一箱东西。\n\n也没有不好。只是我现在很想你。',
+    stage: { bg: 'linear-gradient(178deg,#E9EEF3 0%,#CBD8E4 58%,#ADC1D3 100%)' },
+    actors: ['ya', 'jing'],
     faces: { ya: 'down', jing: 'down' },
     bubbles: [],
     end: true,

@@ -441,6 +441,24 @@ body {
   gap: 4px;
 }
 
+/* 第二章的入口：横排，图标在左，用一点冷色跟第一章的格子区分开 */
+.compartment--uni {
+  flex-direction: row;
+  align-items: center;
+  gap: 11px;
+  border-color: rgba(74, 127, 181, .48);
+  background: linear-gradient(180deg, rgba(234, 243, 250, .62), rgba(180, 205, 226, .26));
+}
+
+.compartment--uni .compartment__icon { color: var(--ya-deep); }
+
+.compartment--uni-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
 .compartment__icon svg { width: 100%; height: 100%; display: block; }
 
 .compartment__label {
