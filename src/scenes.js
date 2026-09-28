@@ -144,6 +144,8 @@ export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
   }
   stage.append(h('div', { class: 'story__floor' }));
   stage.append(h('div', { class: 'stage__no', text: String(index + 1).padStart(2, '0') }));
+  // 布景小道具：纯 CSS 画的（桌子、外卖、床…），按 scene.props 里的名字渲染
+  (scene.props || []).forEach((name) => stage.append(h('span', { class: `sprop sprop--${name}` })));
 
   // 第一章穿校服（hs），第二章换大学那套（uni）
   const cast = scene.set || 'hs';
@@ -296,32 +298,48 @@ export function buildAnim({ onNext, onExit }) {
 
 function vignette(v) {
   const stage = h('div', { class: `vig__stage vig__stage--${v.kind}` });
+  const actors = v.actors.map((who) => h('img', {
+    class: `vig__actor vig__actor--${who}`,
+    src: `${ART}/${v.set}-${who}.png`,
+    alt: '',
+  }));
 
   if (v.kind === 'dance') {
+    // 我跳，她举着手机拍；后面再浮出一小块回看的画面
     stage.append(
       h('i', { class: 'beam beam--1' }), h('i', { class: 'beam beam--2' }),
       ...[1, 2, 3, 4, 5].map((n) => h('i', { class: `spark spark--${n}` })),
+      ...actors,
+      h('span', { class: 'phone' }, h('i', { class: 'phone__rec' })),
+      h('span', { class: 'clip' },
+        h('i', { class: 'clip__play' }),
+        h('span', { class: 'clip__bar' }, h('i')),
+      ),
     );
-  }
-  if (v.kind === 'ppt') {
+  } else if (v.kind === 'tv') {
+    // 同一张床上一起看：床垫在下、人坐在上面、被子盖在他们前面
+    stage.append(
+      h('span', { class: 'bed' }),
+      h('span', { class: 'bed__pillow' }),
+      ...actors,
+      h('span', { class: 'tv' }, h('i')),
+      h('span', { class: 'quilt' }),
+    );
+  } else if (v.kind === 'ppt') {
     stage.append(
       h('span', { class: 'laptop' }, h('i'), h('i'), h('i')),
       h('b', { class: 'vig__tag', text: '接单 · 拿奖' }),
+      ...actors,
     );
-  }
-  if (v.kind === 'tv') {
-    stage.append(h('span', { class: 'tv' }, h('i')));
-  }
-  if (v.kind === 'far') {
+  } else if (v.kind === 'far') {
     stage.append(
       h('i', { class: 'link' }),
       h('b', { class: 'msg', text: v.msg }),
+      ...actors,
     );
+  } else {
+    stage.append(...actors);
   }
-
-  v.actors.forEach((who) => stage.append(
-    h('img', { class: `vig__actor vig__actor--${who}`, src: `${ART}/${v.set}-${who}.png`, alt: '' }),
-  ));
 
   return h('div', { class: `vig vig--${v.kind}` },
     stage,

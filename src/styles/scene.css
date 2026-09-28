@@ -853,7 +853,100 @@
 /* ── 1. 随舞路演 ───────────────────────────────────────── */
 
 .vig__stage--dance { background: radial-gradient(130% 100% at 50% 112%, #3B2C40 0%, #1C1722 60%, #110E18 100%); }
-.vig__stage--dance .vig__actor { animation: vig-dance 1.5s cubic-bezier(.45, 0, .55, 1) infinite; }
+/* 跳的只有我；她站在旁边拍，所以只是轻轻晃 */
+.vig__stage--dance .vig__actor--ya { animation: vig-dance 1.5s cubic-bezier(.45, 0, .55, 1) infinite; }
+.vig__stage--dance .vig__actor--jing { animation: vig-sway 3.4s ease-in-out infinite; }
+
+@keyframes vig-sway {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50%      { transform: rotate(1.5deg); }
+}
+
+/* 她手里那台在录的手机 */
+.phone {
+  position: absolute;
+  left: 61%;
+  top: 41%;
+  width: 19px;
+  height: 31px;
+  z-index: 5;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #23222B, #0E0D13);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 4px 9px -5px rgba(0, 0, 0, .9);
+  animation: vig-sway 3.4s ease-in-out infinite;
+}
+
+.phone__rec {
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #FF5A4E;
+  animation: vig-rec 1.2s steps(2, end) infinite;
+}
+
+@keyframes vig-rec {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: .15; }
+}
+
+/* 拍完一起看：后半程浮出来的那一小块画面 */
+.clip {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  width: 78px;
+  height: 48px;
+  margin-left: -39px;
+  z-index: 6;
+  border-radius: 6px;
+  opacity: 0;
+  background: linear-gradient(180deg, #2B2934, #141219);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .15), 0 7px 16px -9px rgba(0, 0, 0, .95);
+  animation: vig-clip 5.4s var(--ease) infinite;
+}
+
+.clip__play {
+  position: absolute;
+  left: 50%;
+  top: 41%;
+  margin: -7px 0 0 -5px;
+  border-left: 11px solid rgba(255, 246, 230, .92);
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+}
+
+.clip__bar {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 7px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, .2);
+}
+
+.clip__bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 2px;
+  background: var(--brass-300);
+  animation: vig-clip-bar 5.4s linear infinite;
+}
+
+@keyframes vig-clip {
+  0%, 46%   { opacity: 0; transform: translateY(11px) scale(.93); }
+  58%, 86%  { opacity: 1; transform: none; }
+  100%      { opacity: 0; }
+}
+
+@keyframes vig-clip-bar {
+  0%, 58%   { width: 0; }
+  86%, 100% { width: 100%; }
+}
 
 @keyframes vig-dance {
   0%, 100% { transform: translate(-5px, 0) rotate(-3.5deg); }
@@ -947,8 +1040,76 @@
 
 /* ── 3. 关灯看怪奇物语 ─────────────────────────────────── */
 
-.vig__stage--tv { background: radial-gradient(140% 120% at 20% 46%, #2B2439 0%, #14111E 62%, #0A0811 100%); }
-.vig__stage--tv .vig__actor { margin-left: 92px; animation: vig-flinch 3.6s ease-in-out infinite; }
+.vig__stage--tv { background: radial-gradient(140% 120% at 50% 42%, #2B2439 0%, #14111E 62%, #0A0811 100%); }
+
+/* 床：床垫 -> 枕头 -> 两个人坐上去 -> 笔电 -> 被子盖在前面 */
+.bed {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 6px;
+  height: 44px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #3E4557, #242938);
+  box-shadow: 0 9px 18px -11px rgba(0, 0, 0, .95), inset 0 1px 0 rgba(255, 255, 255, .09);
+}
+
+.bed__pillow {
+  position: absolute;
+  left: 6%;
+  bottom: 38px;
+  width: 64px;
+  height: 25px;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #EFEBE1, #C9C3B5);
+  box-shadow: 0 4px 9px -5px rgba(0, 0, 0, .8);
+  transform: rotate(-4deg);
+}
+
+.vig__stage--tv .vig__actor { position: absolute; bottom: 36px; height: 84px; animation: vig-sway 4.2s ease-in-out infinite; }
+.vig__stage--tv .vig__actor--ya   { left: 33%; }
+.vig__stage--tv .vig__actor--jing { right: 32%; height: 76px; animation-delay: -1.2s; }
+
+.tv {
+  position: absolute;
+  left: 50%;
+  bottom: 32px;
+  width: 64px;
+  height: 38px;
+  margin-left: -32px;
+  z-index: 5;
+  border-radius: 3px;
+  overflow: hidden;
+  background: #1A1E2C;
+  box-shadow: inset 0 0 0 1.5px rgba(168, 196, 221, .44), 0 0 40px 15px rgba(146, 180, 214, .34);
+}
+
+.tv i {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(64% 64% at 50% 48%, rgba(198, 218, 238, .95), rgba(146, 180, 214, .25) 62%, rgba(146, 180, 214, 0) 82%);
+  animation: vig-flicker 2.1s steps(2, end) infinite;
+}
+
+.quilt {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 6px;
+  height: 42px;
+  z-index: 4;
+  border-radius: 6px 6px 4px 4px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #7C5E70, #4C3848);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), inset 0 -6px 12px -8px rgba(0, 0, 0, .7);
+}
+
+.quilt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(96deg, rgba(255, 255, 255, .055) 0 8px, rgba(0, 0, 0, .045) 8px 16px);
+}
 
 @keyframes vig-flinch {
   0%, 100% { transform: none; }
@@ -957,7 +1118,7 @@
   58%      { transform: none; }
 }
 
-.tv {
+.panel--tv .tv {
   position: absolute;
   left: 7%;
   bottom: 34px;
@@ -971,7 +1132,7 @@
     inset 0 0 0 1.5px rgba(168, 196, 221, .34),
     0 0 26px 6px rgba(146, 180, 214, .22);   /* 屏幕往四周漏出来的光 */
 }
-.tv i {
+.panel--tv .tv i {
   position: absolute;
   inset: 0;
   background: radial-gradient(64% 64% at 50% 48%, rgba(198, 218, 238, .95), rgba(146, 180, 214, .25) 62%, rgba(146, 180, 214, 0) 82%);
@@ -1377,3 +1538,111 @@
   transition: opacity .5s var(--ease);
 }
 .comic__end.is-live { opacity: 1; pointer-events: auto; }
+
+/* ── 回忆幕里的小道具（纯 CSS 画的，不占资源） ───────────── */
+
+.sprop {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 宿舍的桌子 */
+.sprop--desk {
+  left: 6%;
+  right: 6%;
+  bottom: 20%;
+  height: 5px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #8A6B4C, #563F2B);
+  box-shadow: 0 7px 16px -9px rgba(0, 0, 0, .85);
+}
+
+/* 外卖盒 */
+.sprop--box1,
+.sprop--box2 {
+  bottom: 22%;
+  width: 27px;
+  height: 19px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #EADFC9, #C3B08D);
+  box-shadow: inset 0 0 0 1px rgba(120, 90, 50, .38), 0 4px 9px -6px rgba(0, 0, 0, .8);
+}
+
+.sprop--box1 { left: 4%; transform: rotate(-5deg); }
+.sprop--box2 { left: 13%; bottom: 23%; transform: rotate(4deg); }
+
+/* 饮料 */
+.sprop--cup {
+  left: 85%;
+  bottom: 22%;
+  width: 17px;
+  height: 24px;
+  border-radius: 3px 3px 2px 2px;
+  background: linear-gradient(180deg, #DCE9F2, #A6BFD1);
+  box-shadow: inset 0 0 0 1px rgba(90, 120, 145, .4), 0 4px 9px -6px rgba(0, 0, 0, .8);
+}
+
+/* 笔电 / 屏幕：发蓝光 */
+.sprop--pc,
+.sprop--screen {
+  width: 58px;
+  height: 36px;
+  border-radius: 3px;
+  background: #1A1E2C;
+  box-shadow:
+    inset 0 0 0 1.5px rgba(168, 196, 221, .42),
+    0 0 34px 12px rgba(146, 180, 214, .3);
+  animation: sprop-glow 2.4s steps(2, end) infinite;
+}
+
+.sprop--pc { right: 5%; bottom: 22%; }
+.sprop--screen { left: 50%; bottom: 20%; margin-left: -29px; z-index: 5; }
+
+@keyframes sprop-glow {
+  0%, 100% { opacity: .72; }
+  22%      { opacity: 1; }
+  40%      { opacity: .6; }
+  64%      { opacity: .95; }
+}
+
+/* 一张床 */
+.sprop--bed {
+  left: 4%;
+  right: 4%;
+  bottom: 6%;
+  height: 26%;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #3E4557, #232836);
+  box-shadow: 0 10px 20px -12px rgba(0, 0, 0, .95), inset 0 1px 0 rgba(255, 255, 255, .09);
+}
+
+.sprop--pillow {
+  left: 7%;
+  bottom: 35%;
+  width: 70px;
+  height: 26px;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #EFEBE1, #C9C3B5);
+  box-shadow: 0 5px 11px -6px rgba(0, 0, 0, .85);
+  transform: rotate(-4deg);
+}
+
+.sprop--quilt {
+  left: 4%;
+  right: 4%;
+  bottom: 6%;
+  height: 30%;
+  z-index: 4;
+  border-radius: 6px 6px 4px 4px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #7C5E70, #483543);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18);
+}
+
+.sprop--quilt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(96deg, rgba(255, 255, 255, .06) 0 8px, rgba(0, 0, 0, .05) 8px 16px);
+}
