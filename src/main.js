@@ -1,7 +1,7 @@
 // 场景路由。没有框架，四个场景互相跳，切换时旧的淡出、新的淡入。
 
 import { SCENES } from './data.js';
-import { buildBox, buildInside, buildStory, buildFinale } from './scenes.js';
+import { buildBox, buildInside, buildStory, buildProfile, buildFinale } from './scenes.js';
 import { buildNoodles } from './noodles.js';
 
 const view = document.getElementById('view');
@@ -27,8 +27,9 @@ function toInside() {
 }
 
 function onPick(id) {
+  if (id === 'profile') return toProfile();
   const idx = SCENES.findIndex((s) => s.id === id);
-  toStory(idx < 0 ? 0 : idx);
+  return toStory(idx < 0 ? 0 : idx);
 }
 
 function toStory(index) {
@@ -36,10 +37,14 @@ function toStory(index) {
   show(buildStory(SCENES[idx], {
     index: idx,
     onPrev: () => toStory(idx - 1),
-    onNext: () => (idx === SCENES.length - 1 ? toFinale() : toStory(idx + 1)),
+    onNext: () => (idx === SCENES.length - 1 ? toProfile() : toStory(idx + 1)),
     onExit: toInside,
     onPlay: () => toGame(idx),
   }));
+}
+
+function toProfile() {
+  show(buildProfile({ onNext: toFinale, onExit: toInside }));
 }
 
 function toGame(returnIndex) {
@@ -50,12 +55,13 @@ function toFinale() {
   show(buildFinale({ onExit: toInside }));
 }
 
-// 直接跳转：index.html#s4 / #inside / #game / #finale
+// 直接跳转：index.html#s4 / #u1 / #inside / #game / #profile / #finale
 // 调试和分享都用得上，正常点着走不会改地址栏。
 function route() {
   const id = location.hash.replace(/^#/, '');
   if (id === 'inside') return toInside();
   if (id === 'finale') return toFinale();
+  if (id === 'profile') return toProfile();
   if (id === 'game') return toGame(2);
   const i = SCENES.findIndex((s) => s.id === id);
   return i >= 0 ? toStory(i) : toBox();

@@ -621,3 +621,191 @@
 .tone-cool .story__rule { background: var(--ya); }
 .tone-cool .story__body em { background: linear-gradient(transparent 62%, rgba(168, 196, 221, .65) 62%); }
 
+/* ── 附录：性格卡 ───────────────────────────────────────── */
+
+.scene--profile {
+  justify-content: flex-start;
+  overflow-y: auto;
+  background:
+    radial-gradient(122% 76% at 50% -10%, rgba(255, 208, 142, .22) 0%, rgba(255, 208, 142, 0) 58%),
+    linear-gradient(180deg, #33241A 0%, #1D1410 100%);
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 430px;
+  margin: auto 0;
+  min-width: 0;
+}
+
+.profile__head { padding: 8px 4px 14px; text-align: center; }
+
+.profile__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .22em;
+  color: var(--brass-500);
+}
+
+.profile__title {
+  margin: 8px 0;
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: .06em;
+  color: var(--velvet-100);
+}
+
+.profile__lead {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ink-300);
+}
+
+/* 卡面沿用站内那套纸 */
+.pcard {
+  position: relative;
+  min-width: 0;
+  padding: 16px;
+  border-radius: var(--r-md);
+  background: radial-gradient(120% 130% at 18% 0%, var(--velvet-100) 0%, var(--velvet-200) 56%, var(--velvet-300) 100%);
+  box-shadow: inset 0 0 0 1px rgba(142, 106, 56, .3);
+}
+
+.pcard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: var(--noise);
+  opacity: .06;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* 两个人都同意的那一句 */
+.ppair { display: flex; gap: 12px; }
+
+.pface {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 13px 8px 11px;
+  border-radius: var(--r-sm);
+}
+
+.pface--jing { background: rgba(110, 154, 99, .13); }
+.pface--ya   { background: rgba(74, 127, 181, .13); }
+
+.pface__img {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 6px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 12%;
+  background: rgba(255, 253, 247, .9);
+  box-shadow: 0 3px 9px -3px rgba(60, 42, 24, .5);
+}
+
+.pface__name { font-family: var(--font-display); font-size: 15px; color: var(--ink-900); }
+.pface__nick { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; color: var(--ink-500); }
+
+.pcard__caption {
+  margin: 9px 0 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  color: var(--ink-700);
+}
+
+/* 单独一个人 */
+.pcard--jing { border-left: 3px solid var(--jing); }
+.pcard--ya   { border-left: 3px solid var(--ya); }
+
+.pcard__head { display: flex; align-items: center; gap: 11px; margin-bottom: 13px; }
+
+.pcard__face {
+  width: 46px;
+  height: 46px;
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 12%;
+  background: rgba(255, 253, 247, .9);
+}
+
+.pcard__ident { display: flex; flex-direction: column; gap: 2px; }
+.pcard__name { font-family: var(--font-display); font-size: 17px; color: var(--ink-900); }
+.pcard__tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em; color: var(--ink-500); }
+
+.ppoints { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; list-style: none; }
+
+.ppoint__t {
+  margin-bottom: 3px;
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-900);
+}
+
+.ppoint__d { font-size: 13px; line-height: 1.85; color: var(--ink-700); overflow-wrap: anywhere; }
+
+/* 互补 */
+.pcard__title {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--ink-900);
+}
+
+.pcard__lead { margin: 0 0 13px; font-size: 13px; line-height: 1.8; color: var(--ink-700); }
+
+.pbridge { display: flex; flex-direction: column; gap: 10px; }
+
+.pbridge__side { padding: 11px 12px; border-radius: var(--r-sm); }
+.pbridge__side--ya   { background: rgba(74, 127, 181, .13); border-left: 2px solid var(--ya); }
+.pbridge__side--jing { background: rgba(110, 154, 99, .13); border-left: 2px solid var(--jing); }
+
+.pbridge__label { margin-bottom: 5px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; }
+.pbridge__side--ya .pbridge__label   { color: var(--ya-deep); }
+.pbridge__side--jing .pbridge__label { color: var(--jing-deep); }
+
+.pbridge__text { margin: 0; font-size: 13px; line-height: 1.85; color: var(--ink-700); overflow-wrap: anywhere; }
+
+.pbridge__tail {
+  margin: 13px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(142, 106, 56, .26);
+  font-family: var(--font-display);
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--ink-900);
+}
+
+/* 收尾那句 */
+.pquote {
+  padding: 20px 18px;
+  border: 1px dashed rgba(217, 182, 117, .46);
+  border-radius: var(--r-md);
+  text-align: center;
+}
+
+.pquote__text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 16px;
+  line-height: 2;
+  color: var(--brass-300);
+  white-space: pre-line;
+}
+
+.pquote__sign { margin: 12px 0 0; font-size: 12px; color: var(--ink-300); }
+

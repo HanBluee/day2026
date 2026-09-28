@@ -452,12 +452,23 @@ body {
 
 .compartment--uni .compartment__icon { color: var(--ya-deep); }
 
-.compartment--uni-text {
+.compartment__stack {
   display: flex;
   flex-direction: column;
   gap: 3px;
   min-width: 0;
 }
+
+/* 附录入口：跟时间线无关，用暖黄铜色跟第二章的冷色拉开 */
+.compartment--extra {
+  flex-direction: row;
+  align-items: center;
+  gap: 11px;
+  border-color: rgba(185, 139, 78, .5);
+  background: linear-gradient(180deg, rgba(247, 238, 220, .62), rgba(217, 182, 117, .2));
+}
+
+.compartment--extra .compartment__icon { color: var(--brass-600); }
 
 .compartment__icon svg { width: 100%; height: 100%; display: block; }
 

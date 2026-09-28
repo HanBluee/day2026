@@ -1,6 +1,6 @@
 // 四个场景：序章盒子 / 盒内目录 / 回忆一幕 / 终章。
 
-import { BOX_ITEMS, UNI_ENTRY, PENDING, SCENES, FINALE, ICONS, START, UNCLE_DAY } from './data.js';
+import { BOX_ITEMS, UNI_ENTRY, EXTRAS, SCENES, FINALE, PROFILE, ICONS, START, UNCLE_DAY, ME, HER } from './data.js';
 import { sfx } from './audio.js';
 import { h } from './dom.js';
 
@@ -93,15 +93,22 @@ export function buildInside({ onPick, onCharm }) {
       onclick: () => onPick(UNI_ENTRY.id),
     },
       h('span', { class: 'compartment__icon', html: ICONS[UNI_ENTRY.icon] }),
-      h('span', { class: 'compartment--uni-text' },
+      h('span', { class: 'compartment__stack' },
         h('span', { class: 'compartment__label', text: UNI_ENTRY.label }),
         h('span', { class: 'compartment__meta', text: UNI_ENTRY.note }),
       ),
     ),
-    PENDING.map((p) =>
-      h('div', { class: 'compartment compartment--empty compartment--wide' },
-        h('span', { class: 'compartment__label', text: `${p.label} · 还在写` }),
-        h('span', { class: 'compartment__meta', text: p.note }),
+    EXTRAS.map((x) =>
+      h('button', {
+        class: 'compartment compartment--wide compartment--extra',
+        type: 'button',
+        onclick: () => onPick(x.id),
+      },
+        h('span', { class: 'compartment__icon', html: ICONS[x.icon] }),
+        h('span', { class: 'compartment__stack' },
+          h('span', { class: 'compartment__label', text: x.label }),
+          h('span', { class: 'compartment__meta', text: x.note }),
+        ),
       )),
   );
 
@@ -233,6 +240,83 @@ export function buildFinale({ onExit }) {
   });
 
   return root;
+}
+
+/* ── 附录：性格卡 ──────────────────────────────────────── */
+
+export function buildProfile({ onNext, onExit }) {
+  return h('section', { class: 'scene scene--profile' },
+    h('button', { class: 'back-to-box', type: 'button', text: '目录', onclick: onExit }),
+    h('div', { class: 'profile' },
+      h('div', { class: 'profile__head' },
+        h('div', { class: 'profile__eyebrow', text: PROFILE.eyebrow }),
+        h('h2', { class: 'profile__title', text: PROFILE.title }),
+        h('p', { class: 'profile__lead', text: PROFILE.lead }),
+      ),
+      PROFILE.blocks.map(profileBlock),
+      h('button', { class: 'btn', type: 'button', text: '打开最中间那一格', onclick: onNext }),
+    ),
+  );
+}
+
+function profileBlock(b) {
+  if (b.type === 'pair') {
+    return h('div', { class: 'pcard pcard--pair' },
+      h('div', { class: 'ppair' },
+        ['jing', 'ya'].map((who) => {
+          const person = who === 'jing' ? HER : ME;
+          return h('div', { class: `pface pface--${who}` },
+            h('img', { class: 'pface__img', src: `${FACE}/${who}-laugh.png`, alt: '' }),
+            h('span', { class: 'pface__name', text: person.name }),
+            h('span', { class: 'pface__nick', text: person.nick }),
+          );
+        }),
+      ),
+      h('p', { class: 'pcard__caption', text: b.caption }),
+    );
+  }
+
+  if (b.type === 'who') {
+    return h('div', { class: `pcard pcard--who pcard--${b.who}` },
+      h('div', { class: 'pcard__head' },
+        h('img', { class: 'pcard__face', src: `${FACE}/${b.who}-laugh.png`, alt: '' }),
+        h('div', { class: 'pcard__ident' },
+          h('span', { class: 'pcard__name', text: b.name }),
+          h('span', { class: 'pcard__tag', text: b.tag }),
+        ),
+      ),
+      h('ul', { class: 'ppoints' },
+        b.points.map((p) => h('li', { class: 'ppoint' },
+          h('div', { class: 'ppoint__t', text: p.t }),
+          h('div', { class: 'ppoint__d', text: p.d }),
+        )),
+      ),
+    );
+  }
+
+  if (b.type === 'bridge') {
+    return h('div', { class: 'pcard pcard--bridge' },
+      h('h3', { class: 'pcard__title', text: b.title }),
+      h('p', { class: 'pcard__lead', text: b.lead }),
+      h('div', { class: 'pbridge' },
+        [b.left, b.right].map((side, i) =>
+          h('div', { class: `pbridge__side pbridge__side--${i === 0 ? 'ya' : 'jing'}` },
+            h('div', { class: 'pbridge__label', text: side.label }),
+            h('p', { class: 'pbridge__text', text: side.text }),
+          )),
+      ),
+      h('p', { class: 'pbridge__tail', text: b.tail }),
+    );
+  }
+
+  if (b.type === 'quote') {
+    return h('div', { class: 'pquote' },
+      h('p', { class: 'pquote__text', text: b.text }),
+      h('p', { class: 'pquote__sign', text: b.sign }),
+    );
+  }
+
+  return null;
 }
 
 /* ── 小工具 ────────────────────────────────────────────── */
