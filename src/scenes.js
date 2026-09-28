@@ -148,11 +148,18 @@ export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
   // 第一章穿校服（hs），第二章换大学那套（uni）
   const cast = scene.set || 'hs';
 
-  // 「两地合一」：两个人各自站一块，地名先飘出来，然后合到一起。
-  // 第二章第一页用它，让画面跟着文字走，而不是干站着。
+  // 「两地合一」：第二章第一页用它，让画面把这页的话演一遍。
+  // 分屏（两个城市各一半）-> 两地之间的连线亮起来 -> 缝消失、两人走到一起。
   if (scene.fx === 'merge') {
     stage.append(h('div', { class: 'merge' },
+      h('span', { class: 'merge__side merge__side--jing' }),
+      h('span', { class: 'merge__side merge__side--ya' }),
       h('span', { class: 'merge__divider' }),
+      h('svg', { class: 'merge__route', viewBox: '0 0 100 38', preserveAspectRatio: 'none' },
+        h('path', { class: 'merge__arc', d: 'M8 30 Q50 2 92 30' }),
+        h('circle', { class: 'merge__pin merge__pin--jing', cx: 8, cy: 30, r: 2.4 }),
+        h('circle', { class: 'merge__pin merge__pin--ya', cx: 92, cy: 30, r: 2.4 }),
+      ),
       h('span', { class: 'merge__city merge__city--jing', text: scene.cities.jing }),
       h('span', { class: 'merge__city merge__city--ya', text: scene.cities.ya }),
       h('span', { class: 'merge__glow' }),
@@ -161,6 +168,11 @@ export function buildStory(scene, { index, onPrev, onNext, onExit, onPlay }) {
         h('img', { class: 'merge__actor merge__actor--ya', src: `${ART}/${cast}-ya.png`, alt: '' }),
       ),
     ));
+
+    setTimeout(() => sfx.blip(), 520);       // 湖北亮出来
+    setTimeout(() => sfx.blip(), 900);       // 广州亮出来
+    setTimeout(() => sfx.tap(), 1700);       // 连线开始走
+    setTimeout(() => sfx.relief(), 3050);    // 合到一起
   }
 
   if (scene.actors.length) {

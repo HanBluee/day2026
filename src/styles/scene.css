@@ -623,6 +623,67 @@
   --h: clamp(140px, 30vh, 200px);
 }
 
+/* 分屏：左半边偏冷（她那边），右半边偏暖（我这边），最后一起淡掉 */
+.merge__side {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 52%;
+  animation: merge-side 4.5s var(--ease) both;
+}
+
+.merge__side--jing {
+  left: 0;
+  background: linear-gradient(90deg, rgba(74, 127, 181, .2) 0%, rgba(74, 127, 181, 0) 100%);
+}
+
+.merge__side--ya {
+  right: 0;
+  background: linear-gradient(270deg, rgba(185, 139, 78, .22) 0%, rgba(185, 139, 78, 0) 100%);
+}
+
+@keyframes merge-side {
+  0%, 50%  { opacity: 1; }
+  78%, 100% { opacity: 0; }
+}
+
+/* 两地之间那条弧线：虚线在走，两端各一个点 */
+.merge__route {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 17%;
+  height: 34%;
+  width: 88%;
+  overflow: visible;
+  animation: merge-route 4.5s var(--ease) both;
+}
+
+.merge__arc {
+  fill: none;
+  stroke: rgba(74, 127, 181, .62);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 6 8;
+  animation: merge-flow 1.5s linear infinite;
+}
+
+@keyframes merge-flow { to { stroke-dashoffset: -28; } }
+
+.merge__pin {
+  fill: var(--ya);
+  stroke: #fff;
+  stroke-width: 1;
+}
+
+.merge__pin--jing { fill: var(--jing); }
+
+@keyframes merge-route {
+  0%, 24%   { opacity: 0; }
+  34%, 64%  { opacity: 1; }
+  88%, 100% { opacity: 0; }
+}
+
 .merge__pair {
   position: absolute;
   left: 0;
@@ -640,8 +701,8 @@
   filter: drop-shadow(0 10px 14px rgba(40, 28, 16, .4));
 }
 
-.merge__actor--jing { height: calc(var(--h) * .9); animation: merge-from-left 3.6s var(--ease) .5s both; }
-.merge__actor--ya   { animation: merge-from-right 3.6s var(--ease) .5s both; }
+.merge__actor--jing { height: calc(var(--h) * .9); animation: merge-from-left 2.4s var(--ease) .6s both; }
+.merge__actor--ya   { animation: merge-from-right 2.4s var(--ease) .6s both; }
 
 @keyframes merge-from-left  { from { transform: translateX(-180%); } to { transform: none; } }
 @keyframes merge-from-right { from { transform: translateX(180%); }  to { transform: none; } }
@@ -657,7 +718,7 @@
   color: var(--ya-deep);
   background: rgba(255, 253, 247, .94);
   box-shadow: 0 5px 12px -6px rgba(30, 40, 55, .55);
-  animation: merge-city 3.9s var(--ease) both;
+  animation: merge-city 4.5s var(--ease) both;
 }
 
 .merge__city--jing { left: 7%; }
@@ -665,9 +726,9 @@
 
 @keyframes merge-city {
   0%        { opacity: 0; transform: translateY(-7px) scale(.94); }
-  11%       { opacity: 1; transform: none; }
-  55%       { opacity: 1; }
-  78%, 100% { opacity: 0; }
+  9%        { opacity: 1; transform: none; }
+  60%       { opacity: 1; }
+  76%, 100% { opacity: 0; }
 }
 
 .merge__divider {
@@ -677,7 +738,7 @@
   bottom: 32%;
   width: 1.5px;
   background: repeating-linear-gradient(180deg, rgba(74, 127, 181, .55) 0 6px, transparent 6px 12px);
-  animation: merge-city 3.9s var(--ease) both;
+  animation: merge-divider 4.5s var(--ease) both;
 }
 
 .merge__glow {
@@ -690,13 +751,17 @@
   border-radius: 50%;
   pointer-events: none;
   background: radial-gradient(50% 50% at 50% 50%, rgba(255, 238, 200, .8), rgba(255, 238, 200, 0) 72%);
-  animation: merge-glow 3.6s var(--ease) .5s both;
+  animation: merge-glow 1.9s var(--ease) 2.7s both;
+}
+
+@keyframes merge-divider {
+  0%, 20%   { opacity: .85; }
+  45%, 100% { opacity: 0; }
 }
 
 @keyframes merge-glow {
-  0%, 52% { opacity: 0; }
-  80%     { opacity: 1; }
-  100%    { opacity: .72; }
+  from { opacity: 0; }
+  to   { opacity: .72; }
 }
 
 /* 第二章是"假如"，整体比第一章亮一档、偏冷，好和高中那几年区分开 */
