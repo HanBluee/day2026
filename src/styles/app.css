@@ -152,14 +152,12 @@ body {
     inset 0 12px 20px -12px rgba(96, 70, 40, .6);
 }
 
-/* 盒盖一掀开，两只挂件就躺在绒布上。
-   用 contain 不裁切 —— 原片里手挡着挂件，裁掉任何一边都会缺一块 */
+/* 盒盖一掀开，两只挂件就躺在绒布上（透明抠图，不需要裁切） */
 .inbox-charm {
-  width: 42%;
-  height: 84%;
+  width: 46%;
+  height: 90%;
   object-fit: contain;
-  border-radius: 3px;
-  box-shadow: 0 6px 14px -7px rgba(80, 56, 30, .65);
+  filter: drop-shadow(0 7px 10px rgba(80, 56, 30, .5));
   opacity: 0;
   transform: translateY(9px) scale(.88);
   transition: opacity .45s var(--ease) .34s, transform .7s var(--ease-back) .34s;
@@ -366,18 +364,25 @@ body {
   cursor: pointer;
 }
 
+/* 挂件现在是从照片里抠出来的透明物体，放在两个凹槽里 */
 .charm {
-  width: min(27vw, 108px);
+  width: min(30vw, 122px);
   aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 7px;
   border-radius: var(--r-md);
-  overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(142, 106, 56, .4), 0 6px 14px -8px rgba(40, 28, 16, .6);
+  background: linear-gradient(180deg, rgba(255, 250, 240, .5), rgba(200, 176, 140, .22));
+  box-shadow: inset 0 2px 6px -2px rgba(96, 70, 40, .42);
   transition: transform .6s var(--ease);
 }
 
-.charm img { width: 100%; height: 100%; object-fit: cover; }
-.charm--cat img   { object-position: 50% 30%; }
-.charm--sushi img { object-position: 50% 46%; }
+.charm img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 8px rgba(80, 56, 30, .42));
+}
 
 .charms:active .charm--cat  { transform: translateX(5px) rotate(-5deg); }
 .charms:active .charm--sushi{ transform: translateX(-5px) rotate(5deg); }

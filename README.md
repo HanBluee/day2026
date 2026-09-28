@@ -54,8 +54,9 @@ python -m http.server 8123
 ```bash
 python tools/cutout.py   assets/raw/hs-pair.jpg assets/char hs 2 jing,ya  # 两人合影
 python tools/cutout.py   assets/raw/ya-uni.jpg  assets/char ya 3 front    # 三视图只取正面
+python tools/cutout.py   assets/raw/charm-cat-clean.jpg assets/photo charm 1 cat  # 单只挂件
 python tools/emotions.py assets/raw/ya-uni-emo.jpg assets/face ya         # 3x2 表情组
-python tools/photos.py                                                    # 挂件裁切 + 照片压缩
+python tools/photos.py                                                    # 布景照片压缩
 ```
 
 三个脚本都会自动去掉白底、脚下投影和右下角的「豆包AI生成」水印。

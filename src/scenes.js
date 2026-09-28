@@ -23,8 +23,8 @@ export function buildBox({ onOpen }) {
 
   const box = h('div', { class: 'box' },
     h('div', { class: 'box__interior' },
-      h('img', { class: 'inbox-charm', src: 'assets/photo/charm-cat.jpg', alt: '' }),
-      h('img', { class: 'inbox-charm', src: 'assets/photo/charm-sushi.jpg', alt: '' }),
+      h('img', { class: 'inbox-charm', src: 'assets/photo/charm-cat.png', alt: '' }),
+      h('img', { class: 'inbox-charm', src: 'assets/photo/charm-sushi.png', alt: '' }),
     ),
     h('div', { class: 'box__base' }, h('div', { class: 'clasp' })),
     lid,
@@ -75,9 +75,9 @@ export function buildBox({ onOpen }) {
 export function buildInside({ onPick, onCharm }) {
   const charms = h('div', { class: 'charms', onclick: onCharm, role: 'button', tabindex: '0' },
     h('div', { class: 'charm charm--cat' },
-      h('img', { src: 'assets/photo/charm-cat.jpg', alt: '小猫挂件' })),
+      h('img', { src: 'assets/photo/charm-cat.png', alt: '小猫挂件' })),
     h('div', { class: 'charm charm--sushi' },
-      h('img', { src: 'assets/photo/charm-sushi.jpg', alt: '三文鱼寿司挂件' })),
+      h('img', { src: 'assets/photo/charm-sushi.png', alt: '三文鱼寿司挂件' })),
   );
 
   const compartments = h('div', { class: 'compartments' },
@@ -180,8 +180,8 @@ export function buildFinale({ onExit }) {
   const ring = h('div', { class: 'snap-ring' });
   const stage = h('div', { class: 'charms-stage' },
     ring,
-    h('img', { class: 'half half--cat', src: 'assets/photo/charm-cat.jpg', alt: '小猫挂件' }),
-    h('img', { class: 'half half--sushi', src: 'assets/photo/charm-sushi.jpg', alt: '三文鱼寿司挂件' }),
+    h('img', { class: 'half half--cat', src: 'assets/photo/charm-cat.png', alt: '小猫挂件' }),
+    h('img', { class: 'half half--sushi', src: 'assets/photo/charm-sushi.png', alt: '三文鱼寿司挂件' }),
   );
 
   const root = h('section', { class: 'scene scene--finale' },
