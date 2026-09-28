@@ -96,6 +96,14 @@ async function collect() {
   f('finale.slotNote', '「留给她的那一格」说明', D.FINALE.slotNote);
   f('finale.foot', '最底下的日期', D.FINALE.foot);
 
+  head('会合（高中看完之后才出现）', '高中最后一幕之后；或在盒子里点中间那格');
+  f('meet.eyebrow', '页眉小字', D.MEET.eyebrow);
+  f('meet.title', '大标题', D.MEET.title);
+  f('meet.body', '正文', D.MEET.body);
+  f('meet.action', '进入大学篇的按钮', D.MEET.action);
+  f('box.locked', '还没看完高中时，盒子中间那格的小字', D.MEET.lockedHint);
+  f('box.charms', '挂件下面那句（看完高中之后才显示）', D.MEET.charmsCaption);
+
   head('小剧场 · 泡面危机（分镜）', '第一章第 3 幕点「帮我藏一下」之后先放这个');
   f('comic.from', '左上角的小标', D.COMIC.from);
   f('comic.hint', '底部的操作提示', D.COMIC.hint);

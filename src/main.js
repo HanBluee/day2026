@@ -1,7 +1,8 @@
 // 场景路由。没有框架，四个场景互相跳，切换时旧的淡出、新的淡入。
 
 import { SCENES } from './data.js';
-import { buildBox, buildInside, buildStory, buildAnim, buildFinale } from './scenes.js';
+import { buildBox, buildInside, buildStory, buildMeet, buildAnim, buildFinale } from './scenes.js';
+import { markChapter1Done } from './progress.js';
 import { buildNoodles } from './noodles.js';
 import { buildComic } from './comic.js';
 
@@ -24,11 +25,12 @@ function toBox() {
 }
 
 function toInside() {
-  show(buildInside({ onPick, onCharm: toFinale }));
+  show(buildInside({ onPick, onCharm: toMeet }));
 }
 
 function onPick(id) {
   if (id === 'anim') return toAnim();
+  if (id === 'meet') return toMeet();
   const idx = SCENES.findIndex((s) => s.id === id);
   return toStory(idx < 0 ? 0 : idx);
 }
@@ -38,10 +40,21 @@ function toStory(index) {
   show(buildStory(SCENES[idx], {
     index: idx,
     onPrev: () => toStory(idx - 1),
-    onNext: () => (idx === SCENES.length - 1 ? toAnim() : toStory(idx + 1)),
+    // 高中最后一幕的「下一段」不是直接进大学，而是先看两只挂件会合
+    onNext: () => {
+      if (idx === SCENES.length - 1) return toAnim();
+      return SCENES[idx].id === 's8' ? toMeet() : toStory(idx + 1);
+    },
     onExit: toInside,
     onPlay: () => toComic(idx),
   }));
+}
+
+// 挂件会合这一幕，同时是大学篇的钥匙：走到这里才把大学解锁
+function toMeet() {
+  markChapter1Done();
+  const u1 = Math.max(0, SCENES.findIndex((s) => s.id === 'u1'));
+  show(buildMeet({ onNext: () => toStory(u1), onExit: toInside }));
 }
 
 function toAnim() {
@@ -71,6 +84,7 @@ function route() {
   if (id === 'inside') return toInside();
   if (id === 'finale') return toFinale();
   if (id === 'anim') return toAnim();
+  if (id === 'meet') return toMeet();
   if (id === 'game') return toGame(2);
   if (id === 'comic') return toComic(2);
   const i = SCENES.findIndex((s) => s.id === id);

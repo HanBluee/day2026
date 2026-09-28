@@ -1,6 +1,7 @@
 // 四个场景：序章盒子 / 盒内目录 / 回忆一幕 / 终章。
 
-import { BOX_ITEMS, UNI_ENTRY, EXTRAS, SCENES, FINALE, ANIM_PAGE, ICONS, START, UNCLE_DAY } from './data.js';
+import { BOX_ITEMS, UNI_ENTRY, EXTRAS, SCENES, FINALE, ANIM_PAGE, MEET, ICONS, START, UNCLE_DAY } from './data.js';
+import { chapter1Done } from './progress.js';
 import { sfx } from './audio.js';
 import { h } from './dom.js';
 
@@ -73,12 +74,19 @@ export function buildBox({ onOpen }) {
 /* ── 盒内：物件目录 ────────────────────────────────────── */
 
 export function buildInside({ onPick, onCharm }) {
-  const charms = h('div', { class: 'charms', onclick: onCharm, role: 'button', tabindex: '0' },
-    h('div', { class: 'charm charm--cat' },
-      h('img', { src: 'assets/photo/charm-cat.png', alt: '小猫挂件' })),
-    h('div', { class: 'charm charm--sushi' },
-      h('img', { src: 'assets/photo/charm-sushi.png', alt: '三文鱼寿司挂件' })),
-  );
+  // 高中没看完之前，中间那格是空的——挂件还没会合，大学篇也进不去
+  const done = chapter1Done();
+
+  const charms = done
+    ? h('div', { class: 'charms', onclick: onCharm, role: 'button', tabindex: '0' },
+      h('div', { class: 'charm charm--cat' },
+        h('img', { src: 'assets/photo/charm-cat.png', alt: '小猫挂件' })),
+      h('div', { class: 'charm charm--sushi' },
+        h('img', { src: 'assets/photo/charm-sushi.png', alt: '三文鱼寿司挂件' })),
+    )
+    : h('div', { class: 'charms charms--locked' },
+      h('span', { class: 'charms__locked', text: MEET.lockedHint }),
+    );
 
   const compartments = h('div', { class: 'compartments' },
     BOX_ITEMS.map((item) =>
@@ -88,9 +96,10 @@ export function buildInside({ onPick, onCharm }) {
         h('span', { class: 'compartment__meta', text: item.meta }),
       )),
     h('button', {
-      class: 'compartment compartment--wide compartment--uni',
+      class: `compartment compartment--wide compartment--uni${done ? '' : ' is-locked'}`,
       type: 'button',
-      onclick: () => onPick(UNI_ENTRY.id),
+      disabled: !done || null,
+      onclick: () => { if (done) onPick(UNI_ENTRY.id); },
     },
       h('span', { class: 'compartment__icon', html: ICONS[UNI_ENTRY.icon] }),
       h('span', { class: 'compartment__stack' },
@@ -118,7 +127,7 @@ export function buildInside({ onPick, onCharm }) {
       h('span', { class: 'cavity__title', text: '高中 · 我们' }),
     ),
     charms,
-    h('p', { class: 'charms__caption', text: '它们俩是吸在一起的 —— 最后再点这里' }),
+    done ? h('p', { class: 'charms__caption', text: MEET.charmsCaption }) : null,
     compartments,
   );
 
@@ -269,6 +278,32 @@ export function buildFinale({ onExit }) {
     }, 60);
   });
 
+  return root;
+}
+
+/* ── 会合：高中看完之后，两只挂件吸在一起 ───────────────── */
+
+export function buildMeet({ onNext, onExit }) {
+  const stage = h('div', { class: 'meet__stage' },
+    h('div', { class: 'meet__half meet__half--cat' }, h('img', { src: 'assets/photo/charm-cat.png', alt: '' })),
+    h('div', { class: 'meet__half meet__half--sushi' }, h('img', { src: 'assets/photo/charm-sushi.png', alt: '' })),
+    h('span', { class: 'meet__ring' }),
+  );
+  const inner = h('div', { class: 'meet' },
+    h('div', { class: 'meet__eyebrow', text: MEET.eyebrow }),
+    stage,
+    h('h2', { class: 'meet__title', text: MEET.title }),
+    h('p', { class: 'meet__body', text: MEET.body }),
+    h('button', { class: 'btn', type: 'button', text: MEET.action, onclick: onNext }),
+  );
+  const root = h('section', { class: 'scene scene--meet' },
+    h('button', { class: 'back-to-box', type: 'button', text: '目录', onclick: onExit }),
+    inner,
+  );
+  setTimeout(() => {
+    inner.classList.add('is-joined');
+    setTimeout(() => sfx.snap(), 900);
+  }, 420);
   return root;
 }
 

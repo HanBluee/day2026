@@ -243,6 +243,17 @@ export const NOODLES = {
   outcome: [T('noodles.outcome.1'), T('noodles.outcome.2'), T('noodles.outcome.3')],
 };
 
+/* ── 会合：高中看完之后，两只挂件才出现 ─────────────────── */
+
+export const MEET = {
+  eyebrow: T('meet.eyebrow'),
+  title: T('meet.title'),
+  body: T('meet.body'),
+  action: T('meet.action'),
+  lockedHint: T('box.locked'),
+  charmsCaption: T('box.charms'),
+};
+
 /* ── 小剧场：泡面危机（分镜） ─────────────────────────────
    kind 决定这一格画什么、镜头怎么动、什么时候出字幕；
    台词和旁白全在 文案.txt 的 comic.* 里。 */
