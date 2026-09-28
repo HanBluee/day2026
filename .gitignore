@@ -1,0 +1,13 @@
+# 调试截图与中间产物
+tools/_debug/
+tools/__pycache__/
+*.pyc
+
+# 素材原图：体积大，原始文件在桌面「网站所需要」里；
+# 站点实际用的是 tools/*.py 产出的 assets/char | face | photo
+assets/raw/
+
+# 系统文件
+Thumbs.db
+desktop.ini
+.DS_Store

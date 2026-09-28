@@ -1,0 +1,73 @@
+/* 纪念品盒 —— 设计 token
+   木盒外壳 + 米白绒布内衬 + 黄铜配件。
+   信号色都从素材里来：蓝=王蕴瑶、绿=邹静雯、粉=发尾渐变、紫金=那本跨年日历。 */
+
+:root {
+  /* 木 */
+  --wood-900: #1D150F;
+  --wood-800: #2A1F19;
+  --wood-700: #382719;
+  --wood-600: #4A3222;
+  --wood-500: #5E4029;
+  --wood-400: #7A5636;
+
+  /* 绒布 */
+  --velvet-100: #F6EEDE;
+  --velvet-200: #EDE3D2;
+  --velvet-300: #E0D3BC;
+  --velvet-400: #CBB89A;
+  --velvet-500: #B39E7E;
+
+  /* 黄铜 */
+  --brass-300: #EBD3A3;
+  --brass-400: #D9B675;
+  --brass-500: #B98B4E;
+  --brass-600: #8E6A38;
+  --brass-700: #63491F;
+
+  /* 墨 */
+  --ink-900: #241C14;
+  --ink-700: #574734;
+  --ink-500: #8A7660;
+  --ink-300: #B6A48C;
+
+  /* 两个人 */
+  --ya: #4A7FB5;
+  --ya-soft: #A8C4DD;
+  --ya-deep: #2F5C8A;
+
+  --jing: #6E9A63;
+  --jing-soft: #B4CDA6;
+  --jing-deep: #47683F;
+
+  /* 点缀 */
+  --blush: #E2A69C;
+  --lilac: #B9A8D8;
+  --gold: #D4AF6A;
+
+  /* 语义 */
+  --bg: var(--wood-900);
+  --fg: var(--velvet-100);
+  --hairline: rgba(185, 139, 78, .42);
+
+  /* 动效 */
+  --ease: cubic-bezier(.32, .72, 0, 1);
+  --ease-soft: cubic-bezier(.22, .61, .36, 1);
+  --ease-back: cubic-bezier(.34, 1.4, .64, 1);
+
+  /* 形状：近直角 */
+  --r-sm: 2px;
+  --r-md: 4px;
+  --r-lg: 8px;
+
+  /* 字体：不引 Google Fonts（微信内会加载失败），走系统栈 */
+  --font-serif: "Songti SC", "Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN", STSong, SimSun, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "JetBrains Mono", monospace;
+
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+
+  /* 纹理：作为背景层，不做覆盖层 */
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}

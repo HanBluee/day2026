@@ -1,0 +1,183 @@
+// 内容层。文字都可以随她改；改完刷新即可，不需要重新构建。
+
+export const START = { y: 2021, m: 3, d: 14 };   // 第 1 天
+export const UNCLE_DAY = { y: 2026, m: 9, d: 29 }; // 第 2026 天
+
+export const ME = { name: '王蕴瑶', nick: '丫丫' };   // 蓝
+export const HER = { name: '邹静雯', nick: '小静雯' }; // 绿
+
+/* ── 盒内物件：既是装饰，也是章节入口 ───────────────────── */
+
+const svg = (body, stroke = 'currentColor') =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="1.4"
+        stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
+
+export const ICONS = {
+  desk: svg('<path d="M3 9h18M4 9v10M20 9v10M8 9V6h8v3M4 15h16"/>'),
+  card: svg('<rect x="2.5" y="6" width="19" height="12" rx="1.5"/><path d="M2.5 10h19M6 14h4"/>'),
+  cards: svg('<rect x="3" y="5" width="9" height="13" rx="1"/><path d="M14.5 7.5l2.5-1.6 4 6.4-3 1.8"/><path d="M6 9.5l1.5 2"/>'),
+  ticket: svg('<path d="M3 7.5h18v3a2 2 0 000 4v3H3v-3a2 2 0 000-4z"/><path d="M9 7.5v10" stroke-dasharray="1.6 1.8"/>'),
+  lamp: svg('<path d="M8 4h8l3 7H5z"/><path d="M12 11v6M9 20h6"/>'),
+  notebook: svg('<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 3v18M12 8h4M12 12h4"/>'),
+  calendar: svg('<rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><path d="M8 13h3v3H8z"/>'),
+  train: svg('<rect x="5" y="3.5" width="14" height="13" rx="2.5"/><path d="M5 11h14M9 20l-1.5 2M15 20l1.5 2M8.5 16.5h7"/><circle cx="9" cy="13.6" r=".9"/><circle cx="15" cy="13.6" r=".9"/>'),
+};
+
+/* 盒内布局：前 8 格是第一章带日期的回忆，中间放挂件，最后两格待写 */
+export const BOX_ITEMS = [
+  { id: 's1', icon: 'desk',     label: '分班那天',   meta: '2021.03.14' },
+  { id: 's2', icon: 'card',     label: '一起去食堂', meta: '高二 · 高三' },
+  { id: 's3', icon: 'cards',    label: '泡面危机',   meta: '小游戏' },
+  { id: 's4', icon: 'ticket',   label: '恐怖片',     meta: '放假 · 她家' },
+  { id: 's5', icon: 'lamp',     label: '床上夜谈',   meta: '熄灯之后' },
+  { id: 's6', icon: 'notebook', label: '抽查单词',   meta: 'ABANDON' },
+  { id: 's7', icon: 'calendar', label: '那本日历',   meta: '2022 / 2023' },
+  { id: 's8', icon: 'train',    label: '高考之后',   meta: '广州 ↔ 湖北' },
+];
+
+export const PENDING = [
+  { label: '大学篇', note: '如果我们在同一所大学，还是舍友' },
+  { label: '性格卡', note: '你是谁、她是谁、我们为什么会像' },
+];
+
+/* ── 第一章八幕 ─────────────────────────────────────────── */
+
+export const SCENES = [
+  {
+    id: 's1',
+    eyebrow: '2021.03.14 · 高二下学期',
+    title: '从今天开始数',
+    body: '高二分班，我们在同一间教室碰上了。\n\n那时候谁也不知道，这一天是要拿来数很多年的。\n今天是第 <em>2026</em> 天。',
+    stage: { bg: 'linear-gradient(175deg,#E8EEF4 0%,#D7E2EC 58%,#C3D2DF 100%)' },
+    actors: ['ya', 'jing'],
+    faces: { ya: 'shy', jing: 'laugh' },
+    bubbles: [
+      { who: 'jing', text: '你好呀' },
+      { who: 'ya', text: '……你好' },
+    ],
+  },
+  {
+    id: 's2',
+    eyebrow: '高二 · 高三 · 日常',
+    title: '没什么大事的那种日常',
+    body: '一起上课，一起去食堂。\n\n我们的日常里没发生过什么大事。\n后来才明白，最难被替代的偏偏就是这种没什么大事的日常。',
+    stage: { photo: 'assets/photo/together.jpg', bg: 'linear-gradient(175deg,#DCE6F0 0%,#C8D6E6 100%)', dim: .22 },
+    actors: [],
+    faces: { ya: 'laugh', jing: 'laugh' },
+    bubbles: [],
+  },
+  {
+    id: 's3',
+    eyebrow: '高三 · 宿舍',
+    title: '把东西藏起来',
+    body: '整个宿舍堆满了好东西：自热火锅、零食、薯片、相机、手机，还有一副扑克牌。\n\n我们拿衣服把窗玻璃挡住——\n然后宿管阿姨一把拉开窗户，掀开了那件衣服。',
+    stage: { photo: 'assets/photo/dorm.jpg', bg: 'linear-gradient(175deg,#2A2A32 0%,#1C1B21 100%)', dim: .42 },
+    actors: [],
+    faces: { ya: 'shock', jing: 'shock' },
+    bubbles: [],
+    play: 'noodles',
+    playLabel: '帮我藏一下',
+  },
+  {
+    id: 's4',
+    eyebrow: '放假 · 她家',
+    title: '她放恐怖片',
+    body: '放假我去她家，她放恐怖片。\n\n她爱看。我不敢看，又想看。\n她就坐在旁边逗我。\n\n看完我们出去散步，走了很久。',
+    stage: { bg: 'linear-gradient(178deg,#1E1B26 0%,#2C2734 62%,#171520 100%)' },
+    actors: ['ya', 'jing'],
+    faces: { ya: 'shy', jing: 'laugh' },
+    bubbles: [{ who: 'jing', text: '这段最吓人，你看着' }],
+  },
+  {
+    id: 's5',
+    eyebrow: '宿舍 · 熄灯之后',
+    title: '溜到她床上',
+    body: '宿管阿姨巡逻结束之后，我从自己的床上溜过去。\n\n两个人挤在一张床上说话，说到很晚。\n说了什么我记不太清了，但我记得那种感觉。',
+    stage: { bg: 'linear-gradient(178deg,#161320 0%,#221D2E 54%,#100D18 100%)' },
+    actors: ['ya', 'jing'],
+    faces: { ya: 'shy', jing: 'shy' },
+    bubbles: [],
+  },
+  {
+    id: 's6',
+    eyebrow: '高三 · 教室',
+    title: '我说我背好了',
+    body: '我跟她说，单词我背好了。\n\n她真的开始抽我。\n\n……结果还是不会。',
+    stage: { bg: 'linear-gradient(175deg,#EFEDE4 0%,#DEDACE 60%,#CFC9BA 100%)' },
+    actors: ['ya', 'jing'],
+    faces: { ya: 'cry', jing: 'angry' },
+    bubbles: [
+      { who: 'ya', text: '这次真的背了' },
+      { who: 'jing', text: 'abandon 后面的那个' },
+    ],
+  },
+  {
+    id: 's7',
+    eyebrow: '高三 · 跨年',
+    title: '一云雾幻想一',
+    body: '高三那年一起冲刺高考。\n\n跨年的时候她送了我一本日历，2022 / 2023。\n紫色的，包装很好看。\n\n我很喜欢。',
+    stage: { photo: 'assets/photo/calendar.jpg', bg: 'linear-gradient(175deg,#E7E2F2 0%,#CFC6E6 100%)', dim: .18 },
+    actors: [],
+    faces: { ya: 'laugh', jing: 'shy' },
+    bubbles: [],
+  },
+  {
+    id: 's8',
+    eyebrow: '2024 · 高考之后',
+    title: '两条裙子还没有一起穿过',
+    body: '高考结束，她去了湖北，我去了广州。\n\n生日的时候我们互相送了裙子：\n她送我的是蓝色长裙吊带，我送她的是绿色中裙吊带。\n\n到现在，我们还没有一起穿过。',
+    stage: { photo: 'assets/photo/dresses.jpg', bg: 'linear-gradient(175deg,#DCEBD8 0%,#C6DCC4 100%)', dim: .1 },
+    actors: [],
+    faces: { ya: 'down', jing: 'down' },
+    bubbles: [],
+    end: true,
+  },
+];
+
+/* ── 微游戏：泡面危机 ───────────────────────────────────── */
+
+export const NOODLES = {
+  intro: '阿姨在敲门了。先把东西藏起来——<b>点一件东西，再点一个地方</b>。',
+  spots: [
+    { id: 'cabinet', name: '柜子' },
+    { id: 'under', name: '床底' },
+    { id: 'quilt', name: '被窝' },
+  ],
+  items: [
+    { id: 'hotpot', label: '自热火锅', risk: true },
+    { id: 'snack', label: '零食' },
+    { id: 'chips', label: '薯片' },
+    { id: 'camera', label: '相机' },
+    { id: 'phone', label: '手机' },
+    { id: 'cards', label: '扑克牌' },
+  ],
+  // 阿姨逐个开柜子，但结果一定是化险为夷——这是真事
+  opens: [
+    { spot: 'cabinet', line: '阿姨进来，先拉开了柜子。' },
+    { spot: 'quilt', line: '她顺手掀了一下被窝。' },
+  ],
+  luck: '她拉开的是 —— 那个<b>什么都没藏</b>的柜子。',
+  near: '她把手电筒往里照了照，你压在最底下的那件东西没露出来。',
+  outcome: [
+    '阿姨在宿舍里转了一圈，把我们训了两句。',
+    '最后她翻出来的，只有<b>一颗瓜子</b>。',
+    '我们谁都没敢出声。她一关门，整个宿舍同时松了一口气。',
+  ],
+};
+
+/* ── 终章 ───────────────────────────────────────────────── */
+
+export const FINALE = {
+  days: 2026,
+  letter:
+    '我们隔着两座城市，但还是每天都说话。\n' +
+    '我们两个都是 INFJ——她原来不是，是后来变成的。\n' +
+    '我知道她因为我改了一些东西，我也因为她庆幸了很多。\n' +
+    '我们从同一间教室开始，现在在两个地方各自长大。\n\n' +
+    '今天是我们认识的第 2026 天。\n' +
+    '我把这些话全放进这个盒子里，等你打开。',
+  sign: '王蕴瑶 · 丫丫',
+  slotTitle: '这一格留给你',
+  slotNote: '我们约好要过纪念日，但我不知道你在做什么，你也不知道我在做什么。\n所以这里先空着。',
+  foot: '2021.03.14 — 2026.09.29',
+};
