@@ -115,7 +115,7 @@ body {
   background:
     linear-gradient(180deg, rgba(255, 228, 186, .16) 0%, rgba(0, 0, 0, .1) 18%, rgba(0, 0, 0, .36) 100%),
     repeating-linear-gradient(90deg, rgba(255, 240, 210, .026) 0 1px, rgba(0, 0, 0, .06) 1px 6px),
-    linear-gradient(96deg, var(--wood-400) 0%, var(--wood-500) 40%, var(--wood-700) 100%);
+    linear-gradient(96deg, var(--wood-400) 0%, var(--wood-500) 46%, var(--wood-600) 100%);
   box-shadow:
     0 24px 36px -18px rgba(0, 0, 0, .82),
     inset 0 1px 0 rgba(255, 220, 170, .22),
