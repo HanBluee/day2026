@@ -22,6 +22,7 @@ export const HER = { name: T('her.name'), nick: T('her.nick') }; // 绿
 export const SCENE_TEXT = {
   s1: { day1: T('s1.day1'), wx: T('s1.wx') },
   s2: { chat: T('s2.chat') },
+  s4: { chat: T('s4.chat') },
 };
 
 /* ── 图标（纯结构，不是文案） ───────────────────────────── */
@@ -119,7 +120,12 @@ const HS = [
   {
     id: 's4',
     eyebrow: T('s4.eyebrow'), title: T('s4.title'), body: T('s4.body'),
-    stage: { bg: 'linear-gradient(178deg,#1E1B26 0%,#2C2734 62%,#171520 100%)' },
+    // 夜里她家：暖黄的灯、并排两个枕头、摊一床零食、手机在玩狼人杀、
+    // 电脑停在恐怖片海报上没敢点开；底下一条夜色小路，尽头是宵夜那口锅
+    stage: { bg: 'linear-gradient(178deg,#241E2A 0%,#2E2532 56%,#1A1620 100%)' },
+    props: ['roomlight', 'pillow2', 'snacks', 'laptop2',
+            { name: 'phonecard', text: SCENE_TEXT.s4.chat },
+            'walk', 'pot'],
     actors: ['ya', 'jing'],
     faces: { ya: 'shy', jing: 'laugh' },
     bubbles: [{ who: 'jing', text: T('s4.bubble.1') }],

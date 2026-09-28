@@ -103,6 +103,9 @@ async function collect() {
   head('日常那一页的画面小字', '第一章第 2 幕，课桌旁飘出来的气泡');
   f('s2.chat', '课间随口的吐槽（气泡里的那句）', D.SCENE_TEXT.s2.chat);
 
+  head('放假那一页的画面小字', '第一章第 4 幕，手机屏幕上飘出来的');
+  f('s4.chat', '狼人杀里那句对白', D.SCENE_TEXT.s4.chat);
+
   head('小剧场 · 泡面危机（分镜）', '第一章第 3 幕点「帮我藏一下」之后先放这个');
   f('comic.from', '左上角的小标', D.COMIC.from);
   f('comic.hint', '底部的操作提示', D.COMIC.hint);
@@ -255,7 +258,16 @@ const mode = process.argv[2] || '--build';
 const fields = await collect();
 const expected = fields.filter((e) => e.key).map((e) => e.key);
 
-if (mode === '--export') {
+if (mode === '--add') {
+  // 只补「代码里有、文件里没有」的新键，已有的值一律保留文件里的。
+  // 加了新的文案位时用这个，就不会把文件里刚改好的正文覆盖掉。
+  const before = (() => { try { return parse(readFileSync(TXT, 'utf8')); } catch { return new Map(); } })();
+  const merged = fields.map((e) => (e.key && before.has(e.key) ? { ...e, value: before.get(e.key) } : e));
+  writeFileSync(TXT, toText(merged), 'utf8');
+  const added = expected.filter((k) => !before.has(k));
+  console.log(added.length ? `补进 ${added.length} 条新键，已有的原样保留` : '没有新键要补');
+  if (added.length) console.log('  新增：' + added.join('、'));
+} else if (mode === '--export') {
   // 危险动作：导出会用代码里的值重写 文案.txt。如果 文案.txt 里有还没构建过的改动，
   // 那说明有人正在改文案——这时候覆盖就等于把他的改动删掉。
   // 所以先比对，发现未构建的改动就备份 + 拒绝，除非显式给 --force。

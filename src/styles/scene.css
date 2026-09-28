@@ -2418,3 +2418,200 @@
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 8px 18px -8px rgba(0, 0, 0, .9);
 }
+
+/* ── 放假·她家那一幕：夜里的房间 ─────────────────────────
+   暖黄的灯、并排两个枕头、摊一床的零食、手机在打狼人杀、
+   电脑停在恐怖片海报上没敢点开；下角两张小卡是后来的散步和宵夜。 */
+
+/* 暖黄的房间灯光 */
+.sprop--roomlight {
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(46% 40% at 18% 8%, rgba(255, 214, 140, .5) 0%, rgba(255, 214, 140, 0) 66%),
+    radial-gradient(70% 50% at 82% 0%, rgba(255, 200, 130, .22) 0%, rgba(255, 200, 130, 0) 70%);
+  animation: roomlight 7s ease-in-out infinite;
+}
+
+@keyframes roomlight {
+  0%, 100% { opacity: .85; }
+  50%      { opacity: 1; }
+}
+
+/* 并排两个枕头 */
+.sprop--pillow2 {
+  left: 12%;
+  right: 12%;
+  bottom: 27%;
+  height: 26px;
+  z-index: 1;
+  background:
+    radial-gradient(46% 100% at 24% 50%, #F2EDE2 0 62%, rgba(0, 0, 0, 0) 63%),
+    radial-gradient(46% 100% at 76% 50%, #EDE7DA 0 62%, rgba(0, 0, 0, 0) 63%);
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .5));
+}
+
+/* 摊一床的零食 */
+.sprop--snacks {
+  left: 8%;
+  right: 8%;
+  bottom: 12%;
+  height: 22px;
+  z-index: 4;
+  background:
+    radial-gradient(9px 7px at 12% 60%, #E9A23B 0 100%, rgba(0, 0, 0, 0) 101%),
+    radial-gradient(7px 9px at 26% 74%, #D9553F 0 100%, rgba(0, 0, 0, 0) 101%),
+    radial-gradient(11px 8px at 44% 62%, #C7D3E0 0 100%, rgba(0, 0, 0, 0) 101%),
+    radial-gradient(8px 8px at 62% 78%, #8FBF6A 0 100%, rgba(0, 0, 0, 0) 101%),
+    radial-gradient(10px 7px at 80% 66%, #E4C56A 0 100%, rgba(0, 0, 0, 0) 101%);
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, .6));
+}
+
+/* 电脑：停在恐怖片海报上，亮着但没播 */
+.sprop--laptop2 {
+  right: 7%;
+  bottom: 30%;
+  width: 62px;
+  height: 40px;
+  z-index: 5;
+  border-radius: 3px;
+  background:
+    radial-gradient(70% 60% at 50% 40%, rgba(180, 60, 70, .5) 0%, rgba(20, 14, 22, 0) 70%),
+    linear-gradient(180deg, #2A2230, #14101A);
+  box-shadow: inset 0 0 0 1.5px rgba(150, 120, 90, .4), 0 0 22px 6px rgba(120, 80, 90, .18);
+  transform: rotate(-2deg);
+  animation: laptop-dim 4.5s ease-in-out infinite;
+}
+
+.sprop--laptop2::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 7px;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(180, 60, 70, .45);
+}
+
+@keyframes laptop-dim {
+  0%, 100% { filter: brightness(.78); }
+  50%      { filter: brightness(.95); }
+}
+
+/* 手机：狼人杀的界面 + 一句对白 */
+.sprop--phonecard {
+  left: 6%;
+  top: 8%;
+  width: 110px;
+  z-index: 7;
+  padding: 8px 9px 9px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  box-shadow: 0 12px 26px -14px rgba(20, 12, 24, .9), inset 0 0 0 1px rgba(0, 0, 0, .07);
+  opacity: 0;
+  animation: phonecard 9.5s var(--ease) infinite;
+}
+
+.sprop--phonecard::before {
+  content: "";
+  display: block;
+  height: 34px;
+  margin-bottom: 7px;
+  border-radius: 8px;
+  background:
+    radial-gradient(7px 7px at 16% 50%, #6E9A63 0 100%, rgba(0, 0, 0, 0) 101%),
+    radial-gradient(7px 7px at 38% 50%, #4A7FB5 0 100%, rgba(0, 0, 0, 0) 101%),
+    radial-gradient(7px 7px at 60% 50%, #B98B4E 0 100%, rgba(0, 0, 0, 0) 101%),
+    radial-gradient(7px 7px at 82% 50%, #9A6B8C 0 100%, rgba(0, 0, 0, 0) 101%),
+    linear-gradient(180deg, #2B2A33, #1B1A22);
+}
+
+.sprop--phonecard .sprop__text {
+  display: block;
+  padding: 4px 8px;
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 1.45;
+  color: #17301A;
+  background: #95EC69;
+}
+
+@keyframes phonecard {
+  0%, 6%    { opacity: 0; transform: translateY(-9px) scale(.94); }
+  15%, 76%  { opacity: 1; transform: none; }
+  90%, 100% { opacity: 0; transform: translateY(-6px); }
+}
+
+/* 后来的两张小卡：散步、宵夜 */
+.sprop--walk,
+.sprop--pot {
+  bottom: 3%;
+  width: 78px;
+  height: 48px;
+  z-index: 6;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 8px 18px -10px rgba(0, 0, 0, .9), inset 0 0 0 1px rgba(217, 182, 117, .28);
+  opacity: 0;
+  animation: card-in 11s var(--ease) infinite;
+}
+
+.sprop--walk { left: 2.5%; }
+
+.sprop--walk::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(46% 30% at 16% 92%, rgba(20, 26, 20, .55), rgba(20, 26, 20, 0) 72%),
+    radial-gradient(38% 26% at 62% 96%, rgba(20, 26, 20, .45), rgba(20, 26, 20, 0) 72%),
+    radial-gradient(30% 24% at 86% 88%, rgba(20, 26, 20, .4), rgba(20, 26, 20, 0) 72%),
+    linear-gradient(178deg, #2B3040 0%, #1B202E 62%, #12161F 100%);
+}
+
+.sprop--walk::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 16%;
+  height: 1.5px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(240, 226, 190, 0) 0%, rgba(240, 226, 190, .55) 40%, rgba(240, 226, 190, 0) 100%);
+}
+
+.sprop--pot { right: 2.5%; animation-delay: 5.5s; }
+
+.sprop--pot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(6px 12px at 42% 78%, rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 74%),
+    radial-gradient(5px 10px at 56% 80%, rgba(255, 255, 255, .4), rgba(255, 255, 255, 0) 74%),
+    linear-gradient(178deg, #3A2E24 0%, #241C16 100%);
+  animation: steam 3.4s ease-in-out infinite;
+}
+
+.sprop--pot::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  width: 42px;
+  height: 24px;
+  margin-left: -21px;
+  border-radius: 4px 4px 12px 12px;
+  background: linear-gradient(180deg, #C9C4BC, #8E8880);
+  box-shadow: 0 3px 8px -5px rgba(0, 0, 0, .9);
+}
+
+@keyframes card-in {
+  0%, 44%   { opacity: 0; transform: translateY(10px); }
+  56%, 88%  { opacity: 1; transform: none; }
+  98%, 100% { opacity: 0; }
+}
+
+/* 锅上冒的热气 */
+.sprop--pot .sprop__text { display: none; }
