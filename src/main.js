@@ -46,7 +46,7 @@ function toStory(index) {
       return SCENES[idx].id === 's8' ? toMeet() : toStory(idx + 1);
     },
     onExit: toInside,
-    onPlay: () => toComic(idx, scene.play === 's5comic' ? S5_COMIC : COMIC),
+    onPlay: () => toComic(idx, SCENES[idx].play === 's5comic' ? S5_COMIC : COMIC),
   }));
 }
 
