@@ -44,7 +44,7 @@ async function collect() {
   gap('   会合           小猫和寿司吸在一起······· meet');
   gap('   第二章 大学     6 页（假如）··········· u1 ~ u6');
   gap('   霸王花         那件真事················ r1');
-  gap('   小动画         四段···················· anim');
+  gap('   小动画         三段···················· anim');
   gap('   终章           那封信·················· finale');
   gap('');
   gap('   另外：盒子里格子的名字是 box.* / unibox.*，');
@@ -181,7 +181,7 @@ async function collect() {
   head('霸王花 · 那件真事', '第二章最后一页之后紧接着');
   D.SCENES.filter((s) => s.chapter === 'real').forEach((s) => sceneBlock(s, '霸王花', '第二章最后一页之后'));
 
-  head('小动画 · 四段', '盒子里「小动画」那一格');
+  head('小动画 · 三段', '盒子里「小动画」那一格');
   f('anim.eyebrow', '页眉小字', D.ANIM_PAGE.eyebrow);
   f('anim.title', '大标题', D.ANIM_PAGE.title);
   f('anim.lead', '副标题', D.ANIM_PAGE.lead);
@@ -190,24 +190,21 @@ async function collect() {
     f(`anim.${i + 1}.cap`, `第 ${i + 1} 段 · 下面的说明`, v.cap);
     if (v.msg) f(`anim.${i + 1}.msg`, `第 ${i + 1} 段 · 飘来飘去的那句话`, v.msg);
   });
-  f('anim.bridgeTitle', '05 那段的标题', D.ANIM_PAGE.bridge.title);
-  f('anim.bridgeLead', '05 那段的开头一句', D.ANIM_PAGE.bridge.lead);
-  f('anim.bridgeLeftLabel', '05 左栏标签（她教会我的）', D.ANIM_PAGE.bridge.left.label);
-  f('anim.bridgeLeftText', '05 左栏正文', D.ANIM_PAGE.bridge.left.text);
-  f('anim.bridgeRightLabel', '05 右栏标签（我带她的）', D.ANIM_PAGE.bridge.right.label);
-  f('anim.bridgeRightText', '05 右栏正文', D.ANIM_PAGE.bridge.right.text);
-  f('anim.bridgeTail', '05 那段的收尾一句', D.ANIM_PAGE.bridge.tail);
-  f('anim.closeTitle', '06 那段的标题', D.ANIM_PAGE.closing.title);
-  f('anim.closeBody', '06 那段的正文', D.ANIM_PAGE.closing.body);
-  f('anim.closeSign', '06 末尾那句小字', D.ANIM_PAGE.closing.sign);
+  f('anim.bridgeTitle', '04 那段的标题', D.ANIM_PAGE.bridge.title);
+  f('anim.bridgeLead', '04 那段的开头一句', D.ANIM_PAGE.bridge.lead);
+  f('anim.bridgeLeftLabel', '04 左栏标签（她教会我的）', D.ANIM_PAGE.bridge.left.label);
+  f('anim.bridgeLeftText', '04 左栏正文', D.ANIM_PAGE.bridge.left.text);
+  f('anim.bridgeRightLabel', '04 右栏标签（我带她的）', D.ANIM_PAGE.bridge.right.label);
+  f('anim.bridgeRightText', '04 右栏正文', D.ANIM_PAGE.bridge.right.text);
+  f('anim.bridgeTail', '04 那段的收尾一句', D.ANIM_PAGE.bridge.tail);
+  f('anim.closeTitle', '05 那段的标题', D.ANIM_PAGE.closing.title);
+  f('anim.closeBody', '05 那段的正文', D.ANIM_PAGE.closing.body);
 
   head('终章', '两只挂件吸合之后那一屏');
   f('finale.eyebrow', '终章 · 页眉小字', D.FINALE.eyebrow);
   f('finale.title', '终章 · 大标题', D.FINALE.title);
   f('finale.letter', '那封信（最该换成你自己的话）', D.FINALE.letter);
   f('finale.sign', '落款', D.FINALE.sign);
-  f('finale.slotTitle', '「留给她的那一格」标题', D.FINALE.slotTitle);
-  f('finale.slotNote', '「留给她的那一格」说明', D.FINALE.slotNote);
   f('finale.foot', '最底下的日期', D.FINALE.foot);
 
   return out;

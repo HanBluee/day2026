@@ -271,10 +271,6 @@ export function buildFinale({ onExit }) {
         FINALE.letter,
         h('span', { class: 'sign', text: FINALE.sign }),
       ),
-      h('div', { class: 'slot' },
-        h('div', { class: 'slot__title', text: FINALE.slotTitle }),
-        h('div', { class: 'slot__note', text: FINALE.slotNote }),
-      ),
       h('div', { class: 'finale__foot', text: FINALE.foot }),
     ),
   );
@@ -357,7 +353,6 @@ export function buildAnim({ onNext, onExit }) {
       h('div', { class: 'anim__closing' },
         h('h3', { class: 'anim__closing-title', text: ANIM_PAGE.closing.title }),
         h('p', { class: 'anim__closing-body', text: ANIM_PAGE.closing.body }),
-        h('p', { class: 'anim__closing-sign', text: ANIM_PAGE.closing.sign }),
       ),
       h('button', { class: 'btn', type: 'button', text: '打开最中间那一格', onclick: onNext }),
     ),
@@ -372,19 +367,7 @@ function vignette(v) {
     alt: '',
   }));
 
-  if (v.kind === 'dance') {
-    // 我跳，她举着手机拍；后面再浮出一小块回看的画面
-    stage.append(
-      h('i', { class: 'beam beam--1' }), h('i', { class: 'beam beam--2' }),
-      ...[1, 2, 3, 4, 5].map((n) => h('i', { class: `spark spark--${n}` })),
-      ...actors,
-      h('span', { class: 'phone' }, h('i', { class: 'phone__rec' })),
-      h('span', { class: 'clip' },
-        h('i', { class: 'clip__play' }),
-        h('span', { class: 'clip__bar' }, h('i')),
-      ),
-    );
-  } else if (v.kind === 'tv') {
+  if (v.kind === 'tv') {
     // 同一张床上一起看：床垫在下、人坐在上面、被子盖在他们前面
     stage.append(
       h('span', { class: 'bed' }),

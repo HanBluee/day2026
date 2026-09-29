@@ -431,8 +431,6 @@ export const FINALE = {
   title: T('finale.title'),
   letter: T('finale.letter'),
   sign: T('finale.sign'),
-  slotTitle: T('finale.slotTitle'),
-  slotNote: T('finale.slotNote'),
   foot: T('finale.foot'),
 };
 
@@ -445,10 +443,9 @@ export const ANIM_PAGE = {
   title: T('anim.title'),
   lead: T('anim.lead'),
   items: [
-    { kind: 'dance', set: 'uni', actors: ['ya', 'jing'], title: T('anim.1.title'), cap: T('anim.1.cap') },
-    { kind: 'ppt',   set: 'uni', actors: ['jing'],      title: T('anim.2.title'), cap: T('anim.2.cap') },
-    { kind: 'tv',    set: 'uni', actors: ['ya', 'jing'], title: T('anim.3.title'), cap: T('anim.3.cap') },
-    { kind: 'far',   set: 'uni', actors: ['ya', 'jing'], title: T('anim.4.title'), cap: T('anim.4.cap'), msg: T('anim.4.msg') },
+    { kind: 'ppt', set: 'uni', actors: ['jing'],      title: T('anim.1.title'), cap: T('anim.1.cap') },
+    { kind: 'tv',  set: 'uni', actors: ['ya', 'jing'], title: T('anim.2.title'), cap: T('anim.2.cap') },
+    { kind: 'far', set: 'uni', actors: ['ya', 'jing'], title: T('anim.3.title'), cap: T('anim.3.cap'), msg: T('anim.3.msg') },
   ],
   bridge: {
     title: T('anim.bridgeTitle'),
@@ -460,6 +457,5 @@ export const ANIM_PAGE = {
   closing: {
     title: T('anim.closeTitle'),
     body: T('anim.closeBody'),
-    sign: T('anim.closeSign'),
   },
 };
